@@ -1,0 +1,43 @@
+@startuml
+!include _estilo.iuml
+autonumber
+actor "Operador" as OP
+participant "App Android\n(UI Receção)" as UI
+participant "RececaoViewModel" as VM
+participant "RececaoRepository" as RP
+participant "Cloud Function\nregistarRececao" as CF
+database "Cloud Firestore" as FS
+database "Cloud Storage" as ST
+
+OP -> UI : Nova receção (origem = empresa)
+UI -> VM : iniciarRececao(doadorId, nGuia)
+OP -> UI : Fotografar guia
+UI -> VM : anexarGuia(imagem)
+VM -> RP : carregarImagem(imagem)
+RP -> ST : upload(guias/{id}.jpg)
+ST --> RP : url
+loop para cada produto
+  OP -> UI : Produto, quantidade, apresentação,\nvalidade, controlo C/NC
+  UI -> VM : adicionarLinha(linha)
+  VM -> VM : validarLinha()\nconverterUnidades()
+end
+OP -> UI : Confirmar receção
+UI -> VM : confirmar()
+VM -> RP : registarRececao(rececao, linhas)
+RP -> CF : call registarRececao(dto)
+activate CF
+CF -> CF : validar perfil (custom claims)
+CF -> FS : runTransaction
+activate FS
+CF -> FS : criar rececoes/{id} (+ linhas)
+CF -> FS : agrupar linhas e criar lotes\n(estado PENDENTE_ARRUMACAO)
+CF -> FS : criar movimentos ENTRADA
+CF -> FS : registar rejeições (desperdicios)
+FS --> CF : commit OK
+deactivate FS
+CF --> RP : {rececaoId, lotesIds}
+deactivate CF
+RP --> VM : Result.Success
+VM --> UI : estado = lotes por arrumar
+UI --> OP : Mostrar lista de lotes\npara arrumação
+@enduml

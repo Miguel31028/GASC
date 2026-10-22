@@ -1,0 +1,23 @@
+@startuml
+!include _estilo.iuml
+autonumber
+actor "Responsável" as RS
+participant "App Android\n(Relatórios)" as UI
+participant "Cloud Function\ngerarRGDHSA049" as CF
+database "Cloud Firestore" as FS
+database "Cloud Storage" as ST
+
+RS -> UI : Escolher intervalo de datas
+UI -> CF : call gerarRGDHSA049(dataInicio, dataFim)
+activate CF
+CF -> CF : validar perfil
+CF -> FS : query rececoes where dataHora in [inicio, fim]
+FS --> CF : receções + linhas + doadores + responsáveis
+CF -> CF : mapear para colunas do modelo\n(dia, produto/fornecedor, doc. receção,\nquantidade, C/NC x4, temperatura, obs., rubrica)
+CF -> CF : gerar PDF (modelo RGDHSA049)
+CF -> ST : guardar relatorios/rgdhsa049_{inicio}_{fim}.pdf
+ST --> CF : URL assinado
+CF --> UI : URL
+deactivate CF
+UI --> RS : Abrir / partilhar PDF
+@enduml

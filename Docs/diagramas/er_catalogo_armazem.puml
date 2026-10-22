@@ -1,0 +1,75 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam linetype ortho
+entity "CATEGORIA" as CAT {
+  * id_categoria <<PK>>
+  --
+  * nome
+  * tipo_bem
+  * condicao_armazenamento
+  * congelavel
+  * dias_aviso
+}
+entity "REGRA_CONGELACAO" as RC {
+  * id_regra <<PK>>
+  --
+  * id_categoria <<FK, UQ>>
+  * dias_extensao
+  observacoes
+}
+entity "PRODUTO" as PRD {
+  * id_produto <<PK>>
+  --
+  * id_categoria <<FK>>
+  * nome
+  marca
+  formato
+  * unidade_stock
+  conteudo_por_unidade
+  * tem_validade
+  tipo_data_validade
+  stock_minimo
+  tamanho
+  genero
+  * ativo
+}
+entity "APRESENTACAO" as APR {
+  * id_apresentacao <<PK>>
+  --
+  * id_produto <<FK>>
+  * nome
+  * fator
+}
+entity "EQUIPAMENTO_FRIO" as EQ {
+  * id_equipamento <<PK>>
+  --
+  * codigo <<UQ>>
+  * nome
+  * tipo
+}
+entity "EQUIPAMENTO_CATEGORIA" as EQC {
+  * id_equipamento <<PK, FK>>
+  * id_categoria <<PK, FK>>
+}
+entity "LOCAL" as LOC {
+  * id_local <<PK>>
+  --
+  * tipo (CELULA | ZONA_FRIO)
+  * codigo <<UQ>>
+  coluna
+  linha
+  andar
+  id_equipamento <<FK>>
+  lado
+  nivel
+  * cheio
+  * ativo
+}
+CAT ||--o| RC
+CAT ||--o{ PRD
+PRD ||--o{ APR
+EQ ||--o{ EQC
+CAT ||--o{ EQC
+EQ |o--o{ LOC
+@enduml

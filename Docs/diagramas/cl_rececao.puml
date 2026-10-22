@@ -1,0 +1,40 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam classAttributeIconSize 0
+class Doador {
+  id : String
+  tipo : TipoDoador
+  nome : String
+  nif : String
+  contacto : String
+}
+class Rececao {
+  id : String
+  dataHora : Timestamp
+  anonimo : Boolean
+  nGuia : String
+  urlGuia : String
+  temperatura : Double
+}
+class LinhaRececao {
+  quantidade : Double
+  validade : Date
+  higieneConforme : Boolean
+  rotulagemConforme : Boolean
+  organoleticasConforme : Boolean
+  embalagemConforme : Boolean
+  aceite : Boolean
+  observacoes : String
+}
+class Produto
+class Lote
+class Utilizador
+class Apresentacao
+Doador "0..1" -- "0..*" Rececao
+Rececao "1" *-- "1..*" LinhaRececao
+LinhaRececao "0..*" -- "1" Produto
+LinhaRececao "0..*" -- "0..1" Apresentacao
+LinhaRececao "1" -- "0..*" Lote : origina >
+Rececao "0..*" -- "1" Utilizador : responsável >
+@enduml

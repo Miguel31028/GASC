@@ -1,0 +1,39 @@
+@startuml
+!include _estilo.iuml
+autonumber
+actor "Operador" as OP
+actor "Pessoa que\nlevanta" as PL
+participant "App Android\n(UI Entrega)" as UI
+participant "EntregaViewModel" as VM
+participant "Cloud Function\nregistarEntrega" as CF
+database "Cloud Firestore" as FS
+
+OP -> UI : Abrir agendamentos do dia
+PL -> OP : Apresenta QR (papel / app)
+OP -> UI : Ler QR
+UI -> VM : identificar(token)
+VM -> FS : query credenciais where token == x
+FS --> VM : pessoa + agregado
+alt pessoa não autorizada ou agregado inativo
+  VM --> UI : erro "Não autorizado"
+  UI --> OP : mostrar motivo
+else autorizada
+  VM -> FS : ler restrições, alergias, agendamento
+  VM -> FS : query lotes disponíveis\norderBy(congeladoInterno, validade)
+  FS --> VM : lotes FEFO
+  VM --> UI : sugestão de produtos
+  loop produtos do cabaz
+    OP -> UI : adicionar lote + quantidade
+  end
+  OP -> UI : Confirmar entrega
+  UI -> VM : confirmar()
+  VM -> CF : call registarEntrega(dto)
+  activate CF
+  CF -> FS : runTransaction: verificar stock,\nabater lotes, criar movimentos SAIDA_CABAZ,\ncriar entrega, agendamento = ENTREGUE
+  FS --> CF : commit OK
+  CF -> FS : criar próximo agendamento\n(periodicidade)
+  CF --> VM : entregaId
+  deactivate CF
+  VM --> UI : sucesso
+end
+@enduml

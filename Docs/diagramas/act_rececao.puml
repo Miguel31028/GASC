@@ -1,0 +1,33 @@
+@startuml
+!include _estilo.iuml
+|Operador de armazém|
+start
+:Iniciar nova receção;
+:Indicar origem dos bens;
+if (Origem?) then (Empresa)
+  :Selecionar / criar empresa;
+  :Indicar n.º da guia de transporte;
+  :Fotografar / anexar guia;
+elseif (Particular) then
+  if (Quer identificar-se?) then (sim)
+    :Selecionar / criar particular;
+  else (não)
+    :Marcar como anónimo;
+  endif
+else (Organização / campanha)
+  :Selecionar entidade;
+endif
+repeat
+  :Registar linha de produto\n(ver atividade "Registar linha");
+repeat while (Mais produtos?) is (sim)
+->não;
+:Confirmar receção;
+|Sistema|
+:Gravar receção e linhas (transação);
+:Agrupar linhas aceites em lotes\n(produto + marca + validade);
+:Converter quantidades para\na unidade de stock;
+:Criar lotes (PENDENTE_ARRUMACAO)\ne movimentos de ENTRADA;
+:Registar linhas rejeitadas\ncomo desperdício na receção;
+:Encaminhar lotes para arrumação;
+stop
+@enduml

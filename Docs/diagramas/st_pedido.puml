@@ -1,0 +1,12 @@
+@startuml
+!include _estilo.iuml
+hide empty description
+[*] --> PEDIDO : registar pedido
+PEDIDO --> PEDIDO : alterar n.º de refeições\n[antes do fecho]
+PEDIDO --> CANCELADO : cancelar [antes do fecho]
+PEDIDO --> LEVANTADO : levantamento registado
+PEDIDO --> NAO_LEVANTADO : fecho do serviço
+LEVANTADO --> [*]
+CANCELADO --> [*]
+NAO_LEVANTADO --> [*]
+@enduml

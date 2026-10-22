@@ -1,0 +1,27 @@
+@startuml
+!include _estilo.iuml
+|Sistema (tarefa diária)|
+start
+:Percorrer lotes com stock > 0;
+:Marcar lotes com validade ultrapassada\ncomo EXPIRADO (lista de remoção);
+:Marcar lotes a expirar em N dias\ncomo prioritários;
+:Calcular stock por produto e\ncomparar com o stock mínimo;
+:Gerar alertas e notificar\nos perfis responsáveis;
+|Operador de armazém|
+:Consultar alertas;
+if (Tipo de alerta?) then (Expirado)
+  :Retirar produto do armazém;
+  :Registar desperdício\n(quantidade, motivo);
+elseif (A expirar) then
+  if (Categoria congelável e\nopta por congelar?) then (sim)
+    :Congelar lote;
+    :Confirmar ou corrigir a validade\nproposta pela tabela da categoria;
+    :Arrumar em zona de congelação;
+  else (não)
+    :Dar prioridade na saída\n(cabazes / cozinha);
+  endif
+else (Stock mínimo)
+  :Informar responsável\n(necessidade de doações);
+endif
+stop
+@enduml

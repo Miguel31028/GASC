@@ -1,0 +1,51 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam classAttributeIconSize 0
+class Agregado {
+  id : String
+  codigo : String
+  morada : String
+  telefone : String
+  situacao : String
+  beneficiaCabaz : Boolean
+  beneficiaRefeicoes : Boolean
+  periodicidade : Periodicidade
+  estado : EstadoAgregado
+  dataInscricao : Date
+}
+class Pessoa {
+  id : String
+  nome : String
+  dataNascimento : Date
+  nif : String
+  niss : String
+  parentesco : String
+  titular : Boolean
+  autorizadaLevantar : Boolean
+  restricoesAlimentares : String
+  alergias : String
+  +idade() : Int
+}
+class CredencialQR {
+  token : String
+  emitidaEm : Timestamp
+  suporte : {PAPEL, APP}
+  ativa : Boolean
+}
+class Consentimento {
+  dataHora : Timestamp
+  finalidades : String
+  urlDocumento : String
+}
+class ContaUtente {
+  uid : String
+  telefone : String
+}
+class Utilizador
+Agregado "1" *-- "1..*" Pessoa
+Pessoa "1" -- "0..1" CredencialQR
+Pessoa "1" -- "0..1" ContaUtente
+Agregado "1" -- "1..*" Consentimento
+Agregado "0..*" -- "0..1" Utilizador : técnico responsável >
+@enduml

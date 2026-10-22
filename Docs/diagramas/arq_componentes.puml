@@ -1,0 +1,31 @@
+@startuml
+!include _estilo.iuml
+skinparam componentStyle rectangle
+rectangle "Camada de clientes" as CLI {
+  [App GASC Gestão\n(Android, Kotlin, Compose,\nML Kit para QR)] as APPG
+  [App GASC Utente\n(Android, Kotlin, Compose)] as APPU
+  [Painel Web de Agenda\n(ecrã de parede, Hosting)] as WEB
+}
+rectangle "Backend Firebase / Google Cloud (região europe-west)" as BE {
+  [Authentication\n(perfis: custom claims)] as AUTH
+  [Cloud Functions\n(regras de negócio,\ntransações, PDF)] as CF
+  database "Cloud Firestore\n(dados + security rules)" as FS
+  [Cloud Storage\n(guias, PDF)] as ST
+  [Cloud Messaging\n(notificações)] as FCM
+  [Cloud Scheduler\n(tarefas diárias)] as SCH
+}
+rectangle "Serviços externos (evolução futura)" as EXT {
+  [LLM multimodal\n(leitura de guias,\nreconhecimento de produtos)] as LLM
+  [Posto biométrico\n(PC fixo)] as BIO
+}
+APPG -[hidden]right- APPU
+APPU -[hidden]right- WEB
+AUTH -[hidden]right- CF
+CF -[hidden]right- FS
+FS -[hidden]right- ST
+ST -[hidden]right- FCM
+FCM -[hidden]right- SCH
+LLM -[hidden]right- BIO
+CLI ==> BE : HTTPS / TLS\n(SDK Firebase)
+BE ..> EXT : APIs (futuro)
+@enduml

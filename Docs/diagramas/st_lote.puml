@@ -1,0 +1,17 @@
+@startuml
+!include _estilo.iuml
+hide empty description
+[*] --> PENDENTE_ARRUMACAO : receção confirmada
+PENDENTE_ARRUMACAO --> DISPONIVEL : arrumado num local
+DISPONIVEL --> DISPONIVEL : saída parcial / transferência
+DISPONIVEL --> CONGELADO : congelar [categoria congelável]\n/ validade proposta pela regra
+CONGELADO --> CONGELADO : saída parcial
+DISPONIVEL --> ESGOTADO : saída [quantidade = 0]
+CONGELADO --> ESGOTADO : saída [quantidade = 0]
+DISPONIVEL --> EXPIRADO : tarefa diária [validade < hoje]
+CONGELADO --> EXPIRADO : tarefa diária [validade < hoje]
+EXPIRADO --> DESCARTADO : registar desperdício
+DISPONIVEL --> DESCARTADO : desperdício (dano)
+ESGOTADO --> [*]
+DESCARTADO --> [*]
+@enduml

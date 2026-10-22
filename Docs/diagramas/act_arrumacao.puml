@@ -1,0 +1,35 @@
+@startuml
+!include _estilo.iuml
+|Sistema|
+start
+:Obter lote pendente de arrumação;
+if (Condição de armazenamento?) then (Ambiente)
+  :Procurar células não cheias que já\ncontenham o mesmo produto;
+  if (Encontrou?) then (sim)
+    :Sugerir a primeira pela ordem\n(coluna, linha, andar);
+  else (não)
+    :Obter célula de referência\n(última usada pelo produto\nou pela categoria);
+    :Sugerir a célula não cheia mais\npróxima na ordenação;
+  endif
+else (Refrigerado / congelado)
+  :Filtrar equipamentos do tipo adequado\n(frigorífico / congelador);
+  :Dar prioridade aos de uso\npreferencial da categoria;
+  :Sugerir zona não cheia (D/C/E + nível),\njunto do mesmo produto se existir;
+endif
+|Operador de armazém|
+repeat
+  :Ver sugestão de localização;
+  backward:Sistema marca o local como cheio\ne calcula o local seguinte mais próximo;
+repeat while (Local sugerido está cheio?) is (sim: assinalar "cheio")
+->não;
+if (Aceita a sugestão?) then (sim)
+  :Ler QR do local sugerido;
+else (não)
+  :Ler QR de outro local;
+endif
+|Sistema|
+:Validar local lido;
+:Associar lote ao local;
+:Registar movimento de ARRUMAÇÃO;
+stop
+@enduml

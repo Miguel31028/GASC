@@ -1,0 +1,32 @@
+@startuml
+!include _estilo.iuml
+autonumber
+actor "Operador" as OP
+participant "App Android\n(UI Arrumação)" as UI
+participant "ArrumacaoViewModel" as VM
+participant "Cloud Function\nsugerirLocal" as CF
+database "Cloud Firestore" as FS
+
+OP -> UI : Selecionar lote pendente
+UI -> VM : pedirSugestao(loteId)
+VM -> CF : call sugerirLocal(loteId, excluir = [])
+CF -> FS : ler lote, produto, categoria
+CF -> FS : ler locais ativos e não cheios
+CF -> CF : calcular local mais próximo\n(ordenação coluna-linha-andar)
+CF --> VM : local sugerido (ex.: 003-02-1)
+VM --> UI : mostrar sugestão
+alt local está cheio
+  OP -> UI : Assinalar "cheio"
+  UI -> VM : marcarCheio(localId)
+  VM -> FS : update locais/{id}.cheio = true
+  VM -> CF : call sugerirLocal(loteId, excluir = [localId])
+  CF --> VM : novo local (ex.: 003-03-1)
+  VM --> UI : mostrar nova sugestão
+end
+OP -> UI : Ler QR do local
+UI -> VM : confirmarArrumacao(loteId, codigoLido)
+VM -> VM : validar código lido
+VM -> FS : transação: lote.localId, estado = DISPONIVEL,\nmovimento ARRUMACAO
+FS --> VM : OK
+VM --> UI : arrumação concluída
+@enduml

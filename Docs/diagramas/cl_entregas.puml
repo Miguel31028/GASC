@@ -1,0 +1,33 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam classAttributeIconSize 0
+class Agendamento {
+  id : String
+  dataHora : Timestamp
+  tipo : {CABAZ, OUTROS_BENS}
+  estado : EstadoAgendamento
+  +reagendar(nova : Timestamp)
+}
+class Entrega {
+  id : String
+  dataHora : Timestamp
+  tipo : {CABAZ, OUTROS_BENS}
+  identificacaoManual : Boolean
+  observacoes : String
+}
+class LinhaSaida {
+  quantidade : Double
+}
+class Agregado
+class Pessoa
+class Utilizador
+class Lote
+Agregado "1" -- "0..*" Agendamento
+Agendamento "1" -- "0..1" Entrega : concretizado por >
+Agregado "1" -- "0..*" Entrega
+Entrega "0..*" -- "1" Pessoa : levantada por >
+Entrega "0..*" -- "1" Utilizador : entregue por >
+Entrega "1" *-- "1..*" LinhaSaida
+LinhaSaida "0..*" -- "1" Lote
+@enduml

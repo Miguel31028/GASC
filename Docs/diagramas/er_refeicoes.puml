@@ -1,0 +1,58 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam linetype ortho
+entity "SERVICO_REFEICAO" as SR {
+  * id_servico <<PK>>
+  --
+  * data
+  * tipo
+  * aberto
+  total_previsto
+  total_confecionado
+}
+entity "PEDIDO_REFEICAO" as PR {
+  * id_pedido <<PK>>
+  --
+  * id_agregado <<FK>>
+  * id_servico <<FK>>
+  * n_refeicoes
+  * origem
+  * estado
+  * registado_por
+}
+entity "LEVANTAMENTO" as LV {
+  * id_levantamento <<PK>>
+  --
+  id_pedido <<FK>>
+  * id_pessoa <<FK>>
+  * id_utilizador <<FK>>
+  * data_hora
+  * n_entregues
+  justificacao_excecao
+}
+entity "SAIDA_COZINHA" as SC {
+  * id_saida <<PK>>
+  --
+  * id_servico <<FK>>
+  * id_utilizador <<FK>>
+  * data_hora
+}
+entity "LINHA_SAIDA (ref.)" as LS {
+  * id_linha <<PK>>
+  --
+  id_saida_cozinha <<FK>>
+}
+entity "AGREGADO (ref.)" as AG {
+  * id_agregado <<PK>>
+}
+entity "PESSOA (ref.)" as PE {
+  * id_pessoa <<PK>>
+}
+AG ||--o{ PR
+SR ||--o{ PR
+PR |o--o{ LV
+PE ||--o{ LV
+SR ||--o{ SC
+SC |o--o{ LS
+@enduml

@@ -1,0 +1,207 @@
+[
+  {
+    "id": "M01",
+    "grupo": "Acesso e início",
+    "titulo": "Autenticação"
+  },
+  {
+    "id": "M02",
+    "grupo": "Acesso e início",
+    "titulo": "Início – Operador de armazém"
+  },
+  {
+    "id": "M03",
+    "grupo": "Acesso e início",
+    "titulo": "Menu \"Mais\" e mudança de perfil"
+  },
+  {
+    "id": "M04",
+    "grupo": "Receção",
+    "titulo": "Nova receção – origem e doador"
+  },
+  {
+    "id": "M05",
+    "grupo": "Receção",
+    "titulo": "Pesquisa de produto"
+  },
+  {
+    "id": "M06",
+    "grupo": "Receção",
+    "titulo": "Criar produto"
+  },
+  {
+    "id": "M07",
+    "grupo": "Receção",
+    "titulo": "Linha de produto – quantidade e validade"
+  },
+  {
+    "id": "M08",
+    "grupo": "Receção",
+    "titulo": "Linha de produto – controlo de receção (RGDHSA049)"
+  },
+  {
+    "id": "M09",
+    "grupo": "Receção",
+    "titulo": "Resumo e confirmação da receção"
+  },
+  {
+    "id": "M10",
+    "grupo": "Arrumação",
+    "titulo": "Lotes por arrumar"
+  },
+  {
+    "id": "M11",
+    "grupo": "Arrumação",
+    "titulo": "Sugestão de localização"
+  },
+  {
+    "id": "M12",
+    "grupo": "Arrumação",
+    "titulo": "Leitura do QR do local"
+  },
+  {
+    "id": "M13",
+    "grupo": "Stock e validades",
+    "titulo": "Consulta de stock"
+  },
+  {
+    "id": "M14",
+    "grupo": "Stock e validades",
+    "titulo": "Detalhe do produto e lotes (FEFO)"
+  },
+  {
+    "id": "M15",
+    "grupo": "Stock e validades",
+    "titulo": "Congelar lote"
+  },
+  {
+    "id": "M16",
+    "grupo": "Stock e validades",
+    "titulo": "Alertas"
+  },
+  {
+    "id": "M17",
+    "grupo": "Stock e validades",
+    "titulo": "Registar desperdício"
+  },
+  {
+    "id": "M18",
+    "grupo": "Utentes e agregados",
+    "titulo": "Lista de agregados"
+  },
+  {
+    "id": "M19",
+    "grupo": "Utentes e agregados",
+    "titulo": "Ficha do agregado"
+  },
+  {
+    "id": "M20",
+    "grupo": "Utentes e agregados",
+    "titulo": "Membro do agregado"
+  },
+  {
+    "id": "M21",
+    "grupo": "Utentes e agregados",
+    "titulo": "Credencial QR"
+  },
+  {
+    "id": "M22",
+    "grupo": "Cabazes e outros bens",
+    "titulo": "Entregas do dia"
+  },
+  {
+    "id": "M23",
+    "grupo": "Cabazes e outros bens",
+    "titulo": "Identificação de quem levanta"
+  },
+  {
+    "id": "M24",
+    "grupo": "Cabazes e outros bens",
+    "titulo": "Composição do cabaz com sugestão FEFO"
+  },
+  {
+    "id": "M25",
+    "grupo": "Cabazes e outros bens",
+    "titulo": "Confirmação da entrega"
+  },
+  {
+    "id": "M26",
+    "grupo": "Cabazes e outros bens",
+    "titulo": "Entrega de outros bens"
+  },
+  {
+    "id": "M27",
+    "grupo": "Refeições",
+    "titulo": "Refeições do dia (cozinha)"
+  },
+  {
+    "id": "M28",
+    "grupo": "Refeições",
+    "titulo": "Saída de produtos para a cozinha"
+  },
+  {
+    "id": "M29",
+    "grupo": "Refeições",
+    "titulo": "Levantamento de refeição"
+  },
+  {
+    "id": "M30",
+    "grupo": "Refeições",
+    "titulo": "Pedido de refeições recorrente"
+  },
+  {
+    "id": "M31",
+    "grupo": "Relatórios e indicadores",
+    "titulo": "Emissão do RGDHSA049"
+  },
+  {
+    "id": "M32",
+    "grupo": "Relatórios e indicadores",
+    "titulo": "Painel de indicadores"
+  },
+  {
+    "id": "M33",
+    "grupo": "Administração",
+    "titulo": "Células de prateleira"
+  },
+  {
+    "id": "M34",
+    "grupo": "Administração",
+    "titulo": "Equipamento de frio e zonas"
+  },
+  {
+    "id": "M35",
+    "grupo": "Administração",
+    "titulo": "Categorias e tabela de congelação"
+  },
+  {
+    "id": "M36",
+    "grupo": "Administração",
+    "titulo": "Utilizadores e perfis"
+  },
+  {
+    "id": "M37",
+    "grupo": "App Utente",
+    "titulo": "App Utente – entrada por telemóvel"
+  },
+  {
+    "id": "M38",
+    "grupo": "App Utente",
+    "titulo": "App Utente – início e credencial"
+  },
+  {
+    "id": "M39",
+    "grupo": "App Utente",
+    "titulo": "App Utente – pedidos de refeição"
+  },
+  {
+    "id": "M40",
+    "grupo": "Painel web",
+    "titulo": "Painel de agenda para ecrã de parede"
+  },
+  {
+    "id": "M41",
+    "grupo": "Documentos gerados",
+    "titulo": "RGDHSA049 gerado em PDF"
+  }
+]

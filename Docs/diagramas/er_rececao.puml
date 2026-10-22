@@ -1,0 +1,67 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam linetype ortho
+entity "DOADOR" as DOA {
+  * id_doador <<PK>>
+  --
+  * tipo
+  * nome
+  nif
+  morada
+  contacto
+}
+entity "RECECAO" as REC {
+  * id_rececao <<PK>>
+  --
+  id_doador <<FK>>
+  * id_utilizador <<FK>>
+  * data_hora
+  * tipo_origem
+  * anonimo
+  n_guia
+  url_guia
+  temperatura
+  observacoes
+}
+entity "LINHA_RECECAO" as LR {
+  * id_linha <<PK>>
+  --
+  * id_rececao <<FK>>
+  * id_produto <<FK>>
+  id_apresentacao <<FK>>
+  * quantidade
+  validade
+  lote_fornecedor
+  * higiene_c
+  * rotulagem_c
+  * organoleticas_c
+  * embalagem_c
+  temperatura
+  * aceite
+  observacoes
+}
+entity "UTILIZADOR" as UTZ {
+  * id_utilizador <<PK>>
+  --
+  * nome
+  * email <<UQ>>
+  * perfis
+  * ativo
+}
+entity "PRODUTO (ref.)" as PRD {
+  * id_produto <<PK>>
+}
+entity "APRESENTACAO (ref.)" as APR {
+  * id_apresentacao <<PK>>
+}
+entity "LOTE (ref.)" as LOT {
+  * id_lote <<PK>>
+}
+DOA |o--o{ REC
+UTZ ||--o{ REC
+REC ||--|{ LR
+PRD ||--o{ LR
+APR |o--o{ LR
+LR ||--o{ LOT
+@enduml

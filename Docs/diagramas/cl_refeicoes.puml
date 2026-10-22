@@ -1,0 +1,42 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam classAttributeIconSize 0
+class ServicoRefeicao {
+  data : Date
+  tipo : {ALMOCO, JANTAR}
+  aberto : Boolean
+  totalPrevisto : Int
+  totalConfecionado : Int
+  +fechar()
+}
+class PedidoRefeicao {
+  id : String
+  numeroRefeicoes : Int
+  origem : {BALCAO, APP_UTENTE, TECNICO}
+  estado : EstadoPedido
+  +cancelar()
+}
+class Levantamento {
+  dataHora : Timestamp
+  numeroEntregues : Int
+  justificacaoExcecao : String
+}
+class SaidaCozinha {
+  id : String
+  dataHora : Timestamp
+}
+class LinhaSaida {
+  quantidade : Double
+}
+class Agregado
+class Pessoa
+class Lote
+Agregado "1" -- "0..*" PedidoRefeicao
+PedidoRefeicao "0..*" -- "1" ServicoRefeicao
+PedidoRefeicao "0..1" -- "0..*" Levantamento
+Levantamento "0..*" -- "1" Pessoa : levantado por >
+ServicoRefeicao "1" -- "0..*" SaidaCozinha
+SaidaCozinha "1" *-- "1..*" LinhaSaida
+LinhaSaida "0..*" -- "1" Lote
+@enduml

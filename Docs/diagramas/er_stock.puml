@@ -1,0 +1,73 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam linetype ortho
+entity "LOTE" as LOT {
+  * id_lote <<PK>>
+  --
+  * id_produto <<FK>>
+  * id_linha <<FK>>
+  id_local <<FK>>
+  validade
+  validade_original
+  * qtd_inicial
+  * qtd_atual
+  volumes
+  * estado
+  * congelado_origem
+  * congelado_interno
+  * data_entrada
+}
+entity "MOVIMENTO" as MOV {
+  * id_movimento <<PK>>
+  --
+  * id_lote <<FK>>
+  * id_utilizador <<FK>>
+  * tipo
+  * quantidade
+  * data_hora
+  id_local_origem <<FK>>
+  id_local_destino <<FK>>
+  referencia
+}
+entity "DESPERDICIO" as DES {
+  * id_desperdicio <<PK>>
+  --
+  * id_lote <<FK>>
+  * id_utilizador <<FK>>
+  * quantidade
+  * motivo
+  * data
+}
+entity "ALERTA" as AL {
+  * id_alerta <<PK>>
+  --
+  * tipo
+  id_lote <<FK>>
+  id_produto <<FK>>
+  * data_hora
+  * resolvido
+}
+entity "PRODUTO (ref.)" as PRD {
+  * id_produto <<PK>>
+}
+entity "LINHA_RECECAO (ref.)" as LR {
+  * id_linha <<PK>>
+}
+entity "LOCAL (ref.)" as LOC {
+  * id_local <<PK>>
+}
+entity "UTILIZADOR (ref.)" as UTZ {
+  * id_utilizador <<PK>>
+}
+PRD ||--o{ LOT
+LR ||--o{ LOT
+LOC |o--o{ LOT
+LOT ||--o{ MOV
+UTZ ||--o{ MOV
+LOC |o--o{ MOV
+LOT ||--o{ DES
+UTZ ||--o{ DES
+LOT |o--o{ AL
+PRD |o--o{ AL
+@enduml

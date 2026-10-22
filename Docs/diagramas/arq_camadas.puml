@@ -1,0 +1,29 @@
+@startuml
+!include _estilo.iuml
+package "Camada de Apresentação (UI)" {
+  [Ecrãs Jetpack Compose] as SCR
+  [ViewModels (StateFlow)] as VM
+  [Navegação (Navigation Compose)] as NAV
+}
+package "Camada de Domínio" {
+  [Casos de uso\n(ex.: RegistarRececaoUseCase,\nSugerirLocalUseCase)] as UC
+  [Modelos de domínio\n(Lote, Produto, Agregado...)] as MD
+  [Regras de negócio\n(FEFO, conversão de unidades)] as RN
+}
+package "Camada de Dados" {
+  [Repositórios] as REP
+  [Fontes remotas\n(Firestore, Functions, Storage)] as DS
+  [Mapeadores DTO <-> domínio] as MAP
+}
+[Injeção de dependências (Hilt)] as DI
+SCR --> VM
+NAV --> SCR
+VM --> UC
+UC --> MD
+UC --> RN
+UC --> REP
+REP --> DS
+REP --> MAP
+DI ..> VM
+DI ..> REP
+@enduml

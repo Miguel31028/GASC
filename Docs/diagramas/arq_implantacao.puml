@@ -1,0 +1,25 @@
+@startuml
+!include _estilo.iuml
+node "Smartphone Android\n(colaborador)" as N1 {
+  artifact "gasc-gestao.apk" as A1
+}
+node "Smartphone Android\n(utente)" as N2 {
+  artifact "gasc-utente.apk" as A2
+}
+node "Ecrã de parede\n(PC / Smart TV com browser)" as N3 {
+  artifact "painel-agenda (SPA)" as A3
+}
+node "PC fixo (futuro)\nposto biométrico" as N4 {
+  artifact "app-biometria" as A4
+}
+node "Google Cloud / Firebase\n(região europe-west)" as N5 {
+  database "Firestore" as D1
+  artifact "Cloud Functions" as F1
+  storage "Cloud Storage" as S1
+  artifact "Hosting" as H1
+}
+N1 -- N5 : HTTPS / gRPC (TLS)
+N2 -- N5 : HTTPS (TLS)
+N3 -- N5 : HTTPS (TLS)
+N4 .. N5 : HTTPS (TLS)
+@enduml

@@ -1,0 +1,52 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam linetype ortho
+entity "AGENDAMENTO" as AGD {
+  * id_agendamento <<PK>>
+  --
+  * id_agregado <<FK>>
+  * data_hora
+  * tipo
+  * estado
+}
+entity "ENTREGA" as EN {
+  * id_entrega <<PK>>
+  --
+  * id_agregado <<FK>>
+  id_agendamento <<FK, UQ>>
+  * id_pessoa_levantou <<FK>>
+  * id_utilizador <<FK>>
+  * data_hora
+  * tipo
+  * identificacao_manual
+  observacoes
+}
+entity "LINHA_SAIDA" as LS {
+  * id_linha <<PK>>
+  --
+  id_entrega <<FK>>
+  id_saida_cozinha <<FK>>
+  * id_lote <<FK>>
+  * quantidade
+}
+entity "AGREGADO (ref.)" as AG {
+  * id_agregado <<PK>>
+}
+entity "PESSOA (ref.)" as PE {
+  * id_pessoa <<PK>>
+}
+entity "LOTE (ref.)" as LOT {
+  * id_lote <<PK>>
+}
+entity "UTILIZADOR (ref.)" as UTZ {
+  * id_utilizador <<PK>>
+}
+AG ||--o{ AGD
+AGD |o--o| EN
+AG ||--o{ EN
+PE ||--o{ EN
+UTZ ||--o{ EN
+EN |o--o{ LS
+LOT ||--o{ LS
+@enduml

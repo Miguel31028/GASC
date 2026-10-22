@@ -1,0 +1,29 @@
+@startuml
+!include _estilo.iuml
+|Operador de armazém|
+start
+:Pesquisar produto no catálogo\n(nome, marca ou formato);
+if (Produto existe?) then (não)
+  :Criar produto (nome, marca,\ncategoria, formato, unidade);
+else (sim)
+endif
+:Escolher apresentação\n(UN, caixa, palete, saco...);
+:Indicar quantidade\n(ex.: 1 palete = 30 UN de 35 cl;\n1 saco = 50 kg);
+if (Produto tem validade?) then (sim)
+  :Indicar data de validade;
+else (não)
+endif
+:Avaliar higiene, rotulagem/validade,\ncaracterísticas organoléticas e embalagem\n(Conforme / Não conforme);
+:Registar temperatura\n(refrigerados / congelados);
+if (Tudo conforme?) then (sim)
+  :Linha aceite;
+else (não)
+  :Registar motivo da não conformidade;
+  if (Produto aproveitável?) then (sim)
+    :Linha aceite com observação;
+  else (não)
+    :Linha rejeitada;
+  endif
+endif
+stop
+@enduml

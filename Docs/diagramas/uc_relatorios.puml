@@ -1,0 +1,27 @@
+@startuml
+!include _estilo.iuml
+left to right direction
+actor "Responsável\nda instituição" as RESP
+actor "Operador de\narmazém" as OP
+actor "Tempo" as TMP
+rectangle "P6 Relatórios e Alertas" {
+  usecase "UC10 Emitir RGDHSA049\n(intervalo de datas)" as RL1
+  usecase "Consultar histórico de\nreceções e entregas" as RL2
+  usecase "Consultar desperdício" as RL3
+  usecase "Consultar painel\nde indicadores" as RL4
+  usecase "Exportar listagens\n(PDF / CSV)" as RL5
+  usecase "UC11 Verificar validades\ne stock mínimo" as AL1
+  usecase "Notificar utilizadores" as AL2
+  usecase "Consultar alertas" as AL3
+}
+RESP -- RL1
+RESP -- RL2
+RESP -- RL3
+RESP -- RL4
+OP -- AL3
+RESP -- AL3
+TMP -- AL1
+AL1 ..> AL2 : <<include>>
+RL5 ..> RL2 : <<extend>>
+RL5 ..> RL3 : <<extend>>
+@enduml

@@ -1,0 +1,13 @@
+@startuml
+!include _estilo.iuml
+hide empty description
+[*] --> AGENDADO : criar / gerar pela periodicidade
+AGENDADO --> AGENDADO : reagendar
+AGENDADO --> ENTREGUE : entrega confirmada
+AGENDADO --> CANCELADO : cancelar
+AGENDADO --> FALTOU : fim do dia sem entrega
+FALTOU --> AGENDADO : reagendar
+ENTREGUE --> [*]
+CANCELADO --> [*]
+FALTOU --> [*]
+@enduml

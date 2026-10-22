@@ -1,0 +1,66 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam linetype ortho
+entity "AGREGADO" as AG {
+  * id_agregado <<PK>>
+  --
+  * codigo <<UQ>>
+  * morada
+  codigo_postal
+  localidade
+  telefone
+  situacao
+  * beneficia_cabaz
+  * beneficia_refeicoes
+  periodicidade
+  * estado
+  * data_inscricao
+  id_tecnico <<FK>>
+  observacoes
+}
+entity "PESSOA" as PE {
+  * id_pessoa <<PK>>
+  --
+  * id_agregado <<FK>>
+  * nome
+  data_nascimento
+  nif
+  niss
+  parentesco
+  * titular
+  * autorizada_levantar
+  restricoes_alimentares
+  alergias
+}
+entity "CREDENCIAL_QR" as QR {
+  * token <<PK>>
+  --
+  * id_pessoa <<FK>>
+  * suporte
+  * emitida_em
+  * ativa
+}
+entity "CONTA_UTENTE" as CU {
+  * uid <<PK>>
+  --
+  * id_pessoa <<FK, UQ>>
+  * telefone
+}
+entity "CONSENTIMENTO" as CO {
+  * id_consentimento <<PK>>
+  --
+  * id_agregado <<FK>>
+  * data_hora
+  * finalidades
+  url_documento
+}
+entity "UTILIZADOR (ref.)" as UTZ {
+  * id_utilizador <<PK>>
+}
+AG ||--|{ PE
+PE ||--o{ QR
+PE ||--o| CU
+AG ||--|{ CO
+UTZ |o--o{ AG
+@enduml

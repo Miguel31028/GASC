@@ -1,0 +1,27 @@
+@startuml
+!include _estilo.iuml
+autonumber
+participant "Cloud Scheduler\n(diário, 07:00)" as SC
+participant "Cloud Function\nverificarValidades" as CF
+database "Cloud Firestore" as FS
+participant "Firebase Cloud\nMessaging" as FCM
+actor "Operador /\nResponsável" as US
+
+SC -> CF : disparar
+activate CF
+CF -> FS : query lotes where quantidadeAtual > 0\nand validade <= hoje + N
+FS --> CF : lotes
+loop cada lote
+  alt validade < hoje
+    CF -> FS : lote.estado = EXPIRADO
+    CF -> FS : criar alerta EXPIRADO
+  else validade <= hoje + N
+    CF -> FS : criar alerta VALIDADE_PROXIMA
+  end
+end
+CF -> FS : agregar stock por produto
+CF -> FS : criar alertas STOCK_MINIMO
+CF -> FCM : enviar notificação (tópico do perfil)
+deactivate CF
+FCM --> US : notificação push
+@enduml

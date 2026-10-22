@@ -1,0 +1,46 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam classAttributeIconSize 0
+class Lote {
+  id : String
+  validade : Date
+  validadeOriginal : Date
+  quantidadeInicial : Double
+  quantidadeAtual : Double
+  volumes : Int
+  estado : EstadoLote
+  congeladoNaOrigem : Boolean
+  congeladoInterno : Boolean
+  +abater(qtd : Double)
+  +congelar(novaValidade : Date)
+  +diasParaExpirar() : Int
+}
+class Movimento {
+  id : String
+  tipo : TipoMovimento
+  quantidade : Double
+  dataHora : Timestamp
+  referencia : String
+}
+class Desperdicio {
+  quantidade : Double
+  motivo : MotivoDesperdicio
+  data : Date
+}
+class Alerta {
+  tipo : TipoAlerta
+  dataHora : Timestamp
+  resolvido : Boolean
+}
+class Produto
+class Local
+class Utilizador
+Produto "1" -- "0..*" Lote
+Lote "0..*" -- "0..1" Local : guardado em >
+Lote "1" -- "0..*" Movimento
+Lote "1" -- "0..*" Desperdicio
+Lote "0..1" -- "0..*" Alerta
+Movimento "0..*" -- "1" Utilizador : registado por >
+Desperdicio "0..*" -- "1" Utilizador : registado por >
+@enduml

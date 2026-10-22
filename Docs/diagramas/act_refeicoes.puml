@@ -1,0 +1,39 @@
+@startuml
+!include _estilo.iuml
+|Técnico / Cozinha / Utente|
+start
+:Registar pedido para o dia seguinte\n(agregado, tipo, n.º de refeições);
+note right: Normalmente feito no momento\nem que se levanta a refeição do dia
+|Sistema|
+:Validar agregado ativo e\nserviço aberto nesse dia;
+:Atualizar total previsto do serviço;
+|Cozinha|
+:Consultar n.º de refeições a confecionar;
+:Selecionar produtos (sugestão FEFO);
+|Sistema|
+:Abater stock (SAÍDA_COZINHA);
+|Cozinha|
+:Confecionar;
+:Abrir distribuição;
+repeat
+  :Identificar pessoa (QR / pesquisa);
+  |Sistema|
+  if (Autorizada e com pedido\npara hoje?) then (sim)
+    :Registar levantamento\n(n.º de refeições entregues);
+    |Cozinha|
+    :Perguntar pedido para amanhã;
+    if (Quer refeição amanhã?) then (sim)
+      :Registar pedido;
+    endif
+  else (não)
+    |Cozinha|
+    :Recusar ou registar exceção\n(com justificação);
+  endif
+  |Cozinha|
+repeat while (Mais pessoas?) is (sim)
+->não;
+|Sistema|
+:Fechar serviço;
+:Marcar pedidos não levantados;
+stop
+@enduml

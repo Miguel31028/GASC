@@ -1,0 +1,41 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam classAttributeIconSize 0
+class Categoria {
+  id : String
+  nome : String
+  tipoBem : TipoBem
+  condicao : CondicaoArmazenamento
+  congelavel : Boolean
+  diasAviso : Int
+}
+class RegraCongelacao {
+  diasExtensao : Int
+  observacoes : String
+  +proporValidade(data : Date) : Date
+}
+class Produto {
+  id : String
+  nome : String
+  marca : String
+  formato : String
+  unidadeStock : UnidadeStock
+  conteudoPorUnidade : Double
+  temValidade : Boolean
+  tipoDataValidade : TipoDataValidade
+  stockMinimo : Double
+  tamanho : String
+  genero : String
+  ativo : Boolean
+  +stockAtual() : Double
+  +converter(qtd : Double, a : Apresentacao) : Double
+}
+class Apresentacao {
+  nome : String
+  fator : Double
+}
+Categoria "1" -- "0..1" RegraCongelacao
+Categoria "1" -- "0..*" Produto
+Produto "1" *-- "0..*" Apresentacao
+@enduml

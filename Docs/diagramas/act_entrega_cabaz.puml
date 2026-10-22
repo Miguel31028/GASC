@@ -1,0 +1,35 @@
+@startuml
+!include _estilo.iuml
+|Responsável / Técnico|
+start
+:Definir periodicidade do agregado;
+|Sistema|
+:Gerar / propor agendamentos;
+|Responsável / Técnico|
+:Confirmar agendamento (data, hora);
+|Operador de armazém|
+:Abrir entregas do dia;
+:Identificar pessoa\n(ler QR em papel ou na app);
+|Sistema|
+if (Pessoa autorizada a levantar\npelo agregado?) then (não)
+  :Recusar e informar motivo;
+  stop
+else (sim)
+endif
+:Mostrar agregado, restrições\ne alergias;
+:Sugerir lotes por ordem FEFO\n(não congelados primeiro);
+|Operador de armazém|
+repeat
+  :Adicionar produto / lote ao cabaz;
+  :Indicar quantidade (UN ou kg);
+repeat while (Mais produtos?) is (sim)
+->não;
+:Confirmar entrega;
+|Sistema|
+:Abater stock (transação);
+:Registar movimentos SAÍDA_CABAZ;
+:Registar entrega (quem levantou,\nquem entregou, data/hora);
+:Marcar agendamento como ENTREGUE;
+:Calcular próximo agendamento;
+stop
+@enduml

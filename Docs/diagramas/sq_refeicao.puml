@@ -1,0 +1,34 @@
+@startuml
+!include _estilo.iuml
+autonumber
+actor "Cozinha" as CZ
+actor "Pessoa que\nlevanta" as PL
+participant "App Android\n(UI Refeições)" as UI
+participant "RefeicaoViewModel" as VM
+database "Cloud Firestore" as FS
+
+CZ -> UI : Abrir distribuição (almoço de hoje)
+UI -> VM : carregarServico(hoje, ALMOCO)
+VM -> FS : ler servicosRefeicao/{data_tipo}\ne pedidos do dia
+FS --> VM : serviço + pedidos
+PL -> CZ : Apresenta QR
+CZ -> UI : Ler QR
+UI -> VM : identificar(token)
+VM -> FS : obter pessoa / agregado
+alt existe pedido PEDIDO para hoje e pessoa autorizada
+  VM --> UI : mostrar n.º de refeições do pedido
+  CZ -> UI : Confirmar levantamento
+  VM -> FS : transação: criar levantamento,\npedido = LEVANTADO
+  UI --> CZ : Perguntar pedido para amanhã
+  opt quer refeição amanhã
+    CZ -> UI : n.º de refeições para amanhã
+    VM -> FS : criar pedidosRefeicao (amanhã)\n+ atualizar totalPrevisto
+  end
+else sem pedido / não autorizada
+  VM --> UI : aviso
+  opt exceção autorizada
+    CZ -> UI : registar exceção com justificação
+    VM -> FS : criar levantamento (exceção)
+  end
+end
+@enduml

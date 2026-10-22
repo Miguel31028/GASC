@@ -1,0 +1,29 @@
+@startuml
+!include _estilo.iuml
+left to right direction
+actor "Técnico de\nação social" as TEC
+actor "Cozinha" as COZ
+actor "Responsável\nda instituição" as RESP
+actor "Utente" as UT
+rectangle "P4 Refeições" {
+  usecase "UC07 Registar pedido de refeição\n(dia, tipo, n.º de refeições)" as M1
+  usecase "Registar pedido recorrente\n(por dia da semana)" as M2
+  usecase "Cancelar pedido" as M3
+  usecase "Abrir serviço de jantar\n(dias excecionais)" as M4
+  usecase "Consultar refeições a\nconfecionar no dia" as M5
+  
+  
+  usecase "UC09 Registar levantamento\nde refeição" as M8
+  usecase "Identificar quem levanta\n(QR / pesquisa)" as M9
+}
+TEC -- M1
+COZ -- M1
+UT -- M1
+UT -- M3
+TEC -- M3
+RESP -- M4
+COZ -- M5
+COZ -- M8
+M2 ..> M1 : <<extend>>
+M8 ..> M9 : <<include>>
+@enduml

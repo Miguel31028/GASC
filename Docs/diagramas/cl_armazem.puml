@@ -1,0 +1,36 @@
+@startuml
+!include _estilo.iuml
+hide circle
+skinparam classAttributeIconSize 0
+abstract class Local {
+  id : String
+  codigo : String
+  cheio : Boolean
+  ativo : Boolean
+  {abstract} +chaveOrdenacao() : String
+}
+class Celula {
+  coluna : Int
+  linha : Int
+  andar : Int
+  +chaveOrdenacao() : String
+}
+class EquipamentoFrio {
+  id : String
+  codigo : String
+  nome : String
+  tipo : TipoEquipamento
+}
+class ZonaFrio {
+  lado : Char {D, C, E}
+  nivel : Int
+  +chaveOrdenacao() : String
+}
+class Categoria
+class Lote
+Local <|-- Celula
+Local <|-- ZonaFrio
+EquipamentoFrio "1" *-- "1..9" ZonaFrio
+EquipamentoFrio "0..*" -- "0..*" Categoria : uso preferencial >
+Lote "0..*" -- "0..1" Local : guardado em >
+@enduml

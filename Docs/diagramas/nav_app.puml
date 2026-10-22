@@ -1,0 +1,42 @@
+@startuml
+!include _estilo.iuml
+hide empty description
+state "Login" as L
+state "Início\n(painel por perfil)" as H
+state "Receção" as R {
+  state "Nova receção" as R1
+  state "Linhas de produto" as R2
+  state "Resumo / confirmar" as R3
+  R1 --> R2
+  R2 --> R3
+}
+state "Arrumação" as A
+state "Stock" as S {
+  state "Pesquisa de produtos" as S1
+  state "Detalhe do lote" as S2
+  S1 --> S2
+}
+state "Alertas" as AL
+state "Utentes" as U {
+  state "Lista de agregados" as U1
+  state "Ficha do agregado" as U2
+  U1 --> U2
+}
+state "Entregas do dia" as E
+state "Refeições" as M
+state "Relatórios" as RL
+state "Administração" as AD
+[*] --> L
+L --> H
+H --> R
+H --> A
+H --> S
+H --> AL
+H --> U
+H --> E
+H --> M
+H --> RL
+H --> AD
+R3 --> A : lotes pendentes
+AL --> S2
+@enduml
