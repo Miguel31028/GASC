@@ -10,7 +10,7 @@ rectangle "P6 Relatórios e Alertas" {
   usecase "Consultar desperdício" as RL3
   usecase "Consultar painel\nde indicadores" as RL4
   usecase "Exportar listagens\n(PDF / CSV)" as RL5
-  usecase "UC11 Verificar validades\ne stock mínimo" as AL1
+  usecase "UC11 Verificar validades,\nstock mínimo e fecho do dia" as AL1
   usecase "Notificar utilizadores" as AL2
   usecase "Consultar alertas" as AL3
 }

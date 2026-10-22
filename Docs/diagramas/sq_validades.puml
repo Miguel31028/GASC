@@ -1,27 +1,35 @@
 @startuml
 !include _estilo.iuml
 autonumber
-participant "Cloud Scheduler\n(diário, 07:00)" as SC
-participant "Cloud Function\nverificarValidades" as CF
+participant "Cloud Scheduler" as SC
+participant "Cloud Function\nverificarValidades" as CV
+participant "Cloud Function\nfecharDia" as CD
 database "Cloud Firestore" as FS
 participant "Firebase Cloud\nMessaging" as FCM
 actor "Operador /\nResponsável" as US
 
-SC -> CF : disparar
-activate CF
-CF -> FS : query lotes where quantidadeAtual > 0\nand validade <= hoje + N
-FS --> CF : lotes
+== Diariamente às 07:00 ==
+SC -> CV : disparar
+activate CV
+CV -> FS : query lotes where estado in\n[PENDENTE_ARRUMACAO, DISPONIVEL, CONGELADO]\nand validade <= hoje + max(diasAviso)
+FS --> CV : lotes
 loop cada lote
   alt validade < hoje
-    CF -> FS : lote.estado = EXPIRADO
-    CF -> FS : criar alerta EXPIRADO
-  else validade <= hoje + N
-    CF -> FS : criar alerta VALIDADE_PROXIMA
+    CV -> FS : lote.estado = EXPIRADO
+    CV -> FS : alerta EXPIRADO (id: tipo+lote+data)
+  else validade <= hoje + diasAviso(categoria)
+    CV -> FS : alerta VALIDADE_PROXIMA (id: tipo+lote+data)
   end
 end
-CF -> FS : agregar stock por produto
-CF -> FS : criar alertas STOCK_MINIMO
-CF -> FCM : enviar notificação (tópico do perfil)
-deactivate CF
+CV -> FS : comparar produtos.stockAtual com stockMinimo
+CV -> FS : alertas STOCK_MINIMO (id: tipo+produto+data)
+CV -> FCM : notificação por tópico do perfil
+deactivate CV
 FCM --> US : notificação push
+== Diariamente à hora de fecho (parâmetro) ==
+SC -> CD : disparar
+activate CD
+CD -> FS : agendamentos de hoje AGENDADO → FALTOU
+CD -> FS : serviços de hoje ainda abertos → fechar;\npedidos PEDIDO → NAO_LEVANTADO
+deactivate CD
 @enduml

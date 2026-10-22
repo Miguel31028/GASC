@@ -14,6 +14,7 @@ entity "AGREGADO" as AG {
   * beneficia_cabaz
   * beneficia_refeicoes
   periodicidade
+  periodicidade_dias
   * estado
   * data_inscricao
   id_tecnico <<FK>>

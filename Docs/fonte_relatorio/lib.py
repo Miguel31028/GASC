@@ -65,6 +65,11 @@ class Report:
         sect_paras = [p for p in self.body.iterchildren(_q('w:p'))
                       if p.find(_q('w:pPr')) is not None and p.find(_q('w:pPr')).find(_q('w:sectPr')) is not None]
         self.sect = [copy.deepcopy(p.find(_q('w:pPr')).find(_q('w:sectPr'))) for p in sect_paras]
+        # o modelo reinicia os anexos em numeração romana (XIX...), que repete a das páginas
+        # preliminares; continua-se a numeração árabe do corpo do documento
+        for sp in (self.sect[11], self.body.find(_q('w:sectPr'))):
+            for el in sp.findall(_q('w:pgNumType')):
+                sp.remove(el)
         self.front_end = sect_paras[5]  # fim das páginas preliminares
 
     def strip_template_body(self):
@@ -232,9 +237,13 @@ class Report:
     def h3(self, t):
         return self.heading(t, 3)
 
-    def unnumbered_title(self, text):
+    def unnumbered_title(self, text, toc=False):
         p = self.doc.add_paragraph(style='Titulo Não Numerado')
         p.add_run(text)
+        if toc:
+            bm = f'_Toc9{len(self.headings):05d}'
+            self._bookmark(p, bm)
+            self.headings.append((1, '', text, bm))
         return p
 
     def page_break(self):
@@ -263,6 +272,12 @@ class Report:
 
     def next_tab(self):
         return len(self.tabs) + 1
+
+    def tab_no(self, prefix):
+        return next(n for n, t, _ in self.tabs if t.startswith(prefix))
+
+    def fig_no(self, prefix):
+        return next(n for n, t, _ in self.figs if t.startswith(prefix))
 
     def figure(self, path, caption, max_w=MAX_IMG_W_CM, max_h=MAX_IMG_H_CM):
         from PIL import Image
@@ -363,7 +378,7 @@ class Report:
         content.append(first)
         left = {1: 0, 2: 220, 3: 440}
         numtab = {1: 600, 2: 1100, 3: 1700}
-        entries = [(lvl, bm, [('t', num), ('tab', None), ('t', title)])
+        entries = [(lvl, bm, [('t', num), ('tab', None), ('t', title)] if num else [('t', title)])
                    for lvl, num, title, bm in self.headings if lvl <= 3]
         for p in self._index_paragraphs(
                 entries, 'TOC \\o "1-3" \\h \\z \\u', lambda l: f'ndice{l}',

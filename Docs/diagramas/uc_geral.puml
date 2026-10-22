@@ -19,6 +19,9 @@ rectangle "Sistema de Gestão do Espaço Social" {
 OP -- P1
 OP -- P2
 OP -- P3
+OP -- P6
+RESP -- P1
+RESP -- P4
 RESP -- P2
 RESP -- P3
 RESP -- P5
@@ -31,4 +34,6 @@ UT -- P3
 UT -- P4
 ADM -- P5
 TMP -- P6
+TMP -- P3
+TMP -- P4
 @enduml

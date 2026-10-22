@@ -4,9 +4,9 @@
 start
 :Percorrer lotes com stock > 0;
 :Marcar lotes com validade ultrapassada\ncomo EXPIRADO (lista de remoção);
-:Marcar lotes a expirar em N dias\ncomo prioritários;
+:Gerar alertas VALIDADE_PROXIMA\n(antecedência da categoria);
 :Calcular stock por produto e\ncomparar com o stock mínimo;
-:Gerar alertas e notificar\nos perfis responsáveis;
+:Notificar os perfis responsáveis;
 |Operador de armazém|
 :Consultar alertas;
 if (Tipo de alerta?) then (Expirado)

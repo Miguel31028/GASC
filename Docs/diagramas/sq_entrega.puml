@@ -15,13 +15,12 @@ UI -> VM : identificar(token)
 VM -> CF : call identificarPessoa(token)
 CF -> FS : credenciais/{token} → pessoa, agregado
 CF -> FS : registar acesso (auditoria)
-CF --> VM : pessoa, agregado, autorizado
+CF --> VM : pessoa, agregado (código, n.º de pessoas),\nautorizado, restrições, alergias, agendamento do dia
 alt pessoa não autorizada ou agregado inativo
   VM --> UI : erro "Não autorizado"
   UI --> OP : mostrar motivo
 else autorizada
-  VM -> FS : ler restrições, alergias, agendamento
-  VM -> FS : query lotes disponíveis\norderBy(congeladoInterno, validade)
+  VM -> FS : query lotes disponíveis e não expirados\norderBy(congeladoInterno, validade)
   FS --> VM : lotes FEFO
   VM --> UI : sugestão de produtos
   loop produtos do cabaz
@@ -31,9 +30,8 @@ else autorizada
   UI -> VM : confirmar()
   VM -> CF : call registarEntrega(dto)
   activate CF
-  CF -> FS : runTransaction: verificar stock,\nabater lotes, criar movimentos SAIDA_CABAZ,\ncriar entrega, agendamento = ENTREGUE
+  CF -> FS : runTransaction: verificar stock e validade,\nabater lotes, criar movimentos SAIDA_CABAZ,\ncriar entrega, agendamento = ENTREGUE,\ncriar próximo agendamento (id determinístico)
   FS --> CF : commit OK
-  CF -> FS : criar próximo agendamento\n(periodicidade)
   CF --> VM : entregaId
   deactivate CF
   VM --> UI : sucesso

@@ -7,34 +7,42 @@ class Doador {
   tipo : TipoDoador
   nome : String
   nif : String
+  morada : String
   contacto : String
 }
 class Rececao {
   id : String
   dataHora : Timestamp
+  tipoOrigem : TipoDoador
   anonimo : Boolean
   nGuia : String
   urlGuia : String
   temperatura : Double
+  observacoes : String
 }
 class LinhaRececao {
   quantidade : Double
   validade : Date
+  loteFornecedor : String
   higieneConforme : Boolean
   rotulagemConforme : Boolean
   organoleticasConforme : Boolean
   embalagemConforme : Boolean
+  temperatura : Double
   aceite : Boolean
   observacoes : String
 }
 class Produto
-class Lote
-class Utilizador
 class Apresentacao
+class Lote
+class Desperdicio
+class Utilizador
 Doador "0..1" -- "0..*" Rececao
 Rececao "1" *-- "1..*" LinhaRececao
 LinhaRececao "0..*" -- "1" Produto
 LinhaRececao "0..*" -- "0..1" Apresentacao
-LinhaRececao "1" -- "0..*" Lote : origina >
+LinhaRececao "1..*" -- "0..1" Lote : agrupada em >
+LinhaRececao "0..1" -- "0..1" Desperdicio : rejeição >
 Rececao "0..*" -- "1" Utilizador : responsável >
+note bottom of LinhaRececao : Linhas aceites da mesma receção com o mesmo\nproduto e validade formam um lote (RN-01).\nLinhas rejeitadas não originam lote.
 @enduml

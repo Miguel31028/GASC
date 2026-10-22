@@ -26,8 +26,9 @@ def build(tpl, D, M, out, pages=None):
     r = Report(tpl, pages)
     fig_anchor, tab_anchor = front(r)
     r.strip_template_body()
-    cap1(r, D); cap2(r, D); cap3(r, D); cap4(r, D); cap5(r, D); cap6(r, D)
+    cap1(r, D); cap2(r, D); cap3(r, D); cap4(r, D); cap5(r, D)
     cap_mockups(r, D, M)
+    cap6(r, D)
     cap7(r, D); cap8(r, D); cap9(r, D)
     r.end_chapters()
     bibliografia(r)
@@ -46,28 +47,38 @@ def norm(s):
 
 
 def compute_pages(pdf, r):
+    """Determina a página impressa (rodapé) de cada título, figura e tabela."""
     n = int(re.search(r'Pages:\s+(\d+)', subprocess.run(['pdfinfo', pdf], capture_output=True, text=True).stdout).group(1))
-    texts = []
+    texts, folio = [], []
     for i in range(1, n + 1):
         t = subprocess.run(['pdftotext', '-f', str(i), '-l', str(i), '-layout', pdf, '-'], capture_output=True, text=True).stdout
-        texts.append([norm(l) for l in t.split('\n') if l.strip()])
+        lines = [norm(l) for l in t.split('\n') if l.strip()]
+        texts.append(lines)
+        folio.append(lines[-1] if lines and re.fullmatch(r'\d+', lines[-1]) else None)
     first = r.headings[0]
     start = next(i for i, lines in enumerate(texts) if f'{first[1]} {first[2]}' in lines)
     pages = {}
 
     def find(pred, from_idx):
         for i in range(from_idx, n):
-            for l in texts[i]:
-                if pred(l):
-                    return i
+            if any(pred(l) for l in texts[i]):
+                return i
         return None
+
+    def page_of(i):
+        if folio[i]:
+            return int(folio[i])
+        j = i  # página sem número (primeira de secção): usa a seguinte com número
+        while j < n and not folio[j]:
+            j += 1
+        return int(folio[j]) - (j - i) if j < n else i - start + 1
 
     cur = start
     for lvl, num, title, bm in r.headings:
-        target = norm(f'{num} {title}')
+        target = norm(f'{num} {title}' if num else title)
         i = find(lambda l: l == target or (l.startswith(target[:60]) and '....' not in l and not re.search(r'\d+$', l[len(target):])), cur)
         if i is not None:
-            pages[bm] = i - start + 1
+            pages[bm] = page_of(i)
             cur = i
     for kind, items in (('Figura', r.figs), ('Tabela', r.tabs)):
         cur = start
@@ -75,7 +86,7 @@ def compute_pages(pdf, r):
             pref = norm(f'{kind} {num}: {text}')[:50]
             i = find(lambda l: l.startswith(pref) and '....' not in l, cur)
             if i is not None:
-                pages[bm] = i - start + 1
+                pages[bm] = page_of(i)
                 cur = i
     missing = [bm for *_, bm in r.headings if bm not in pages] + [bm for *_, bm in r.figs + r.tabs if bm not in pages]
     return pages, missing

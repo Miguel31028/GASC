@@ -6,8 +6,8 @@ entity "LOTE" as LOT {
   * id_lote <<PK>>
   --
   * id_produto <<FK>>
-  * id_linha <<FK>>
   id_local <<FK>>
+  id_lote_origem <<FK>>
   validade
   validade_original
   * qtd_inicial
@@ -29,11 +29,14 @@ entity "MOVIMENTO" as MOV {
   id_local_origem <<FK>>
   id_local_destino <<FK>>
   referencia
+  justificacao
 }
 entity "DESPERDICIO" as DES {
   * id_desperdicio <<PK>>
   --
-  * id_lote <<FK>>
+  id_lote <<FK>>
+  id_linha_rececao <<FK>>
+  * id_produto <<FK>>
   * id_utilizador <<FK>>
   * quantidade
   * motivo
@@ -61,12 +64,15 @@ entity "UTILIZADOR (ref.)" as UTZ {
   * id_utilizador <<PK>>
 }
 PRD ||--o{ LOT
-LR ||--o{ LOT
+LOT |o--|{ LR
+LOT |o--o{ LOT
+LR |o--o| DES
 LOC |o--o{ LOT
 LOT ||--o{ MOV
 UTZ ||--o{ MOV
 LOC |o--o{ MOV
-LOT ||--o{ DES
+LOT |o--o{ DES
+PRD ||--o{ DES
 UTZ ||--o{ DES
 LOT |o--o{ AL
 PRD |o--o{ AL

@@ -8,6 +8,7 @@ RF = {
         ('RF-UTZ-03', 'Apresentar menus e ações de acordo com os perfis do utilizador autenticado.', M, MVP),
         ('RF-UTZ-04', 'Permitir a recuperação da palavra-passe por email.', S, MVP),
         ('RF-UTZ-05', 'Registar o autor e a data/hora de todas as operações que alteram dados (auditoria).', M, MVP),
+        ('RF-UTZ-06', 'Permitir ao Administrador definir os parâmetros gerais: hora limite para pedidos de refeição, dias de distribuição de cabazes e hora de fecho automático dos serviços.', M, MVP),
     ],
     'Catálogo e categorias (CAT)': [
         ('RF-CAT-01', 'Gerir categorias de bens (nome, tipo de bem, condição de armazenamento, indicação de congelável, dias de aviso de validade).', M, MVP),
@@ -17,12 +18,12 @@ RF = {
         ('RF-CAT-05', 'Definir um stock mínimo por produto.', S, MVP),
         ('RF-CAT-06', 'Registar bens não alimentares (vestuário, higiene, limpeza) com atributos simples: tamanho, género e validade opcional.', M, MVP),
         ('RF-CAT-07', 'Pesquisar produtos por nome, marca ou categoria e sugerir produtos semelhantes para evitar duplicados.', S, MVP),
-        ('RF-CAT-08', 'Associar códigos de barras (EAN) aos produtos e pesquisá-los por leitura com a câmara.', C, FUT),
+        ('RF-CAT-08', 'Associar códigos de barras de artigo (EAN, *European Article Number*) aos produtos e pesquisá-los por leitura com a câmara.', C, FUT),
     ],
     'Doadores e receção (REC)': [
         ('RF-REC-01', 'Gerir doadores dos tipos particular, empresa, organização e campanha (nome, NIF, morada, contacto).', M, MVP),
         ('RF-REC-02', 'Registar uma receção indicando a origem; uma doação de particular pode ser registada como anónima.', M, MVP),
-        ('RF-REC-03', 'Exigir, numa receção de empresa, o número do documento de transporte e permitir anexar a fotografia ou digitalização da guia.', M, MVP),
+        ('RF-REC-03', 'Exigir, numa receção de empresa, o número da guia de transporte e permitir fotografar a guia ou anexar o ficheiro digitalizado (PDF ou imagem).', M, MVP),
         ('RF-REC-04', 'Registar as linhas da receção: produto, apresentação, quantidade, validade e lote do fornecedor.', M, MVP),
         ('RF-REC-05', 'Registar por linha o controlo de receção do RGDHSA049: higiene, rotulagem/validade, características organoléticas e embalagem (C/NC), temperatura e observações.', M, MVP),
         ('RF-REC-06', 'Converter automaticamente as quantidades recebidas para a unidade de stock do produto.', M, MVP),
@@ -45,7 +46,7 @@ RF = {
         ('RF-ARM-09', 'Representar o mapa do armazém e calcular a proximidade física real entre locais.', W, FUT),
     ],
     'Stock e validades (STK)': [
-        ('RF-STK-01', 'Consultar o stock por produto, categoria e local, na unidade de stock e em volumes (ex.: 1 UN batatas, 40 kg).', M, MVP),
+        ('RF-STK-01', 'Consultar o stock por produto, categoria e local, na unidade de stock e em volumes (ex.: batatas: 1 UN com 40 kg).', M, MVP),
         ('RF-STK-02', 'Ordenar os lotes pela regra FEFO, dando prioridade aos não congelados internamente.', M, MVP),
         ('RF-STK-03', 'Congelar um lote (total ou parcialmente) de uma categoria congelável, propondo a nova validade pela tabela, permitindo alterá-la e guardando a validade original.', M, MVP),
         ('RF-STK-04', 'Apresentar diariamente a lista de lotes expirados a remover do armazém.', M, MVP),
@@ -56,7 +57,7 @@ RF = {
     ],
     'Utentes e agregados (UTE)': [
         ('RF-UTE-01', 'Registar agregados familiares: morada, contactos, situação, técnico responsável e estado.', M, MVP),
-        ('RF-UTE-02', 'Registar os membros do agregado com dados pessoais (nome, data de nascimento, NIF, NISS, parentesco), restrições alimentares e alergias.', M, MVP),
+        ('RF-UTE-02', 'Registar os membros do agregado com dados pessoais (nome, data de nascimento, parentesco e, quando exigidos pelos programas de apoio, o número de identificação fiscal (NIF) e o número de identificação da segurança social (NISS)), restrições alimentares e alergias.', M, MVP),
         ('RF-UTE-03', 'Indicar os membros autorizados a levantar cabazes e refeições em nome do agregado.', M, MVP),
         ('RF-UTE-04', 'Indicar se o agregado beneficia de cabazes, de refeições ou de ambos.', M, MVP),
         ('RF-UTE-05', 'Permitir ao Responsável definir a periodicidade do cabaz de cada agregado.', M, MVP),
@@ -96,15 +97,15 @@ RF = {
         ('RF-REL-01', 'Emitir o registo RGDHSA049 em PDF para qualquer intervalo de datas, sempre que solicitado.', M, MVP),
         ('RF-REL-02', 'Gerar alertas de validade próxima (antecedência configurável por categoria).', M, MVP),
         ('RF-REL-03', 'Gerar alertas de stock abaixo do mínimo.', M, MVP),
-        ('RF-REL-04', 'Enviar notificações push aos perfis responsáveis.', S, MVP),
+        ('RF-REL-04', 'Enviar notificações *push* aos perfis responsáveis.', S, MVP),
         ('RF-REL-05', 'Consultar o histórico de receções e entregas com filtros (período, doador, agregado, produto).', M, MVP),
         ('RF-REL-06', 'Consultar o desperdício por período, produto, categoria e motivo (quantidades).', M, MVP),
         ('RF-REL-07', 'Apresentar um painel de indicadores básico (stock, entradas, saídas, desperdício, refeições).', S, MVP),
-        ('RF-REL-08', 'Exportar listagens em CSV e PDF.', S, MVP),
-        ('RF-REL-09', 'Disponibilizar dashboards avançados na web, com análise temporal e comparativa.', C, FUT),
+        ('RF-REL-08', 'Exportar listagens em formato CSV (valores separados por vírgulas) e PDF.', S, MVP),
+        ('RF-REL-09', 'Disponibilizar painéis analíticos avançados na web, com análise temporal e comparativa.', C, FUT),
     ],
     'App Utente (APU)': [
-        ('RF-APU-01', 'Autenticar o utente pelo número de telemóvel (código por SMS) após ativação da conta pelo técnico.', S, MVP),
+        ('RF-APU-01', 'Autenticar o utente pelo número de telemóvel (código enviado por SMS) após ativação da conta pelo Técnico.', S, MVP),
         ('RF-APU-02', 'Apresentar a credencial QR do utente.', S, MVP),
         ('RF-APU-03', 'Consultar as próximas entregas agendadas do agregado.', S, MVP),
         ('RF-APU-04', 'Registar e cancelar pedidos de refeição do agregado, dentro das regras definidas.', S, MVP),
@@ -113,91 +114,94 @@ RF = {
 }
 
 RNF = [
-    ('RNF-01', 'Usabilidade', 'Interface em português europeu, com elementos de toque de pelo menos 48 dp e as operações mais frequentes (registar linha de receção, entregar cabaz, registar levantamento) acessíveis em três toques ou menos a partir do ecrã inicial.'),
-    ('RNF-02', 'Facilidade de aprendizagem', 'Um colaborador sem formação técnica deve conseguir registar uma receção completa após uma sessão de formação de 30 minutos.'),
-    ('RNF-03', 'Desempenho', 'As consultas de stock e a sugestão de local devem responder em menos de 2 segundos (percentil 90) numa ligação Wi-Fi ou 4G.'),
-    ('RNF-04', 'Disponibilidade', 'O sistema deve estar disponível 24×7, beneficiando da disponibilidade dos serviços Firebase; as tarefas agendadas devem ser reexecutáveis sem efeitos duplicados (idempotência).'),
-    ('RNF-05', 'Conectividade', 'Assume-se Internet disponível em todos os locais. A aplicação deve tolerar falhas curtas, mantendo em cache os dados consultados, mas as operações que alteram stock exigem ligação, para garantir transações atómicas.'),
-    ('RNF-06', 'Segurança', 'Autenticação obrigatória; autorização por perfil, verificada no servidor (*custom claims* e *Security Rules*); comunicação cifrada (TLS); sessões terminadas após inatividade prolongada.'),
-    ('RNF-07', 'Privacidade (RGPD)', 'Minimização dos dados pessoais, consentimento registado, direitos de acesso, retificação e apagamento (com anonimização que preserve as estatísticas), dados alojados numa região da União Europeia e registo dos acessos a dados de utentes.'),
-    ('RNF-08', 'Integridade', 'Todos os movimentos de stock são executados em transações atómicas; o stock de um lote nunca pode ficar negativo.'),
-    ('RNF-09', 'Rastreabilidade', 'Cada lote é rastreável desde a receção (doador, guia, controlo) até à saída (agregado, pessoa, cozinha ou desperdício).'),
-    ('RNF-10', 'Compatibilidade', 'Android 8.0 (API 26) ou superior, em smartphones com ecrã de 5" ou mais; painel web compatível com as versões atuais do Chrome, Edge e Firefox.'),
-    ('RNF-11', 'Manutenibilidade', 'Código em Kotlin numa arquitetura em camadas (MVVM), com testes unitários na camada de domínio (cobertura mínima de 60%) e versionado em Git.'),
-    ('RNF-12', 'Escalabilidade', 'Suportar pelo menos 50 utilizadores, 5 000 lotes ativos e 2 000 agregados sem degradação perceptível.'),
-    ('RNF-13', 'Custo', 'Operar dentro dos limites gratuitos ou de baixo custo do Firebase, com alertas de orçamento configurados.'),
-    ('RNF-14', 'Cópias de segurança', 'Exportação diária automática da base de dados para armazenamento na nuvem, com retenção mínima de 30 dias.'),
-    ('RNF-15', 'Extensibilidade', 'Novos tipos de bens, categorias, equipamentos e células devem ser configuráveis sem alteração de código.'),
-    ('RNF-16', 'Acessibilidade', 'Respeito pelo tamanho de letra do sistema, contraste adequado e textos alternativos nos ícones.'),
-    ('RNF-17', 'Localização', 'Datas no formato dd/mm/aaaa, fuso horário Europe/Lisbon e unidades do Sistema Internacional.'),
+    ('RNF-01', 'Capacidade de interação (operabilidade)', 'Interface em português europeu, com elementos de toque de pelo menos 48 dp (*density-independent pixels*) e as operações mais frequentes (registar linha de receção, entregar cabaz, registar levantamento) acessíveis em três toques ou menos a partir do ecrã inicial.'),
+    ('RNF-02', 'Capacidade de interação (aprendizagem)', 'Um colaborador sem formação técnica deve conseguir registar uma receção completa de 5 linhas em 5 minutos ou menos, após uma sessão de formação de 30 minutos.'),
+    ('RNF-03', 'Eficiência de desempenho', 'As consultas de stock e a sugestão de local devem responder em menos de 2 segundos (percentil 90) numa ligação Wi-Fi ou 4G.'),
+    ('RNF-04', 'Fiabilidade (disponibilidade)', 'Disponibilidade mensal igual ou superior a 99,5%, apoiada nos serviços Firebase; as tarefas agendadas devem ser reexecutáveis sem efeitos duplicados (idempotência).'),
+    ('RNF-05', 'Fiabilidade (tolerância a falhas)', 'Assume-se Internet disponível em todos os locais. A aplicação deve tolerar falhas curtas, mantendo em cache os dados consultados, mas as operações que alteram stock exigem ligação, para garantir transações atómicas.'),
+    ('RNF-06', 'Segurança (autenticidade e confidencialidade)', 'Autenticação obrigatória; autorização por perfil, verificada no servidor (*custom claims* e *Security Rules*); comunicação cifrada com TLS (*Transport Layer Security*); sessões terminadas após 30 minutos de inatividade.'),
+    ('RNF-07', 'Segurança (proteção de dados – RGPD)', 'Cumprimento do Regulamento Geral sobre a Proteção de Dados (RGPD) (Parlamento Europeu e Conselho, 2016): minimização dos dados pessoais, base legal e consentimento registados, direitos de acesso, retificação e apagamento (com anonimização que preserve as estatísticas), dados alojados numa região da União Europeia e registo dos acessos a dados de utentes.'),
+    ('RNF-08', 'Segurança (integridade)', 'Todos os movimentos de stock são executados em transações atómicas; o stock de um lote nunca pode ficar negativo.'),
+    ('RNF-09', 'Segurança (responsabilização)', 'Cada lote é rastreável desde a receção (doador, guia, controlo) até à saída (agregado, pessoa, cozinha ou desperdício), com o autor de cada operação.'),
+    ('RNF-10', 'Flexibilidade (adaptabilidade)', 'Android 8.0 (API 26) ou superior, em *smartphones* com ecrã de 5" ou mais; painel web compatível com as versões atuais do Chrome, Edge e Firefox.'),
+    ('RNF-11', 'Manutenibilidade (modularidade e testabilidade)', 'Código em Kotlin numa arquitetura em camadas MVVM (*Model-View-ViewModel*), com testes unitários na camada de domínio (cobertura mínima de 60%) e versionado em Git.'),
+    ('RNF-12', 'Flexibilidade (escalabilidade)', 'Suportar pelo menos 50 utilizadores, 5 000 lotes ativos e 2 000 agregados, mantendo os tempos de resposta do RNF-03.'),
+    ('RNF-13', 'Restrição (custo)', 'Custo mensal da plataforma dentro do orçamento aprovado pela instituição, com alertas de orçamento a 50% e a 90%.'),
+    ('RNF-14', 'Fiabilidade (recuperabilidade)', 'Exportação diária automática da base de dados para armazenamento na nuvem, com retenção mínima de 30 dias.'),
+    ('RNF-15', 'Manutenibilidade (modificabilidade)', 'Novos tipos de bens, categorias, equipamentos e células devem ser configuráveis sem alteração de código.'),
+    ('RNF-16', 'Capacidade de interação (inclusividade)', 'Respeito pelo tamanho de letra do sistema, contraste mínimo de 4,5:1 (WCAG 2.1, nível AA) e textos alternativos nos ícones.'),
+    ('RNF-17', 'Restrição (localização)', 'Datas no formato dd/mm/aaaa, fuso horário Europe/Lisbon e unidades do Sistema Internacional.'),
 ]
 
 RN = [
-    ('RN-01', 'Lote', 'Um lote agrupa unidades do mesmo produto (nome, marca e formato) com a mesma validade e o mesmo estado de congelação. Linhas iguais da mesma receção fundem-se num lote; qualquer diferença origina um lote distinto.'),
-    ('RN-02', 'Unidades', 'Cada produto tem uma unidade de stock (UN, KG ou L). As apresentações têm um fator de conversão (ex.: palete = 30 UN). Nos produtos a granel o stock é contado em peso e em volumes: a saída em kg reduz o peso e o volume mantém-se até o peso chegar a zero (ex.: entra 1 UN de batatas com 50 kg, saem 10 kg, ficam 1 UN com 40 kg).'),
+    ('RN-01', 'Lote', 'Um lote agrupa unidades do mesmo produto (nome, marca e formato) com a mesma validade, recebidas na mesma receção. As linhas aceites da mesma receção que cumpram estes critérios agrupam-se num único lote; receções diferentes originam lotes diferentes, para preservar a rastreabilidade por doador e por guia. A congelação parcial divide um lote (RN-08).'),
+    ('RN-02', 'Unidades', 'Cada produto tem uma unidade de stock (UN, KG ou L). As apresentações têm um fator de conversão (ex.: palete = 30 UN). Nos produtos a granel o stock é contado em peso e em volumes: a saída em kg reduz o peso e o volume mantém-se até o peso chegar a zero (ex.: entra 1 UN de batatas com 50 kg; saem 10 kg e fica 1 UN com 40 kg).'),
     ('RN-03', 'Células', 'O código de uma célula tem o formato xxx-xx-xx: três dígitos para a coluna, dois para a linha e dois para o andar. A ordenação é feita por coluna, depois linha e depois andar.'),
-    ('RN-04', 'Zonas de frio', 'Uma zona é identificada pelo código do equipamento, pelo lado (D – direita, C – centro, E – esquerda) e pelo nível (ex.: ARCA1-D1). O número de zonas varia por equipamento, mas não existem lados para além de D, C e E.'),
+    ('RN-04', 'Zonas de frio', 'Uma zona é identificada pelo código do equipamento, pelo lado (D – direita, C – centro, E – esquerda) e pelo nível (ex.: ARCA1-D1). O número de zonas varia por equipamento (arca 1: três; arca 2: duas), mas não existem lados para além de D, C e E.'),
     ('RN-05', 'Uso preferencial', 'O uso preferencial de um equipamento de frio por categoria (ex.: arca 1 para aves) é uma sugestão, nunca uma restrição.'),
-    ('RN-06', 'Sugestão de local', 'O sistema sugere primeiro um local não cheio que já contenha o mesmo produto; na falta deste, o local não cheio mais próximo, na ordenação, do último local usado pelo produto ou pela categoria (algoritmo na secção 4.6).'),
-    ('RN-07', 'FEFO', 'As saídas sugerem os lotes por ordem crescente de validade, colocando no fim os lotes congelados internamente. Os produtos já congelados na origem são tratados como não congelados.'),
-    ('RN-08', 'Congelação', 'Só podem ser congelados lotes de categorias congeláveis. A nova validade proposta é a data de congelação somada dos dias da tabela da categoria e pode ser alterada pelo operador. A validade original é preservada. Congelar parte de um lote divide-o em dois.'),
-    ('RN-09', 'Expiração', 'Um lote com validade anterior à data atual passa a EXPIRADO, aparece na lista de remoção e não pode ser usado em cabazes ou na cozinha.'),
-    ('RN-10', 'Desperdício', 'O desperdício é contabilizado apenas em quantidades (na unidade de stock), por produto, categoria e motivo.'),
+    ('RN-06', 'Sugestão de local', 'O sistema sugere primeiro um local não cheio, compatível com a condição de armazenamento do lote, que já contenha o mesmo produto; na falta deste, o local não cheio mais próximo, na ordenação, do último local usado pelo produto ou pela categoria (secção 4.6.1). Um lote congelado na origem é tratado como CONGELADO para efeitos de localização.'),
+    ('RN-07', 'FEFO', 'As saídas sugerem apenas lotes não expirados (validade igual ou posterior à data atual), por ordem crescente de validade, colocando no fim os lotes congelados internamente. Os produtos já congelados na origem são tratados como não congelados para efeitos de prioridade.'),
+    ('RN-08', 'Congelação', 'Só podem ser congelados lotes de categorias congeláveis. A nova validade proposta é a data de congelação acrescida dos dias da tabela da categoria e pode ser alterada pelo operador. A validade original é preservada. Congelar parte de um lote divide-o em dois, ficando o novo lote ligado ao de origem.'),
+    ('RN-09', 'Expiração', 'Um lote com validade anterior à data atual passa a EXPIRADO, aparece na lista de remoção e não pode ser usado em cabazes ou na cozinha; esta verificação é também feita no momento de cada saída.'),
+    ('RN-10', 'Desperdício', 'O desperdício é contabilizado apenas em quantidades (na unidade de stock), por produto, categoria e motivo; não é calculada uma percentagem agregada sobre unidades diferentes.'),
     ('RN-11', 'Origem', 'Uma receção de empresa exige o número da guia de transporte. Uma receção de particular pode ser anónima ou identificar totalmente o doador.'),
-    ('RN-12', 'RGDHSA049', 'O controlo de receção é obrigatório em todas as receções, independentemente da origem. O responsável indicado no documento é o utilizador que registou a receção.'),
-    ('RN-13', 'Autorização de levantamento', 'Só as pessoas marcadas como autorizadas no agregado podem levantar cabazes e refeições.'),
-    ('RN-14', 'Pedidos de refeição', 'Os pedidos são feitos por agregado, para um dia e um tipo de refeição, com o número de refeições pretendido. O sistema avisa quando esse número excede o número de membros do agregado.'),
+    ('RN-12', 'RGDHSA049', 'O controlo de receção é obrigatório em todas as receções, independentemente da origem. O colaborador que rubrica o documento é o utilizador que registou a receção.'),
+    ('RN-13', 'Autorização de levantamento', 'Só as pessoas marcadas como autorizadas no agregado podem levantar cabazes, outros bens e refeições; não há exceções para pessoas não autorizadas.'),
+    ('RN-14', 'Pedidos de refeição', 'Os pedidos são feitos por agregado, para um dia e um tipo de refeição, com o número de refeições pretendido, até à hora limite do dia anterior. O servidor avisa quando esse número excede o número de membros do agregado.'),
     ('RN-15', 'Jantar', 'Só é possível pedir jantar para os dias em que o Responsável abriu o serviço de jantar.'),
-    ('RN-16', 'Periodicidade', 'A periodicidade do cabaz é definida pelo Responsável. O próximo agendamento é calculado a partir da data da última entrega.'),
-    ('RN-17', 'Credencial QR', 'Cada pessoa tem no máximo uma credencial ativa. O QR contém apenas um *token* aleatório, sem dados pessoais, e uma reemissão invalida a credencial anterior.'),
+    ('RN-16', 'Periodicidade', 'A periodicidade do cabaz é definida pelo Responsável. O próximo agendamento é calculado a partir da data da última entrega e ajustado ao dia de distribuição seguinte.'),
+    ('RN-17', 'Credencial QR', 'Cada pessoa autorizada tem no máximo uma credencial ativa. O QR contém apenas um *token* aleatório, sem dados pessoais; uma reemissão ou a perda da autorização invalida a credencial.'),
     ('RN-18', 'Stock não negativo', 'Nenhuma operação pode deixar a quantidade de um lote abaixo de zero.'),
-    ('RN-19', 'Aviso de validade', 'A antecedência do alerta de validade é definida por categoria (valor por omissão: 7 dias).'),
+    ('RN-19', 'Aviso de validade', 'A antecedência do alerta de validade é definida por categoria (valor por omissão: 7 dias); as categorias de bens sem validade não têm aviso.'),
 ]
 
 PERM = [
-    ('Utilizadores e parâmetros', 'G', 'C', '–', '–', '–', '–'),
-    ('Catálogo e tabela de congelação', 'G', 'G', 'C', 'G', 'C', '–'),
-    ('Células e equipamentos de frio', 'G', 'G', '–', 'C', 'C', '–'),
-    ('Receção e arrumação', 'C', 'G', '–', 'G', '–', '–'),
-    ('Stock, congelação e desperdício', 'C', 'G', 'C', 'G', 'C', '–'),
+    ('Utilizadores e parâmetros gerais', 'G', 'C', '–', '–', '–', '–'),
+    ('Células e equipamentos de frio', 'G', 'C', '–', 'C', 'C', '–'),
+    ('Categorias e tabela de congelação', '–', 'G', '–', 'C', 'C', '–'),
+    ('Catálogo de produtos', '–', 'G', '–', 'G', 'C', '–'),
+    ('Receção e arrumação', '–', 'G', '–', 'G', '–', '–'),
+    ('Stock, congelação e desperdício', '–', 'G', '–', 'G', 'C', '–'),
+    ('Alertas', '–', 'C', '–', 'C', 'C', '–'),
     ('Agregados e pessoas', '–', 'G', 'G', 'I', 'I', 'P'),
-    ('Periodicidade dos cabazes', '–', 'G', 'C', 'C', '–', '–'),
+    ('Periodicidade dos cabazes', '–', 'G', 'C', '–', '–', '–'),
     ('Agendamentos', '–', 'G', 'G', 'C', '–', 'P'),
     ('Entregas de cabazes e outros bens', '–', 'G', 'C', 'G', '–', 'P'),
-    ('Serviços de refeição', '–', 'G', 'C', '–', 'G', '–'),
+    ('Serviços de refeição (abrir jantar, fechar)', '–', 'G', '–', '–', 'G', '–'),
     ('Pedidos de refeição', '–', 'G', 'G', '–', 'G', 'P'),
-    ('Saídas para a cozinha e levantamentos', '–', 'G', '–', 'C', 'G', '–'),
-    ('Relatórios, RGDHSA049 e indicadores', 'C', 'G', 'C', 'C', 'C', '–'),
+    ('Saídas para a cozinha e levantamentos', '–', 'G', '–', '–', 'G', '–'),
+    ('Relatórios, histórico, RGDHSA049 e indicadores', '–', 'G', '–', '–', '–', '–'),
 ]
 
 
 def cap3(r, D):
     r.chapter('Análise de Requisitos')
-    r.para('Este capítulo identifica os intervenientes no sistema e documenta os requisitos funcionais e não funcionais, as regras de negócio e os pressupostos que condicionam a solução.')
+    r.para('Este capítulo identifica os intervenientes no sistema e documenta os requisitos funcionais e não funcionais, as regras de negócio, os pressupostos e a validação dos requisitos com a instituição.')
 
     r.h2('Atores e perfis de utilizador')
     n = r.next_tab()
     r.para(f'Foram identificados seis perfis de utilizador humano e um ator temporal, descritos na Tabela {n}. Um colaborador pode acumular vários perfis; por exemplo, o Responsável da instituição pode também operar o armazém.')
     r.table(['Ator', 'Descrição', 'Principais responsabilidades'], [
-        ['Administrador', 'Colaborador com conhecimentos informáticos que configura o sistema.', 'Gerir utilizadores e perfis, células, equipamentos de frio e parâmetros.'],
-        ['Responsável da instituição', 'Coordenador do Espaço Social.', 'Definir regras (tabela de congelação, periodicidade dos cabazes, serviço de jantar), supervisionar o stock e emitir relatórios.'],
+        ['Administrador', 'Colaborador com conhecimentos informáticos que configura o sistema.', 'Gerir utilizadores e perfis, células, equipamentos de frio e parâmetros gerais.'],
+        ['Responsável da instituição', 'Coordenador do Espaço Social.', 'Definir regras (categorias, tabela de congelação, periodicidade dos cabazes, serviço de jantar), gerir o catálogo, supervisionar o stock e emitir relatórios.'],
         ['Técnico de ação social', 'Técnico que acompanha os agregados.', 'Registar agregados e pessoas, consentimentos e credenciais; agendar entregas; registar pedidos de refeição.'],
         ['Operador de armazém', 'Colaborador ou voluntário do armazém.', 'Receber, arrumar, congelar, transferir, registar desperdício e entregar cabazes e outros bens.'],
-        ['Cozinha', 'Colaborador da cozinha ou da cantina.', 'Consultar refeições a confecionar, registar saídas para a cozinha, levantamentos e pedidos do dia seguinte.'],
+        ['Cozinha', 'Colaborador da cozinha ou da cantina.', 'Consultar refeições a confecionar, registar saídas para a cozinha, levantamentos e pedidos do dia seguinte; fechar o serviço.'],
         ['Utente', 'Membro de um agregado apoiado com acesso à App Utente.', 'Apresentar a credencial QR, consultar entregas e registar pedidos de refeição.'],
-        ['Tempo', 'Ator não humano (tarefas agendadas).', 'Verificar validades e stock mínimo, gerar alertas, marcar faltas e fechar serviços.'],
+        ['Tempo', 'Ator não humano (tarefas agendadas).', 'Verificar validades e stock mínimo, gerar alertas, marcar faltas e fechar automaticamente os serviços do dia.'],
     ], 'Atores do sistema.', widths=[2.2, 3.4, 4.6], first_bold=True)
 
     r.h2('Matriz de permissões')
     n = r.next_tab()
-    r.para(f'A Tabela {n} define as permissões de cada perfil por área funcional. As permissões são verificadas no servidor, pelas regras de segurança do Firestore e pelas Cloud Functions, e não apenas na interface (ver secção 6.4).')
+    r.para(f'A Tabela {n} define as permissões de cada perfil por área funcional. As colunas correspondem ao Administrador (ADM), ao Responsável da instituição (RESP), ao Técnico de ação social (TEC), ao Operador de armazém (OP), à Cozinha (COZ) e ao Utente (UT). As permissões são verificadas no servidor, pelas regras de segurança do Firestore e pelas Cloud Functions, e não apenas na interface (secção 7.4).')
     r.table(['Área funcional', 'ADM', 'RESP', 'TEC', 'OP', 'COZ', 'UT'],
             [list(p) for p in PERM],
-            'Matriz de permissões por perfil (G – gerir; C – consultar; I – apenas os dados necessários à identificação e à entrega, obtidos pela leitura da credencial; P – apenas dados do próprio agregado; – sem acesso).',
+            'Matriz de permissões por perfil (G – gerir; C – consultar; I – apenas os dados necessários à identificação e à entrega, devolvidos pela leitura da credencial; P – apenas dados do próprio agregado; – sem acesso).',
             widths=[4.2, 1, 1, 1, 1, 1, 1], first_bold=True)
 
     r.h2('Requisitos funcionais')
-    r.para('Os requisitos funcionais estão organizados por módulo. Cada requisito tem um identificador único, uma prioridade MoSCoW e a fase em que será implementado. Os requisitos *Must* e *Should* constituem o MVP. Os requisitos *Could* e *Won\'t (agora)* são melhorias futuras, desenvolvidas no Capítulo 9.')
+    first = r.next_tab()
+    r.para(f'Os requisitos funcionais estão organizados por módulo, da Tabela {first} à Tabela {first + len(RF) - 1}. Cada requisito tem um identificador único, uma prioridade MoSCoW e a fase em que será implementado. Os requisitos *Must* e *Should* constituem o MVP; os requisitos *Could* e *Won\'t (agora)* são melhorias futuras, desenvolvidas no Capítulo 9.')
     for mod, reqs in RF.items():
         r.h3(mod)
         r.table(['ID', 'Descrição', 'Prioridade', 'Fase'],
@@ -206,13 +210,14 @@ def cap3(r, D):
                 widths=[1.5, 6.2, 1.4, 1.0])
     total = sum(len(v) for v in RF.values())
     mvp = sum(1 for v in RF.values() for x in v if x[3] == MVP)
-    r.para(f'No total foram identificados {total} requisitos funcionais, dos quais {mvp} integram o MVP e {total - mvp} são melhorias futuras.')
+    must = sum(1 for v in RF.values() for x in v if x[2] == M)
+    r.para(f'No total foram identificados {total} requisitos funcionais, dos quais {mvp} integram o MVP ({must} *Must* e {mvp - must} *Should*) e {total - mvp} são melhorias futuras.')
 
     r.h2('Requisitos não funcionais')
     n = r.next_tab()
-    r.para(f'Os requisitos não funcionais (Tabela {n}) seguem as características de qualidade do modelo ISO/IEC 25010 (ISO/IEC, 2011) e refletem o contexto de utilização: colaboradores com perfis técnicos diversos, que usam o seu próprio smartphone, e o tratamento de dados pessoais de pessoas em situação de vulnerabilidade.')
+    r.para(f'Os requisitos não funcionais (Tabela {n}) estão classificados segundo as características e subcaracterísticas do modelo de qualidade da norma ISO/IEC 25010 (ISO/IEC, 2023); os que não são características de qualidade do produto aparecem como restrições. Refletem o contexto de utilização: colaboradores com perfis técnicos diversos, que usam o seu próprio *smartphone*, e o tratamento de dados pessoais de pessoas em situação de vulnerabilidade. Sempre que possível, cada requisito tem um critério mensurável.')
     r.table(['ID', 'Característica', 'Descrição'], [list(x) for x in RNF],
-            'Requisitos não funcionais.', widths=[1.3, 2.2, 6.6])
+            'Requisitos não funcionais.', widths=[1.3, 2.6, 6.2])
 
     r.h2('Regras de negócio')
     n = r.next_tab()
@@ -223,9 +228,19 @@ def cap3(r, D):
     r.h2('Pressupostos e restrições')
     r.bullets([
         '**Tecnologia imposta:** a aplicação móvel é desenvolvida em Kotlin com Firebase. Podem usar-se serviços de apoio (modelos de IA, tecnologias web básicas).',
-        '**Plataforma:** todos os colaboradores usam smartphones Android próprios. Por isso, a aplicação não deve guardar dados sensíveis fora da cache gerida pelo SDK e deve terminar a sessão quando o utilizador é desativado.',
+        '**Plataforma:** todos os colaboradores usam *smartphones* Android próprios. Por isso, a aplicação não deve guardar dados sensíveis fora da cache gerida pelo *Software Development Kit* (SDK) e deve terminar a sessão quando o utilizador é desativado.',
         '**Conectividade:** existe Internet com qualidade em todos os locais do armazém e da cozinha.',
         '**Dados iniciais:** o catálogo de produtos começa vazio e cresce com as receções. Os utentes e os agregados têm de ser todos registados, uma vez que não existe sistema anterior de onde importar.',
         '**Etiquetagem:** a instituição aceita colar etiquetas QR nas células das prateleiras e nas zonas dos equipamentos de frio.',
-        '**Validação pendente:** convém confirmar com a equipa HACCP se o sistema deve distinguir a *data limite de consumo* ("consumir até") da *data de durabilidade mínima* ("consumir de preferência antes de"), prevista no Regulamento (UE) n.º 1169/2011, pois a regra de expiração pode diferir. O modelo de dados prevê um campo para este efeito (ver secção 5.2).',
+        '**Validação pendente:** convém confirmar com a equipa HACCP se o sistema deve distinguir a *data limite de consumo* ("consumir até") da *data de durabilidade mínima* ("consumir de preferência antes de"), distinção prevista no regulamento europeu sobre informação aos consumidores (Parlamento Europeu e Conselho, 2011), pois a regra de expiração pode diferir. O modelo de dados prevê um campo para este efeito (secção 5.2).',
     ])
+
+    r.h2('Validação dos requisitos')
+    n = r.next_tab()
+    r.para(f'Os requisitos foram construídos e validados em ciclos de perguntas e respostas escritas com o Responsável da instituição, resumidos na Tabela {n}. Cada ronda partiu do entendimento documentado na ronda anterior e terminou com a confirmação ou correção das regras.')
+    r.table(['Ronda', 'Tema', 'Decisões da instituição'], [
+        ['1', 'Entendimento do enunciado e âmbito', 'Aceitação da divisão entre MVP e trabalho futuro, com a condição de registar as funcionalidades adiadas como intenção futura de melhoria.'],
+        ['2', 'Perfis, plataforma, unidades, lotes, armazém, receção, utentes e refeições (20 questões)', 'Perfis confirmados; dispositivos Android próprios; Internet em todos os locais; várias unidades por artigo; critério de lote; catálogo inicial vazio; tabela de congelação como proposta; desperdício em quantidade; formato xxx-xx-xx; etiquetas QR; guias sempre digitalizadas; RGDHSA049 em todas as receções; doador identificado ou anónimo; registo de todos os utentes; identificação por QR (biometria opcional); pedidos de refeição na véspera.'],
+        ['3', 'Pormenores de unidades, armazém, autorizações e refeições (12 questões)', 'Saída a granel em kg; zonas D/C/E e uso preferencial como sugestão; App Utente; pessoas autorizadas por agregado; refeições pedidas por agregado e por dia; jantar excecional; periodicidade decidida pelo Responsável; cabaz manual no MVP; registo simples de outros bens; tabela de congelação por categoria registada na aplicação.'],
+    ], 'Rondas de validação dos requisitos.', widths=[1.0, 3.4, 5.8])
+    r.para('A aceitação formal do documento de requisitos e dos protótipos pela instituição é o primeiro passo do plano de implementação (secção 7.5).')

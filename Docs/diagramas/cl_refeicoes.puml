@@ -4,7 +4,7 @@ hide circle
 skinparam classAttributeIconSize 0
 class ServicoRefeicao {
   data : Date
-  tipo : {ALMOCO, JANTAR}
+  tipo : TipoRefeicao
   aberto : Boolean
   totalPrevisto : Int
   totalConfecionado : Int
@@ -12,8 +12,9 @@ class ServicoRefeicao {
 }
 class PedidoRefeicao {
   id : String
+  data : Date
   numeroRefeicoes : Int
-  origem : {BALCAO, APP_UTENTE, TECNICO}
+  origem : OrigemPedido
   estado : EstadoPedido
   +cancelar()
 }
@@ -26,17 +27,17 @@ class SaidaCozinha {
   id : String
   dataHora : Timestamp
 }
-class LinhaSaida {
-  quantidade : Double
-}
+class LinhaSaida
 class Agregado
 class Pessoa
-class Lote
+class Utilizador
 Agregado "1" -- "0..*" PedidoRefeicao
 PedidoRefeicao "0..*" -- "1" ServicoRefeicao
+PedidoRefeicao "0..*" -- "0..1" Utilizador : registado por >
 PedidoRefeicao "0..1" -- "0..*" Levantamento
 Levantamento "0..*" -- "1" Pessoa : levantado por >
+Levantamento "0..*" -- "1" Utilizador : entregue por >
 ServicoRefeicao "1" -- "0..*" SaidaCozinha
-SaidaCozinha "1" *-- "1..*" LinhaSaida
-LinhaSaida "0..*" -- "1" Lote
+SaidaCozinha "0..1" *-- "0..*" LinhaSaida
+note right of PedidoRefeicao : data desnormalizada do serviço;\nregistado por um colaborador ou\npela conta do utente (origem APP_UTENTE)
 @enduml

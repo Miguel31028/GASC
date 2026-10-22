@@ -5,7 +5,7 @@ actor "Cozinha" as CZ
 actor "Pessoa que\nlevanta" as PL
 participant "App Android\n(UI Refeições)" as UI
 participant "RefeicaoViewModel" as VM
-participant "Cloud Functions\n(identificarPessoa,\nregistarLevantamento)" as CF
+participant "Cloud Functions\n(identificarPessoa, registarLevantamento,\nregistarPedido)" as CF
 database "Cloud Firestore" as FS
 
 CZ -> UI : Abrir distribuição (almoço de hoje)
@@ -17,21 +17,24 @@ CZ -> UI : Ler QR
 UI -> VM : identificar(token)
 VM -> CF : call identificarPessoa(token)
 CF --> VM : pessoa, agregado, autorizado
-alt existe pedido PEDIDO para hoje e pessoa autorizada
+alt pessoa não autorizada
+  VM --> UI : recusar levantamento (motivo)
+else autorizada e com pedido para hoje
   VM --> UI : mostrar n.º de refeições do pedido
   CZ -> UI : Confirmar levantamento
+  UI -> VM : confirmar(n)
   VM -> CF : call registarLevantamento(pedidoId, n)
   CF -> FS : transação: criar levantamento,\npedido = LEVANTADO
   UI --> CZ : Perguntar pedido para amanhã
   opt quer refeição amanhã
     CZ -> UI : n.º de refeições para amanhã
-    VM -> FS : criar pedidosRefeicao (amanhã)
-    FS -> CF : trigger onCreate(pedido)
-    CF -> FS : atualizar totalPrevisto do serviço
+    VM -> CF : call registarPedido(agregado, amanhã, n)
+    CF -> FS : validar serviço aberto, hora limite\ne n.º de membros (RN-14, RN-15)
+    CF -> FS : criar pedido + atualizar totalPrevisto
   end
-else sem pedido / não autorizada
-  VM --> UI : aviso
-  opt exceção autorizada
+else autorizada e sem pedido
+  VM --> UI : aviso "sem pedido"
+  opt exceção
     CZ -> UI : registar exceção com justificação
     VM -> CF : call registarLevantamento(sem pedido, justificação)
     CF -> FS : criar levantamento (exceção)

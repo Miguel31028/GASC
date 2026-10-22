@@ -1,12 +1,12 @@
 @startuml
 !include _estilo.iuml
-|Responsável / Técnico|
+|Responsável|
 start
 :Definir periodicidade do agregado;
 |Sistema|
 :Gerar / propor agendamentos;
-|Responsável / Técnico|
-:Confirmar agendamento (data, hora);
+|Responsável|
+:Confirmar ou ajustar agendamento\n(data, hora);
 |Operador de armazém|
 :Abrir entregas do dia;
 :Identificar pessoa\n(ler QR em papel ou na app);

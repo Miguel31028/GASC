@@ -13,7 +13,7 @@ VM -> CF : call sugerirLocal(loteId, excluir = [])
 CF -> FS : ler lote, produto, categoria
 CF -> FS : ler locais ativos e não cheios
 CF -> CF : calcular local mais próximo\n(ordenação coluna-linha-andar)
-CF --> VM : local sugerido (ex.: 003-02-1)
+CF --> VM : local sugerido (ex.: 003-02-01)
 VM --> UI : mostrar sugestão
 alt local está cheio
   OP -> UI : Assinalar "cheio"
@@ -21,7 +21,7 @@ alt local está cheio
   VM -> CF : call marcarLocalCheio(localId)
   CF -> FS : locais/{id}.cheio = true
   VM -> CF : call sugerirLocal(loteId, excluir = [localId])
-  CF --> VM : novo local (ex.: 003-03-1)
+  CF --> VM : novo local (ex.: 003-02-02)
   VM --> UI : mostrar nova sugestão
 end
 OP -> UI : Ler QR do local

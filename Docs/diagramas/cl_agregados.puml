@@ -6,13 +6,17 @@ class Agregado {
   id : String
   codigo : String
   morada : String
+  codigoPostal : String
+  localidade : String
   telefone : String
   situacao : String
   beneficiaCabaz : Boolean
   beneficiaRefeicoes : Boolean
   periodicidade : Periodicidade
+  periodicidadeDias : Int [0..1]
   estado : EstadoAgregado
   dataInscricao : Date
+  observacoes : String
 }
 class Pessoa {
   id : String
@@ -30,7 +34,7 @@ class Pessoa {
 class CredencialQR {
   token : String
   emitidaEm : Timestamp
-  suporte : {PAPEL, APP}
+  suporte : SuporteCredencial
   ativa : Boolean
 }
 class Consentimento {

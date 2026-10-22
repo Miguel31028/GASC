@@ -4,8 +4,8 @@ hide empty description
 [*] --> AGENDADO : criar / gerar pela periodicidade
 AGENDADO --> AGENDADO : reagendar
 AGENDADO --> ENTREGUE : entrega confirmada
-AGENDADO --> CANCELADO : cancelar
-AGENDADO --> FALTOU : fim do dia sem entrega
+AGENDADO --> CANCELADO : cancelar / agregado suspenso
+AGENDADO --> FALTOU : tarefa de fim do dia\n[sem entrega registada]
 FALTOU --> AGENDADO : reagendar
 ENTREGUE --> [*]
 CANCELADO --> [*]

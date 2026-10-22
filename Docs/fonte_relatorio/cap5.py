@@ -1,11 +1,11 @@
 DICT = {
     'CATEGORIA': [
         ('id_categoria', 'String', 'S', 'Identificador.'),
-        ('nome', 'String(60)', 'S', 'Ex.: Lacticínios, Massas, Carne de aves, Vestuário.'),
+        ('nome', 'String(60)', 'S', 'Ex.: Laticínios, Massas, Carne de aves, Vestuário.'),
         ('tipo_bem', 'TipoBem', 'S', 'ALIMENTAR, HIGIENE, LIMPEZA, VESTUARIO ou OUTRO.'),
         ('condicao_armazenamento', 'CondicaoArmazenamento', 'S', 'AMBIENTE, REFRIGERADO ou CONGELADO; determina o tipo de local sugerido.'),
         ('congelavel', 'Boolean', 'S', 'Se os produtos podem ser congelados para prolongar a validade.'),
-        ('dias_aviso', 'Int', 'S', 'Antecedência, em dias, do alerta de validade (por omissão 7).'),
+        ('dias_aviso', 'Int', 'C', 'Antecedência, em dias, do alerta de validade (por omissão 7); nulo nas categorias de bens sem validade.'),
     ],
     'REGRA_CONGELACAO': [
         ('id_categoria', 'String', 'S', 'Categoria a que a regra se aplica (uma regra por categoria).'),
@@ -68,6 +68,7 @@ DICT = {
     ],
     'LINHA_RECECAO': [
         ('id_rececao, id_produto', 'String', 'S', 'Receção e produto.'),
+        ('id_lote', 'String', 'C', 'Lote em que a linha foi agrupada (RN-01); nulo nas linhas rejeitadas.'),
         ('id_apresentacao', 'String', 'N', 'Apresentação usada (nula = unidade de stock).'),
         ('quantidade', 'Decimal', 'S', 'Quantidade na apresentação indicada.'),
         ('validade', 'Date', 'C', 'Obrigatória se o produto tem validade.'),
@@ -79,7 +80,8 @@ DICT = {
     ],
     'LOTE': [
         ('id_lote', 'String', 'S', 'Identificador (também impresso em etiqueta, se necessário).'),
-        ('id_produto, id_linha', 'String', 'S', 'Produto e linha de receção de origem.'),
+        ('id_produto', 'String', 'S', 'Produto (as linhas de receção que originaram o lote referem-no através de LINHA_RECECAO.id_lote).'),
+        ('id_lote_origem', 'String', 'N', 'Lote de que este resultou por divisão (congelação parcial).'),
         ('id_local', 'String', 'N', 'Local atual (nulo enquanto pendente).'),
         ('validade', 'Date', 'N', 'Validade atual (alterada na congelação).'),
         ('validade_original', 'Date', 'N', 'Validade de origem.'),
@@ -96,9 +98,11 @@ DICT = {
         ('data_hora', 'Timestamp', 'S', 'Momento.'),
         ('id_local_origem, id_local_destino', 'String', 'N', 'Para arrumações e transferências.'),
         ('referencia', 'String', 'N', 'Id da entrega, saída para a cozinha ou receção.'),
+        ('justificacao', 'String', 'C', 'Obrigatória nos movimentos de AJUSTE.'),
     ],
     'DESPERDICIO': [
-        ('id_lote, id_utilizador', 'String', 'S', 'Lote e autor.'),
+        ('id_lote / id_linha_rececao', 'String', 'C', 'Lote descartado ou linha rejeitada na receção; exatamente um dos dois é preenchido.'),
+        ('id_produto, id_utilizador', 'String', 'S', 'Produto (para agregações) e autor.'),
         ('quantidade', 'Decimal', 'S', 'Quantidade desperdiçada na unidade de stock.'),
         ('motivo', 'MotivoDesperdicio', 'S', 'EXPIRADO, DANIFICADO ou NAO_CONFORME.'),
         ('data', 'Date', 'S', 'Data do registo.'),
@@ -116,12 +120,15 @@ DICT = {
     ],
     'AGREGADO': [
         ('id_agregado, codigo', 'String', 'S', 'Identificador interno e código legível (ex.: A-0142).'),
-        ('morada, codigo_postal, localidade, telefone', 'String', 'S/N', 'Contactos.'),
+        ('morada', 'String', 'S', 'Morada do agregado.'),
+        ('codigo_postal, localidade, telefone', 'String', 'N', 'Contactos.'),
         ('situacao', 'String', 'N', 'Caracterização socioeconómica resumida.'),
         ('beneficia_cabaz, beneficia_refeicoes', 'Boolean', 'S', 'Respostas de que beneficia.'),
-        ('periodicidade', 'Periodicidade', 'N', 'SEMANAL, QUINZENAL, MENSAL, PONTUAL ou n.º de dias.'),
+        ('periodicidade', 'Periodicidade', 'C', 'Obrigatória quando beneficia_cabaz; definida pelo Responsável.'),
+        ('periodicidade_dias', 'Int', 'C', 'N.º de dias quando a periodicidade é PERSONALIZADA.'),
         ('estado', 'EstadoAgregado', 'S', 'ATIVO, SUSPENSO ou INATIVO.'),
-        ('data_inscricao, id_tecnico, observacoes', 'Vários', 'S/N', 'Acompanhamento.'),
+        ('data_inscricao', 'Date', 'S', 'Data de inscrição.'),
+        ('id_tecnico, observacoes', 'String', 'N', 'Técnico responsável e observações.'),
     ],
     'PESSOA': [
         ('id_pessoa, id_agregado', 'String', 'S', 'Identificação e agregado.'),
@@ -139,6 +146,11 @@ DICT = {
     ],
     'EQUIPAMENTO_CATEGORIA': [
         ('id_equipamento, id_categoria', 'String', 'S', 'Chave composta; associa um equipamento de frio a uma categoria de uso preferencial (sugestão).'),
+    ],
+    'PARAMETROS (documento único)': [
+        ('hora_limite_pedidos', 'Time', 'S', 'Hora do dia anterior até à qual se podem criar, alterar ou cancelar pedidos (ex.: 16:00).'),
+        ('dias_distribuicao', 'Lista<DiaSemana>', 'S', 'Dias da semana em que há distribuição de cabazes.'),
+        ('hora_fecho', 'Time', 'S', 'Hora da tarefa que marca faltas e fecha os serviços do dia.'),
     ],
     'CONSENTIMENTO': [
         ('id_consentimento, id_agregado', 'String', 'S', 'Identificação e agregado.'),
@@ -161,8 +173,12 @@ DICT = {
     'SERVICO_REFEICAO / PEDIDO_REFEICAO / LEVANTAMENTO / SAIDA_COZINHA': [
         ('SERVICO_REFEICAO.data, tipo, aberto', 'Vários', 'S', 'Dia, ALMOCO ou JANTAR, se aceita pedidos.'),
         ('SERVICO_REFEICAO.total_previsto, total_confecionado', 'Int', 'N', 'Totais do dia.'),
-        ('PEDIDO_REFEICAO.n_refeicoes, origem, estado', 'Vários', 'S', 'Quantidade, canal (BALCAO, APP_UTENTE, TECNICO) e estado.'),
-        ('LEVANTAMENTO.n_entregues, justificacao_excecao', 'Int/String', 'S/N', 'Refeições entregues e justificação de exceção (obrigatória quando não há pedido).'),
+        ('PEDIDO_REFEICAO.data', 'Date', 'S', 'Data do serviço, desnormalizada para consultas por agregado.'),
+        ('PEDIDO_REFEICAO.n_refeicoes, origem, estado', 'Vários', 'S', 'Quantidade, canal (OrigemPedido) e estado.'),
+        ('PEDIDO_REFEICAO.id_utilizador / uid_conta_utente', 'String', 'C', 'Quem registou: um colaborador ou a conta do utente; exatamente um.'),
+        ('LEVANTAMENTO.id_pessoa, id_utilizador', 'String', 'S', 'Pessoa que levantou e colaborador que entregou.'),
+        ('LEVANTAMENTO.n_entregues', 'Int', 'S', 'Refeições entregues.'),
+        ('LEVANTAMENTO.justificacao_excecao', 'String', 'C', 'Obrigatória quando não há pedido.'),
         ('SAIDA_COZINHA.id_servico, id_utilizador, data_hora', 'Vários', 'S', 'Serviço a que se destinam os produtos, autor e momento.'),
     ],
 }
@@ -181,7 +197,10 @@ ENUMS = [
     ('TipoAlerta', 'EXPIRADO, VALIDADE_PROXIMA, STOCK_MINIMO'),
     ('Perfil', 'ADMIN, RESPONSAVEL, TECNICO, OPERADOR, COZINHA'),
     ('EstadoAgregado', 'ATIVO, SUSPENSO, INATIVO'),
-    ('Periodicidade', 'SEMANAL, QUINZENAL, MENSAL, PONTUAL, PERSONALIZADA (n.º de dias)'),
+    ('Periodicidade', 'SEMANAL, QUINZENAL, MENSAL, PONTUAL, PERSONALIZADA (com periodicidade_dias)'),
+    ('TipoAgendamento', 'CABAZ, OUTROS_BENS'),
+    ('SuporteCredencial', 'PAPEL, APP'),
+    ('OrigemPedido', 'BALCAO (no levantamento), COLABORADOR (técnico ou responsável), APP_UTENTE'),
     ('EstadoAgendamento', 'AGENDADO, ENTREGUE, FALTOU, CANCELADO'),
     ('TipoRefeicao', 'ALMOCO, JANTAR'),
     ('EstadoPedido', 'PEDIDO, LEVANTADO, NAO_LEVANTADO, CANCELADO'),
@@ -198,24 +217,25 @@ FS = [
     ('lotes/{id}', 'Lote com `produtoId`, `categoriaId`, `localId`, `validade`, `estado`, `qtdAtual`.', 'Nome do produto e código do local desnormalizados para listagens.'),
     ('movimentos/{id}', 'Registo imutável de movimentos.', 'Só escrita pelas Cloud Functions.'),
     ('desperdicios/{id}', 'Registos de desperdício.', 'Inclui `categoriaId` para agregações.'),
-    ('alertas/{id}', 'Alertas gerados pela tarefa diária.', 'Id determinístico (tipo+lote+data) para idempotência.'),
-    ('agregados/{id}', 'Agregado, subcoleções `pessoas/{id}` e `consentimentos/{id}`.', 'Acesso restrito a TEC e RESP; utente só ao seu.'),
+    ('alertas/{id}', 'Alertas gerados pela tarefa diária.', 'Id determinístico (tipo + lote ou produto + data) para idempotência.'),
+    ('agregados/{id}', 'Agregado, subcoleções `pessoas/{id}` e `consentimentos/{id}`.', 'Acesso restrito ao Técnico e ao Responsável; o utente só ao seu agregado.'),
+    ('contasUtente/{uid}', 'Conta da App Utente: pessoa e agregado associados.', 'Criada pela função de ativação, que define o *custom claim* agregadoId.'),
     ('credenciais/{token}', 'Mapeia o token QR para a pessoa e o agregado.', 'Leitura apenas por Cloud Function.'),
-    ('agendamentos/{id}', 'Agendamentos de cabazes e outros bens.', 'Lido pelo painel web (campos não sensíveis).'),
+    ('agendamentos/{id}', 'Agendamentos de cabazes e outros bens.', 'Leitura pelos colaboradores e pelo utente do próprio agregado.'),
+    ('painelAgenda/{data}', 'Projeção do dia para o painel web: hora, código do agregado, tipo e estado.', 'Escrita só por Cloud Function; sem nomes nem dados pessoais.'),
     ('entregas/{id}', 'Entrega com as linhas embebidas (`linhas`).', 'Linhas embebidas: são sempre lidas em conjunto.'),
     ('servicosRefeicao/{data_tipo}', 'Serviço do dia (ex.: `2026-10-22_ALMOCO`).', 'Id determinístico facilita a consulta.'),
-    ('pedidosRefeicao/{id}', 'Pedidos por agregado e serviço.', '–'),
+    ('pedidosRefeicao/{id}', 'Pedidos por agregado e serviço, com a data desnormalizada.', 'Escrita só pela função `registarPedido`.'),
     ('levantamentos/{id}', 'Levantamentos de refeições.', '–'),
     ('saidasCozinha/{id}', 'Saídas para a cozinha com linhas embebidas.', '–'),
-    ('parametros/geral', 'Parâmetros globais (hora limite dos pedidos, dias de distribuição).', 'Documento único.'),
+    ('parametros/geral', 'Parâmetros gerais (hora limite dos pedidos, dias de distribuição, hora de fecho).', 'Documento único, gerido pelo Administrador.'),
     ('auditoria/{id}', 'Registo de operações sensíveis (acesso a dados de utentes, alterações).', 'Só escrita pelo servidor.'),
 ]
 
 IDX = [
     ('lotes', 'produtoId ASC, estado ASC, congeladoInterno ASC, validade ASC', 'Seleção FEFO de um produto.'),
-    ('lotes', 'estado ASC, validade ASC', 'Tarefa diária de validades e lista de expirados.'),
+    ('lotes', 'estado ASC, validade ASC', 'Tarefa diária (estado in [...] e validade <= limite) e lista de expirados.'),
     ('lotes', 'localId ASC, estado ASC', 'Conteúdo de um local.'),
-    ('rececoes', 'dataHora ASC', 'Emissão do RGDHSA049 por intervalo.'),
     ('agendamentos', 'dataHora ASC, estado ASC', 'Entregas do dia e painel web.'),
     ('pedidosRefeicao', 'servicoId ASC, estado ASC', 'Pedidos de um serviço.'),
     ('pedidosRefeicao', 'agregadoId ASC, data DESC', 'Histórico do agregado e App Utente.'),
@@ -242,7 +262,8 @@ def cap5(r, D):
         r.figure(f'{D}/{img}.png', f'Modelo entidade-relacionamento – {cap}.', max_h=17)
 
     r.h2('Dicionário de dados')
-    r.para('As tabelas seguintes descrevem os atributos das entidades. Na coluna "Obr." indica-se se o atributo é obrigatório (S), opcional (N) ou condicionalmente obrigatório (C). Atributos com a mesma natureza aparecem agrupados.')
+    first = r.next_tab()
+    r.para(f'As tabelas seguintes (Tabela {first} à Tabela {first + len(DICT) - 1}) descrevem os atributos das entidades. Na coluna "Obr." indica-se se o atributo é obrigatório (S), opcional (N) ou condicionalmente obrigatório (C). Atributos com a mesma natureza aparecem agrupados.')
     for ent, rows in DICT.items():
         r.table(['Atributo', 'Tipo', 'Obr.', 'Descrição'], [list(x) for x in rows],
                 f'Dicionário de dados – {ent}.', widths=[3.2, 2.2, 0.8, 4.4])
@@ -254,7 +275,7 @@ def cap5(r, D):
 
     r.h2('Modelo físico em Cloud Firestore')
     r.paras(
-        'O Cloud Firestore organiza os dados em coleções de documentos JSON, sem junções nem chaves estrangeiras impostas pela base de dados (Google, 2026b). A passagem do modelo ER para o Firestore seguiu três critérios: (i) **embeber** as relações de composição que são sempre lidas em conjunto e têm cardinalidade limitada (apresentações no produto, linhas na entrega); (ii) usar **subcoleções** quando os filhos podem crescer ou ter acessos diferentes (linhas da receção, pessoas do agregado); e (iii) **desnormalizar** os campos necessários às listagens (nome do produto e código do local no lote), mantendo-os coerentes através das Cloud Functions.',
+        'O Cloud Firestore organiza os dados em coleções de documentos JSON, sem junções nem chaves estrangeiras impostas pela base de dados (Google, 2026b). A passagem do modelo ER para o Firestore seguiu três critérios: (i) **incorporar** (*embedding*) no documento as relações de composição que são sempre lidas em conjunto e têm cardinalidade limitada (apresentações no produto, linhas na entrega); (ii) usar **subcoleções** quando os filhos podem crescer ou ter acessos diferentes (linhas da receção, pessoas do agregado); e (iii) **desnormalizar** os campos necessários às listagens (nome do produto e código do local no lote), mantendo-os coerentes através das Cloud Functions.',
     )
     n = r.next_tab()
     r.para(f'A Tabela {n} apresenta as coleções propostas.')
@@ -262,14 +283,14 @@ def cap5(r, D):
             'Coleções do Cloud Firestore.', widths=[3, 4.2, 3.2])
     r.para('Exemplo de um documento da coleção `lotes`:')
     r.code('''
-lotes/Lx8k2P {
-  "produtoId": "p_arroz_agulha_1kg",   "produtoNome": "Arroz agulha 1 kg (Marca X)",
-  "categoriaId": "c_massas_arroz",     "linhaRececaoId": "r_2026_0153/l_04",
-  "localId": "loc_003_02_01",          "localCodigo": "003-02-01",
-  "validade": "2026-12-02",           "validadeOriginal": "2026-12-02",
-  "qtdInicial": 12, "qtdAtual": 10, "unidade": "UN", "volumes": null,
+lotes/L-0912 {
+  "produtoId": "p_iogurte_natural_pd",  "produtoNome": "Iogurte natural PD x4",
+  "categoriaId": "c_laticinios",        "rececaoId": "r_2026_0153",
+  "localId": "loc_arca3_c1",            "localCodigo": "ARCA3-C1",
+  "validade": "2026-10-24",            "validadeOriginal": "2026-10-24",
+  "qtdInicial": 6, "qtdAtual": 6, "unidade": "UN", "volumes": null,
   "estado": "DISPONIVEL", "congeladoOrigem": false, "congeladoInterno": false,
-  "dataEntrada": "2026-10-20T10:42:00Z"
+  "loteOrigemId": null,                 "dataEntrada": "2026-10-22T10:15:00Z"
 }
 ''')
     n = r.next_tab()

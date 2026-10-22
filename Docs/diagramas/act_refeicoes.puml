@@ -18,7 +18,9 @@ note right: Normalmente feito no momento\nem que se levanta a refeição do dia
 repeat
   :Identificar pessoa (QR / pesquisa);
   |Sistema|
-  if (Autorizada e com pedido\npara hoje?) then (sim)
+  if (Pessoa autorizada?) then (não)
+    :Recusar levantamento;
+  elseif (Tem pedido para hoje?) then (sim)
     :Registar levantamento\n(n.º de refeições entregues);
     |Cozinha|
     :Perguntar pedido para amanhã;
@@ -26,14 +28,13 @@ repeat
       :Registar pedido;
     endif
   else (não)
-    |Cozinha|
-    :Recusar ou registar exceção\n(com justificação);
+    :Registar exceção\n(com justificação);
   endif
   |Cozinha|
 repeat while (Mais pessoas?) is (sim)
 ->não;
 |Sistema|
-:Fechar serviço;
+:Fechar serviço\n(manual ou automático à hora de fecho);
 :Marcar pedidos não levantados;
 stop
 @enduml

@@ -2,22 +2,33 @@
 !include _estilo.iuml
 autonumber
 actor "Responsável" as RS
-participant "App Android\n(Relatórios)" as UI
+participant "App Android\n(UI Relatórios)" as UI
+participant "RelatorioViewModel" as VM
+participant "RelatorioRepository" as RP
 participant "Cloud Function\ngerarRGDHSA049" as CF
 database "Cloud Firestore" as FS
 database "Cloud Storage" as ST
 
 RS -> UI : Escolher intervalo de datas
-UI -> CF : call gerarRGDHSA049(dataInicio, dataFim)
+UI -> VM : gerar(dataInicio, dataFim)
+VM -> RP : gerarRGDHSA049(inicio, fim)
+RP -> CF : call gerarRGDHSA049(inicio, fim)
 activate CF
-CF -> CF : validar perfil
+CF -> CF : validar perfil (RESPONSAVEL)
 CF -> FS : query rececoes where dataHora in [inicio, fim]
 FS --> CF : receções + linhas + doadores + responsáveis
-CF -> CF : mapear para colunas do modelo\n(dia, produto/fornecedor, doc. receção,\nquantidade, C/NC x4, temperatura, obs., rubrica)
-CF -> CF : gerar PDF (modelo RGDHSA049)
-CF -> ST : guardar relatorios/rgdhsa049_{inicio}_{fim}.pdf
-ST --> CF : URL assinado
-CF --> UI : URL
+alt sem receções no intervalo
+  CF --> RP : erro SEM_DADOS
+  RP --> VM : Result.Empty
+  VM --> UI : "Não há receções no período"
+else com receções
+  CF -> CF : mapear para as colunas do modelo\n(dia, produto/fornecedor, doc. receção,\nquantidade, C/NC x4, temperatura, obs., rubrica)
+  CF -> CF : gerar PDF (A4 horizontal)
+  CF -> ST : guardar relatorios/rgdhsa049_{inicio}_{fim}.pdf
+  ST --> CF : URL assinado (temporário)
+  CF --> RP : URL
+  RP --> VM : Result.Success(url)
+  VM --> UI : abrir / partilhar PDF
+end
 deactivate CF
-UI --> RS : Abrir / partilhar PDF
 @enduml

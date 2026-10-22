@@ -5,13 +5,13 @@ actor "Administrador" as ADM
 actor "Responsável\nda instituição" as RESP
 rectangle "P5 Administração" {
   usecase "Gerir utilizadores e perfis" as G1
-  usecase "Gerir categorias" as G2
+  usecase "Gerir categorias\n(dias de aviso)" as G2
   usecase "Gerir tabela de congelação" as G2b
-  usecase "Gerir catálogo de produtos\ne apresentações" as G3
+  usecase "Gerir catálogo de produtos,\napresentações e stock mínimo" as G3
   usecase "Gerir células de prateleira" as G4
   usecase "Gerir equipamentos\ne zonas de frio" as G5
   usecase "Imprimir etiquetas QR\ndos locais" as G7
-  usecase "Definir parâmetros\n(dias de aviso, stock mínimo)" as G6
+  usecase "Definir parâmetros gerais\n(hora limite dos pedidos,\ndias de distribuição, hora de fecho)" as G6
 }
 ADM -- G1
 ADM -- G4

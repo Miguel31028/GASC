@@ -5,6 +5,7 @@ actor "Técnico de\nação social" as TEC
 actor "Responsável\nda instituição" as RESP
 actor "Operador de\narmazém" as OP
 actor "Utente" as UT
+actor "Tempo" as TMP
 rectangle "P3 Utentes e Entregas: cabazes e outros bens" {
   usecase "Agendar entrega de cabaz" as E1
   usecase "UC06 Entregar cabaz" as E2
@@ -13,6 +14,7 @@ rectangle "P3 Utentes e Entregas: cabazes e outros bens" {
   usecase "Entregar outros bens\n(roupa, higiene...)" as E5
   usecase "Registar falta / cancelamento" as E6
   usecase "Consultar próximas entregas" as E7
+  usecase "Marcar faltas\n(fim do dia)" as E8
 }
 TEC -- E1
 RESP -- E1
@@ -20,6 +22,7 @@ OP -- E2
 OP -- E5
 OP -- E6
 UT -- E7
+TMP -- E8
 E2 ..> E3 : <<include>>
 E2 ..> E4 : <<include>>
 E5 ..> E3 : <<include>>

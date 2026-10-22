@@ -16,10 +16,12 @@ entity "PEDIDO_REFEICAO" as PR {
   --
   * id_agregado <<FK>>
   * id_servico <<FK>>
+  * data
   * n_refeicoes
   * origem
   * estado
-  * registado_por
+  id_utilizador <<FK>>
+  uid_conta_utente <<FK>>
 }
 entity "LEVANTAMENTO" as LV {
   * id_levantamento <<PK>>

@@ -5,29 +5,32 @@ skinparam classAttributeIconSize 0
 class Agendamento {
   id : String
   dataHora : Timestamp
-  tipo : {CABAZ, OUTROS_BENS}
+  tipo : TipoAgendamento
   estado : EstadoAgendamento
   +reagendar(nova : Timestamp)
 }
 class Entrega {
   id : String
   dataHora : Timestamp
-  tipo : {CABAZ, OUTROS_BENS}
+  tipo : TipoAgendamento
   identificacaoManual : Boolean
   observacoes : String
 }
 class LinhaSaida {
   quantidade : Double
 }
+class SaidaCozinha
 class Agregado
 class Pessoa
 class Utilizador
 class Lote
 Agregado "1" -- "0..*" Agendamento
-Agendamento "1" -- "0..1" Entrega : concretizado por >
+Agendamento "0..1" -- "0..1" Entrega : concretizado por >
 Agregado "1" -- "0..*" Entrega
 Entrega "0..*" -- "1" Pessoa : levantada por >
 Entrega "0..*" -- "1" Utilizador : entregue por >
-Entrega "1" *-- "1..*" LinhaSaida
+Entrega "0..1" *-- "0..*" LinhaSaida
+SaidaCozinha "0..1" *-- "0..*" LinhaSaida
 LinhaSaida "0..*" -- "1" Lote
+note bottom of LinhaSaida : {xor} cada linha pertence a uma Entrega\nou a uma SaidaCozinha, nunca a ambas.
 @enduml

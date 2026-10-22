@@ -2,16 +2,19 @@
 !include _estilo.iuml
 hide empty description
 [*] --> PENDENTE_ARRUMACAO : receção confirmada
+[*] --> CONGELADO : congelação parcial\n(divisão de um lote DISPONIVEL)
 PENDENTE_ARRUMACAO --> DISPONIVEL : arrumado num local
-DISPONIVEL --> DISPONIVEL : saída parcial / transferência
-DISPONIVEL --> CONGELADO : congelar [categoria congelável]\n/ validade proposta pela regra
-CONGELADO --> CONGELADO : saída parcial
+PENDENTE_ARRUMACAO --> EXPIRADO : tarefa diária [validade < hoje]
+DISPONIVEL --> DISPONIVEL : saída parcial / transferência / ajuste
+DISPONIVEL --> CONGELADO : congelar total [categoria congelável]\n/ nova validade proposta pela tabela
+CONGELADO --> CONGELADO : saída parcial / transferência
 DISPONIVEL --> ESGOTADO : saída [quantidade = 0]
 CONGELADO --> ESGOTADO : saída [quantidade = 0]
 DISPONIVEL --> EXPIRADO : tarefa diária [validade < hoje]
 CONGELADO --> EXPIRADO : tarefa diária [validade < hoje]
 EXPIRADO --> DESCARTADO : registar desperdício
-DISPONIVEL --> DESCARTADO : desperdício (dano)
+DISPONIVEL --> DESCARTADO : desperdício (dano)\n[quantidade restante = 0]
+CONGELADO --> DESCARTADO : desperdício (dano)\n[quantidade restante = 0]
 ESGOTADO --> [*]
 DESCARTADO --> [*]
 @enduml

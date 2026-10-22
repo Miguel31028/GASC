@@ -12,8 +12,9 @@ class Lote {
   estado : EstadoLote
   congeladoNaOrigem : Boolean
   congeladoInterno : Boolean
+  dataEntrada : Timestamp
   +abater(qtd : Double)
-  +congelar(novaValidade : Date)
+  +congelar(qtd : Double, novaValidade : Date) : Lote
   +diasParaExpirar() : Int
 }
 class Movimento {
@@ -22,6 +23,7 @@ class Movimento {
   quantidade : Double
   dataHora : Timestamp
   referencia : String
+  justificacao : String
 }
 class Desperdicio {
   quantidade : Double
@@ -38,8 +40,12 @@ class Local
 class Utilizador
 Produto "1" -- "0..*" Lote
 Lote "0..*" -- "0..1" Local : guardado em >
+Lote "0..1" -- "0..*" Lote : origem (divisão) >
 Lote "1" -- "0..*" Movimento
-Lote "1" -- "0..*" Desperdicio
+Movimento "0..*" -- "0..1" Local : origem >
+Movimento "0..*" -- "0..1" Local : destino >
+Lote "0..1" -- "0..*" Desperdicio
+Produto "1" -- "0..*" Desperdicio
 Lote "0..1" -- "0..*" Alerta
 Produto "0..1" -- "0..*" Alerta
 Movimento "0..*" -- "1" Utilizador : registado por >

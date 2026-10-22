@@ -18,7 +18,7 @@ export const ecrasB = q => [
         ${li({ lead: '<span class="small b">10:00</span>', h: 'A-0131 · Carla Pereira', s: 'Cabaz mensal · 3 pessoas', trail: tag('Entregue', 'ok', 'check') })}
         ${li({ lead: '<span class="small b">10:30</span>', h: 'A-0142 · Maria Silva', s: 'Cabaz quinzenal · 4 pessoas · alergia', trail: tag('Agendado', 'info'), cls: 'sel' })}
         ${li({ lead: '<span class="small b">11:00</span>', h: 'A-0096 · Fernando Lopes', s: 'Outros bens · vestuário', trail: tag('Agendado', 'info') })}
-        ${li({ lead: '<span class="small b">11:30</span>', h: 'A-0127 · Rui Almeida', s: 'Cabaz semanal · 2 pessoas', trail: tag('Suspenso', 'warn') })}
+        ${li({ lead: '<span class="small b">11:30</span>', h: 'A-0127 · Rui Almeida', s: 'Cabaz semanal · agregado suspenso', trail: tag('Cancelado', 'neu') })}
         ${li({ lead: '<span class="small b">14:30</span>', h: 'A-0088 · Helena Sousa', s: 'Cabaz quinzenal · 2 pessoas', trail: tag('Agendado', 'info') })}
         ${li({ lead: '<span class="small b">15:00</span>', h: 'A-0075 · Abel Marques', s: 'Cabaz mensal · 1 pessoa', trail: tag('Agendado', 'info') })}
       </div>
@@ -54,7 +54,7 @@ export const ecrasB = q => [
       ${fefoRow(1, 'Batata branca', 'L-0801', '30/10', tag('granel', 'neu'), '3 kg')}
       ${fefoRow(1, 'Arroz agulha 1 kg', 'L-0733', '02/12', '', '2 UN')}
       ${fefoRow(1, 'Leite meio-gordo 1 L', 'L-0790', '10/11', '', '4 UN')}
-      ${fefoRow(1, 'Massa esparguete 500 g', 'L-0702', '15/03/27', '', '2 UN', `<div class="row small" style="gap:6px;margin-top:6px;color:var(--error)">${ic('warning', 's18')}Contém glúten · confirmar com o agregado</div>`)}
+      ${fefoRow(1, 'Massa esparguete 500 g', 'L-0702', '15/03/27', '', '0 UN', `<div class="row small" style="gap:6px;margin-top:6px;color:var(--error)">${ic('warning', 's18')}Contém glúten · excluída (alergia no agregado)</div>`)}
       ${fefoRow(1, 'Frango inteiro', 'L-0650', '10/01/27', tag('congelado', 'info'), '1 UN')}
     </div>
     <div class="bottombar">${btn('Rever entrega (9)', 'filled', 'arrow_forward')}</div>`) },
@@ -120,7 +120,7 @@ export const ecrasB = q => [
         <div class="row sb" style="margin-top:4px"><span>Hora limite para alterações</span><span class="b">hoje 16:00</span></div>
       </div>
       <div class="section">Sugestão para cozinhar hoje (FEFO)</div>
-      <div class="row wrap" style="gap:6px">${tag('Peito de frango 3,2 kg · 1 dia', 'warn')}${tag('Alface 1,3 kg · 3 dias', 'warn')}${tag('Natas 4 UN · 2 dias', 'warn')}</div>
+      <div class="row wrap" style="gap:6px">${tag('Peito de frango 3,2 kg · 1 dia', 'warn')}${tag('Alface 1,3 kg · 3 dias', 'warn')}${tag('Cenoura 10 kg · 7 dias', 'warn')}</div>
     </div>
     ${bnav('Refeições', NAV_COZINHA)}`) },
 
@@ -195,7 +195,7 @@ export const ecrasB = q => [
     ${appbar({ title: 'Indicadores', sub: 'Outubro de 2026', lead: 'arrow_back', actions: ['tune'] })}
     <div class="content" style="padding-top:4px">
       <div class="row"><div class="kpi"><div class="v">2 314</div><div class="l">Artigos recebidos</div></div><div class="kpi"><div class="v">96</div><div class="l">Cabazes entregues</div></div></div>
-      <div class="row"><div class="kpi"><div class="v">812</div><div class="l">Refeições servidas</div></div><div class="kpi"><div class="v" style="color:var(--warn)">1,9%</div><div class="l">Desperdício</div></div></div>
+      <div class="row"><div class="kpi"><div class="v">812</div><div class="l">Refeições servidas</div></div><div class="kpi"><div class="v" style="color:var(--warn);font-size:21px">86 UN · 12 kg</div><div class="l">Desperdício (quantidade)</div></div></div>
       <div class="card outlined" style="padding:12px">
         <div class="row sb"><span class="title-s">Entradas vs. saídas por semana</span></div>
         <div class="bars">
@@ -204,8 +204,8 @@ export const ecrasB = q => [
         <div class="row xs muted" style="gap:12px;margin-top:6px"><span class="row" style="gap:4px"><span style="width:10px;height:10px;background:var(--primary);border-radius:2px"></span>Entradas</span><span class="row" style="gap:4px"><span style="width:10px;height:10px;background:#e0a458;border-radius:2px"></span>Saídas</span></div>
       </div>
       <div class="card outlined" style="padding:12px">
-        <div class="title-s" style="margin-bottom:8px">Desperdício por categoria</div>
-        ${[['Lacticínios', 38], ['Padaria', 27], ['Frutas e legumes', 22], ['Charcutaria', 13]].map(([c, p]) => `<div class="row small" style="gap:8px;margin-top:6px"><span style="width:110px">${c}</span><div class="hbar grow"><div style="width:${p}%"></div></div><span style="width:32px;text-align:right">${p}%</span></div>`).join('')}
+        <div class="title-s" style="margin-bottom:8px">Desperdício por categoria (UN)</div>
+        ${[['Laticínios', 33], ['Padaria', 23], ['Frutas e legumes', 19], ['Charcutaria', 11]].map(([c, p]) => `<div class="row small" style="gap:8px;margin-top:6px"><span style="width:110px">${c}</span><div class="hbar grow"><div style="width:${p * 3}%"></div></div><span style="width:42px;text-align:right">${p} UN</span></div>`).join('')}
       </div>
     </div>`) },
 
@@ -216,7 +216,7 @@ export const ecrasB = q => [
     <div class="content np">
       <div class="list">
         ${li({ lead: 'store', leadCls: 'sq', h: '2026-0155 · Particular anónimo', s: '22/10 11:02 · 3 linhas · Ana Costa', trail: tag('editável', 'info', 'edit') })}
-        ${li({ lead: 'store', leadCls: 'sq', h: '2026-0153 · Pingo Doce – Barcelos', s: '22/10 10:15 · 5 linhas · 1 NC · Ana Costa', trail: tag('com saídas', 'neu', 'lock') })}
+        ${li({ lead: 'store', leadCls: 'sq', h: '2026-0153 · Pingo Doce – Barcelos', s: '22/10 10:15 · 5 linhas · 2 NC · Ana Costa', trail: tag('com saídas', 'neu', 'lock') })}
         ${li({ lead: 'store', leadCls: 'sq', h: '2026-0151 · Mercadona', s: '20/10 16:40 · 9 linhas · Vasco Brito', trail: tag('com saídas', 'neu', 'lock') })}
         ${li({ lead: 'campaign', leadCls: 'sq', h: '2026-0150 · Campanha escola', s: '19/10 09:30 · 12 linhas · Ana Costa', trail: tag('com saídas', 'neu', 'lock') })}
         ${li({ lead: 'store', leadCls: 'sq', h: '2026-0149 · Recheio – Barcelos', s: '09/10 15:10 · 7 linhas · Vasco Brito', trail: tag('com saídas', 'neu', 'lock') })}
@@ -273,7 +273,7 @@ export const ecrasB = q => [
     <div class="content np">
       <table class="t" style="margin:6px 0 0;font-size:12.5px">
         <tr><th style="padding-left:16px">Categoria</th><th>Cond.</th><th>Cong.</th><th>Aviso</th></tr>
-        ${[['Carne de aves', 'Refrig.', '+90 d', '2 d'], ['Carne de vaca/porco', 'Refrig.', '+120 d', '2 d'], ['Peixe fresco', 'Refrig.', '+90 d', '1 d'], ['Pão e padaria', 'Ambiente', '+30 d', '1 d'], ['Lacticínios', 'Refrig.', '—', '3 d'], ['Frutas e legumes', 'Ambiente', '—', '3 d'], ['Massas e arroz', 'Ambiente', '—', '30 d'], ['Conservas', 'Ambiente', '—', '30 d'], ['Higiene pessoal', 'Ambiente', '—', '—'], ['Vestuário', 'Ambiente', '—', '—']].map(([a, b, c, d]) =>
+        ${[['Carne de aves', 'Refrig.', '+90 d', '2 d'], ['Carne de vaca/porco', 'Refrig.', '+120 d', '2 d'], ['Peixe fresco', 'Refrig.', '+90 d', '1 d'], ['Pão e padaria', 'Ambiente', '+30 d', '1 d'], ['Laticínios', 'Refrig.', '—', '3 d'], ['Frutas e legumes', 'Ambiente', '—', '3 d'], ['Legumes de folha', 'Refrig.', '—', '2 d'], ['Massas e arroz', 'Ambiente', '—', '30 d'], ['Conservas', 'Ambiente', '—', '30 d'], ['Higiene pessoal', 'Ambiente', '—', '—'], ['Vestuário', 'Ambiente', '—', '—']].map(([a, b, c, d]) =>
           `<tr><td style="padding-left:16px">${a}</td><td>${b}</td><td>${c === '—' ? '<span class="muted">—</span>' : tag(c, 'info')}</td><td>${d}</td></tr>`).join('')}
       </table>
     </div>
@@ -294,7 +294,8 @@ export const ecrasB = q => [
         ${li({ lead: 'JR', h: 'Joana Reis', s: 'Técnico de ação social', trail: tag('Ativo', 'ok') })}
         ${li({ lead: 'MF', h: 'Manuel Fonseca', s: 'Cozinha', trail: tag('Ativo', 'ok') })}
         ${li({ lead: 'TP', h: 'Teresa Pinto', s: 'Administrador', trail: tag('Ativo', 'ok') })}
-        ${li({ lead: 'VB', h: 'Vasco Brito', s: 'Operador (voluntário)', trail: tag('Inativo', 'neu') })}
+        ${li({ lead: 'VB', h: 'Vasco Brito', s: 'Operador (voluntário)', trail: tag('Ativo', 'ok') })}
+        ${li({ lead: 'RL', h: 'Rita Lopes', s: 'Operador (voluntária)', trail: tag('Inativo', 'neu') })}
       </div>
     </div>
     <div class="scrim" style="top:420px"></div>
@@ -364,7 +365,7 @@ export const painelWeb = () => ({ id: 'M41', grupo: 'Painel web', titulo: 'Paine
     <div style="flex:2;background:#fff;border-radius:18px;padding:18px 24px;box-shadow:0 1px 3px rgba(0,0,0,.12)">
       <table class="t" style="font-size:20px">
         <tr><th style="font-size:16px">Hora</th><th style="font-size:16px">Agregado</th><th style="font-size:16px">Tipo</th><th style="font-size:16px">Estado</th></tr>
-        ${[['09:30', 'A-0119', 'Cabaz', ['Entregue', 'ok']], ['10:00', 'A-0131', 'Cabaz', ['Entregue', 'ok']], ['10:30', 'A-0142', 'Cabaz', ['A decorrer', 'warn']], ['11:00', 'A-0096', 'Outros bens', ['Agendado', 'info']], ['11:30', 'A-0127', 'Cabaz', ['Suspenso', 'neu']], ['14:30', 'A-0088', 'Cabaz', ['Agendado', 'info']], ['15:00', 'A-0075', 'Cabaz', ['Agendado', 'info']]].map(([h, a, t, [s, k]]) =>
+        ${[['09:30', 'A-0119', 'Cabaz', ['Entregue', 'ok']], ['10:00', 'A-0131', 'Cabaz', ['Entregue', 'ok']], ['10:30', 'A-0142', 'Cabaz', ['Agendado', 'info']], ['11:00', 'A-0096', 'Outros bens', ['Agendado', 'info']], ['11:30', 'A-0127', 'Cabaz', ['Cancelado', 'neu']], ['14:30', 'A-0088', 'Cabaz', ['Agendado', 'info']], ['15:00', 'A-0075', 'Cabaz', ['Agendado', 'info']]].map(([h, a, t, [s, k]]) =>
           `<tr><td style="padding:12px 4px;font-weight:500">${h}</td><td>${a}</td><td>${t}</td><td><span class="tag ${k}" style="font-size:16px;height:30px;padding:0 12px">${s}</span></td></tr>`).join('')}
       </table>
     </div>
@@ -381,24 +382,23 @@ export const painelWeb = () => ({ id: 'M41', grupo: 'Painel web', titulo: 'Paine
 // ---------------------------------------------------------------- PDF RGDHSA049
 export const pdfRgdhsa = () => {
   const rows = [
-    ['01', 'Leite m/g 1 L / Pingo Doce', 'DPM1/4100…', '12 UN', 1, 1, 1, 1, '5,0', '', 'AC'],
+    ['01', 'Leite m/g 1 L / Pingo Doce', 'DPM1/4100652210', '12 UN', 1, 1, 1, 1, '5,0', '', 'AC'],
     ['01', 'Arroz agulha 1 kg / Particular anónimo', '—', '10 UN', 1, 1, 1, 1, '—', '', 'AC'],
-    ['06', 'Alface frisada / Pingo Doce', 'DPM1/4101…', '1,324 kg', 1, 1, 1, 1, '4,0', '', 'AC'],
-    ['06', 'Leite Agros 35 cl / Pingo Doce', 'DPM1/4101…', '1 palete (30 UN)', 1, 1, 1, 0, '5,5', '2 emb. amolgadas', 'AC'],
-    ['06', 'Fiambre perna 200 g / Pingo Doce', 'DPM1/4101…', '2 UN', 1, 1, 1, 0, '6,0', 'Rejeitado', 'AC'],
-    ['09', 'Fiambre perna extra / Recheio', 'DRM1/3029…', '7 UN', 1, 1, 1, 1, '4,5', '', 'VB'],
-    ['09', 'Bacon naco 200 g / Recheio', 'DRM1/3029…', '8 UN', 1, 1, 1, 1, '4,5', '', 'VB'],
-    ['14', 'Feijão preto / Irmãdona', 'DON7004…', '1 UN', 1, 1, 1, 1, '—', '', 'AC'],
-    ['20', 'Frango inteiro / Mercadona', 'GT 2026/88…', '6 UN', 1, 1, 1, 1, '-18', 'Congelado', 'JR'],
-    ['20', 'Pescada congelada / Mercadona', 'GT 2026/88…', '4 kg', 1, 1, 1, 1, '-18', 'Congelado', 'JR'],
-    ['21', 'Massa esparguete 500 g / Campanha escola', '—', '24 UN', 1, 1, 1, 1, '—', '', 'AC'],
-    ['21', 'Grão-de-bico 845 g / Campanha escola', '—', '12 UN', 1, 1, 1, 1, '—', '', 'AC'],
-    ['21', 'Atum em óleo 120 g / Campanha escola', '—', '30 UN', 1, 1, 1, 1, '—', '', 'AC'],
-    ['22', 'Iogurte natural ×4 / Pingo Doce', 'DPM1/4101…', '6 UN', 1, 1, 1, 1, '4,0', '', 'AC'],
-    ['22', 'Maçã Gala 1,5 kg / Pingo Doce', 'DPM1/4101…', '3 UN', 1, 1, 1, 1, '—', '', 'AC'],
-    ['22', 'Pão de forma / Padaria Central', 'Lote 2210', '8 UN', 1, 1, 0, 1, '—', 'Bolor em 1 UN (rejeitada)', 'AC'],
-    ['22', 'Azeite 0,75 L / Particular (J. Ferreira)', '—', '2 UN', 1, 1, 1, 1, '—', '', 'AC'],
-    ['22', 'Cenoura granel / Produtor local', '—', '1 saco (10 kg)', 1, 1, 1, 1, '—', '', 'VB'],
+    ['02', 'Azeite 0,75 L / Particular (J. Ferreira)', '—', '2 UN', 1, 1, 1, 1, '—', '', 'AC'],
+    ['09', 'Fiambre perna extra / Recheio', 'DRM1/3029055669', '7 UN', 1, 1, 1, 1, '4,5', '', 'VB'],
+    ['09', 'Bacon naco 200 g / Recheio', 'DRM1/3029055669', '8 UN', 1, 1, 1, 1, '4,5', '', 'VB'],
+    ['14', 'Feijão preto / Irmãdona', 'DON70042026…', '1 UN', 1, 1, 1, 1, '—', '', 'AC'],
+    ['19', 'Massa esparguete 500 g / Campanha escola', '—', '24 UN', 1, 1, 1, 1, '—', '', 'AC'],
+    ['19', 'Grão-de-bico 845 g / Campanha escola', '—', '12 UN', 1, 1, 1, 1, '—', '', 'AC'],
+    ['19', 'Atum em óleo 120 g / Campanha escola', '—', '30 UN', 1, 1, 1, 1, '—', '', 'AC'],
+    ['20', 'Frango inteiro / Mercadona', 'GT 2026/8812', '6 UN', 1, 1, 1, 1, '-18', 'Congelado na origem', 'VB'],
+    ['20', 'Pescada congelada / Mercadona', 'GT 2026/8812', '4 kg', 1, 1, 1, 1, '-18', 'Congelado na origem', 'VB'],
+    ['22', 'Alface frisada / Pingo Doce', 'DPM1/4101774379', '1,324 kg', 1, 1, 1, 1, '4,0', '', 'AC'],
+    ['22', 'Maçã Gala 1,5 kg / Pingo Doce', 'DPM1/4101774379', '3 UN', 1, 1, 1, 1, '—', '', 'AC'],
+    ['22', 'Leite Agros 35 cl / Pingo Doce', 'DPM1/4101774379', '1 palete (30 UN)', 1, 1, 1, 0, '5,5', '2 emb. amolgadas (aceite)', 'AC'],
+    ['22', 'Iogurte natural ×4 / Pingo Doce', 'DPM1/4101774379', '6 UN', 1, 1, 1, 1, '4,0', '', 'AC'],
+    ['22', 'Fiambre perna 200 g / Pingo Doce', 'DPM1/4101774379', '2 UN', 1, 1, 1, 0, '6,0', 'Embalagem violada (rejeitado)', 'AC'],
+    ['22', 'Iogurte natural Danone / Particular anónimo', '—', '4 UN', 1, 1, 1, 1, '4,0', '', 'AC'],
   ];
   const cn = v => `<td style="text-align:center">${v ? 'X' : ''}</td><td style="text-align:center">${v ? '' : 'X'}</td>`;
   return { id: 'M42', grupo: 'Documentos gerados', titulo: 'RGDHSA049 gerado em PDF', wide: true, html: `

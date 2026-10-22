@@ -30,6 +30,7 @@ entity "LINHA_RECECAO" as LR {
   * id_rececao <<FK>>
   * id_produto <<FK>>
   id_apresentacao <<FK>>
+  id_lote <<FK>>
   * quantidade
   validade
   lote_fornecedor
@@ -63,5 +64,5 @@ UTZ ||--o{ REC
 REC ||--|{ LR
 PRD ||--o{ LR
 APR |o--o{ LR
-LR ||--o{ LOT
+LOT |o--|{ LR
 @enduml

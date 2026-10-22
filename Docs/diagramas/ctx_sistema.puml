@@ -1,15 +1,15 @@
 @startuml
 !include _estilo.iuml
 left to right direction
-actor "Doadores\n(particulares, empresas,\norganizações)" as DO
-actor "Colaboradores\n(armazém, cozinha,\ntécnicos, responsável)" as CO
+actor "Doadores\n(particulares, empresas,\norganizações, campanhas)" as DO
+actor "Colaboradores\n(administrador, responsável,\ntécnicos, armazém, cozinha)" as CO
 actor "Utentes e\nagregados" as UT
 actor "Equipa HACCP /\nentidades externas" as HA
 rectangle "Sistema de Gestão do\nEspaço Social (GASC)" as SIS
-DO --> SIS : bens doados,\nguias de transporte
-CO --> SIS : receções, arrumações,\nentregas, refeições
-SIS --> CO : sugestões, alertas,\nindicadores
-UT --> SIS : pedidos de refeição,\nidentificação (QR)
-SIS --> UT : cabazes, refeições,\nagenda, credencial
-SIS --> HA : RGDHSA049,\nrelatórios
+DO --> SIS : dados da doação,\nguia de transporte digitalizada
+CO --> SIS : registos de receção, arrumação,\nentregas, refeições e configuração
+SIS --> CO : sugestões, alertas,\nindicadores, relatórios
+UT --> SIS : pedidos de refeição,\ncredencial QR
+SIS --> UT : agenda de entregas,\nestado dos pedidos, credencial
+SIS --> HA : RGDHSA049,\nrelatórios de atividade
 @enduml

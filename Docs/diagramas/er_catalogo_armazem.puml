@@ -9,7 +9,7 @@ entity "CATEGORIA" as CAT {
   * tipo_bem
   * condicao_armazenamento
   * congelavel
-  * dias_aviso
+  dias_aviso
 }
 entity "REGRA_CONGELACAO" as RC {
   * id_regra <<PK>>
@@ -30,6 +30,7 @@ entity "PRODUTO" as PRD {
   * tem_validade
   tipo_data_validade
   stock_minimo
+  codigo_barras
   tamanho
   genero
   * ativo

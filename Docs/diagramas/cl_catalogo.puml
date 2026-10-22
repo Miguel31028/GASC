@@ -8,7 +8,7 @@ class Categoria {
   tipoBem : TipoBem
   condicao : CondicaoArmazenamento
   congelavel : Boolean
-  diasAviso : Int
+  diasAviso : Int [0..1]
 }
 class RegraCongelacao {
   diasExtensao : Int
@@ -27,6 +27,7 @@ class Produto {
   stockMinimo : Double
   tamanho : String
   genero : String
+  codigoBarras : String
   ativo : Boolean
   +stockAtual() : Double
   +converter(qtd : Double, a : Apresentacao) : Double

@@ -68,6 +68,7 @@ export const ecrasA = q => [
         ${li({ lead: 'kitchen', leadCls: 'plain', h: 'Equipamentos de frio', cls: 'dense' })}
         ${li({ lead: 'category', leadCls: 'plain', h: 'Categorias e congelação', cls: 'dense' })}
         ${li({ lead: 'manage_accounts', leadCls: 'plain', h: 'Utilizadores e perfis', cls: 'dense' })}
+        ${li({ lead: 'settings', leadCls: 'plain', h: 'Parâmetros gerais', cls: 'dense' })}
       </div>
       <div class="divider"></div>
       ${li({ lead: 'logout', leadCls: 'plain', h: 'Terminar sessão', cls: 'dense' })}
@@ -90,7 +91,7 @@ export const ecrasA = q => [
         <div class="grow"><div class="title-s">guia_4101774379.jpg</div><div class="small muted">Fotografada às 10:14 · 1,2 MB</div></div>
         <div class="ib">${ic('delete')}</div>
       </div>
-      ${btn('Fotografar outra página', 'outlined', 'photo_camera')}
+      <div class="row">${btn('Fotografar página', 'outlined', 'photo_camera', 'grow')}${btn('Anexar ficheiro', 'outlined', 'attach_file', 'grow')}</div>
       ${field('Temperatura à chegada (ºC)', '4,0', { icon: 'device_thermostat' })}
     </div>
     <div class="bottombar">${btn('Seguinte', 'filled', 'arrow_forward')}</div>`) },
@@ -99,12 +100,12 @@ export const ecrasA = q => [
     ${appbar({ title: 'Adicionar produto', sub: 'Receção 2026-0153 · Pingo Doce', lead: 'arrow_back', actions: ['barcode_scanner'] })}
     <div class="content np" style="gap:0">
       <div style="padding:4px 16px 10px"><div class="search">${ic('search')}<span class="grow">leite meio</span>${ic('close')}</div></div>
-      <div class="row wrap" style="padding:0 16px 8px;gap:6px">${chip('Todos', true)}${chip('Lacticínios')}${chip('Bebidas')}${chip('Recentes', false, 'history')}</div>
+      <div class="row wrap" style="padding:0 16px 8px;gap:6px">${chip('Todos', true)}${chip('Laticínios')}${chip('Bebidas')}${chip('Recentes', false, 'history')}</div>
       <div class="list">
-        ${li({ lead: 'LM', h: 'Leite meio-gordo <b>Mimosa</b> 1 L', s: 'Lacticínios · UN · 3 apresentações', trail: 'stock 46 UN' })}
-        ${li({ lead: 'LM', h: 'Leite meio-gordo <b>Pingo Doce</b> 1 L', s: 'Lacticínios · UN · 2 apresentações', trail: 'stock 12 UN' })}
-        ${li({ lead: 'LM', h: 'Leite meio-gordo <b>Agros</b> 35 cl', s: 'Lacticínios · UN · palete 30 UN', trail: 'stock 0 UN', cls: 'sel' })}
-        ${li({ lead: 'LM', h: 'Leite meio-gordo s/ lactose <b>Mimosa</b> 1 L', s: 'Lacticínios · UN', trail: 'stock 6 UN' })}
+        ${li({ lead: 'LM', h: 'Leite meio-gordo <b>Mimosa</b> 1 L', s: 'Laticínios · UN · 3 apresentações', trail: 'stock 46 UN' })}
+        ${li({ lead: 'LM', h: 'Leite meio-gordo <b>Pingo Doce</b> 1 L', s: 'Laticínios · UN · 2 apresentações', trail: 'stock 12 UN' })}
+        ${li({ lead: 'LM', h: 'Leite meio-gordo <b>Agros</b> 35 cl', s: 'Laticínios · UN · palete 30 UN', trail: 'stock 0 UN', cls: 'sel' })}
+        ${li({ lead: 'LM', h: 'Leite meio-gordo s/ lactose <b>Mimosa</b> 1 L', s: 'Laticínios · UN', trail: 'stock 6 UN' })}
       </div>
       <div class="card info row" style="margin:12px 16px;gap:10px">${ic('lightbulb')}<div class="small">Não encontra o produto? Crie-o: o catálogo cresce à medida que as receções são registadas.</div></div>
       <div style="padding:0 16px">${btn('Criar novo produto', 'tonal', 'add', 'block')}</div>
@@ -116,14 +117,14 @@ export const ecrasA = q => [
     <div class="sheet" style="top:96px">
       <div class="handle"></div>
       <div class="title-m">Novo produto</div>
-      ${field('Nome *', 'Batata branca', { cls: 'focus' })}
-      <div class="row">${field('Marca', 'Sem marca', {}).replace('class="field ', 'class="field grow ')}${field('Formato', 'Saco 50 kg').replace('class="field ', 'class="field grow ')}</div>
+      ${field('Nome *', 'Abóbora manteiga', { cls: 'focus' })}
+      <div class="row">${field('Marca', 'Sem marca', {}).replace('class="field ', 'class="field grow ')}${field('Formato', 'Granel').replace('class="field ', 'class="field grow ')}</div>
       ${field('Categoria *', 'Frutas e legumes', { trail: 'arrow_drop_down', support: 'Ambiente · não congelável · aviso 3 dias' })}
       <div class="label">Unidade de stock</div>
       ${seg(['UN', 'KG', 'L'], 'KG')}
       <div class="row sb"><div><div class="title-s">Tem data de validade</div><div class="small muted">Desligar para vestuário e outros bens</div></div><div class="switch on"></div></div>
       <div class="label">Apresentações</div>
-      <div class="row wrap" style="gap:6px">${chip('Quilograma (1 kg)', true)}${chip('Saco = 50 kg', true)}${chip('Adicionar', false, 'add')}</div>
+      <div class="row wrap" style="gap:6px">${chip('Quilograma (1 kg)', true)}${chip('Caixa = 20 kg', true)}${chip('Adicionar', false, 'add')}</div>
       ${field('Stock mínimo (kg)', '20')}
       <div class="row" style="justify-content:flex-end;gap:8px">${btn('Cancelar', 'text')}${btn('Criar produto', 'filled')}</div>
     </div>`) },
@@ -190,7 +191,7 @@ export const ecrasA = q => [
       <div class="card ok row" style="margin:6px 16px 10px;gap:10px">${ic('check_circle', 'fill')}<div class="small"><b>Receção registada.</b> Arrume os lotes seguindo as sugestões de localização.</div></div>
       <div class="list">
         ${li({ lead: 'ac_unit', leadCls: 'sq', h: 'Iogurte natural PD ×4 · 6 UN', s: 'Refrigerado · val. 24/10 · sugerido ARCA3-C1', trail: tag('2 dias', 'warn') })}
-        ${li({ lead: 'eco', leadCls: 'sq', h: 'Alface frisada PD · 1,324 kg', s: 'Refrigerado · sugerido ARCA3-D2', trail: tag('3 dias', 'warn') })}
+        ${li({ lead: 'eco', leadCls: 'sq', h: 'Alface frisada PD · 1,324 kg', s: 'Legumes de folha · refrigerado · sugerido ARCA3-D2', trail: tag('3 dias', 'warn') })}
         ${li({ lead: 'water_full', leadCls: 'sq', h: 'Leite meio-gordo Agros · 30 UN', s: 'Ambiente · sugerido 004-01-02', trail: '' })}
         ${li({ lead: 'nutrition', leadCls: 'sq', h: 'Maçã Gala saco 1,5 kg · 3 UN', s: 'Ambiente · sugerido 001-03-01', trail: '' })}
       </div>
@@ -249,7 +250,7 @@ export const ecrasA = q => [
     ${bnav('Stock')}`) },
 
   { id: 'M14', grupo: 'Stock e validades', titulo: 'Detalhe do produto e lotes (FEFO)', html: phone(`
-    ${appbar({ title: 'Iogurte natural', sub: 'Lacticínios · refrigerado · não congelável', lead: 'arrow_back', actions: ['edit', 'more_vert'] })}
+    ${appbar({ title: 'Iogurte natural', sub: 'Laticínios · refrigerado · não congelável', lead: 'arrow_back', actions: ['edit', 'more_vert'] })}
     <div class="content" style="padding-top:6px">
       <div class="row">
         <div class="kpi"><div class="v">10 UN</div><div class="l">Stock disponível</div></div>

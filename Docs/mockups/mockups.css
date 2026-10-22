@@ -243,5 +243,5 @@ table.t td { padding: 7px 4px; border-bottom: 1px solid #e3e9e5; }
 /* ecrãs de grande formato (web e PDF) */
 .wide { width: 1280px; height: 720px; background: #f3f7f5; display: flex; flex-direction: column; font-family: Roboto; overflow: hidden; border: 1px solid #c9d1cd; }
 .a4 { width: 1123px; height: 794px; background: #fff; padding: 34px 40px; font-family: Arial, sans-serif; color: #000; border: 1px solid #bbb; }
-.li.dense { min-height: 46px; padding: 4px 16px; }
+.li.dense { min-height: 42px; padding: 2px 16px; }
 .li.dense .lead { height: 30px; }

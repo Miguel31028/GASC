@@ -5,6 +5,7 @@ actor "Técnico de\nação social" as TEC
 actor "Cozinha" as COZ
 actor "Responsável\nda instituição" as RESP
 actor "Utente" as UT
+actor "Tempo" as TMP
 rectangle "P4 Refeições" {
   usecase "UC07 Registar pedido de refeição\n(dia, tipo, n.º de refeições)" as M1
   usecase "Registar pedido recorrente\n(por dia da semana)" as M2
@@ -14,6 +15,7 @@ rectangle "P4 Refeições" {
   
   
   usecase "UC09 Registar levantamento\nde refeição" as M8
+  usecase "Fechar serviço\n(marcar não levantados)" as M10
   usecase "Identificar quem levanta\n(QR / pesquisa)" as M9
 }
 TEC -- M1
@@ -24,6 +26,8 @@ TEC -- M3
 RESP -- M4
 COZ -- M5
 COZ -- M8
+COZ -- M10
+TMP -- M10
 M2 ..> M1 : <<extend>>
 M8 ..> M9 : <<include>>
 @enduml
