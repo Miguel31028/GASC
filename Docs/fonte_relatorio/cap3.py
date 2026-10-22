@@ -136,7 +136,7 @@ RN = [
     ('RN-01', 'Lote', 'Um lote agrupa unidades do mesmo produto (nome, marca e formato) com a mesma validade e o mesmo estado de congelação. Linhas iguais da mesma receção fundem-se num lote; qualquer diferença origina um lote distinto.'),
     ('RN-02', 'Unidades', 'Cada produto tem uma unidade de stock (UN, KG ou L). As apresentações têm um fator de conversão (ex.: palete = 30 UN). Nos produtos a granel o stock é contado em peso e em volumes: a saída em kg reduz o peso e o volume mantém-se até o peso chegar a zero (ex.: entra 1 UN de batatas com 50 kg, saem 10 kg, ficam 1 UN com 40 kg).'),
     ('RN-03', 'Células', 'O código de uma célula tem o formato xxx-xx-xx: três dígitos para a coluna, dois para a linha e dois para o andar. A ordenação é feita por coluna, depois linha e depois andar.'),
-    ('RN-04', 'Zonas de frio', 'Uma zona é identificada pelo código do equipamento, pelo lado (D – direita, C – centro, E – esquerda) e pelo nível (ex.: ARCA1-D2). O número de zonas varia por equipamento, mas não existem lados para além de D, C e E.'),
+    ('RN-04', 'Zonas de frio', 'Uma zona é identificada pelo código do equipamento, pelo lado (D – direita, C – centro, E – esquerda) e pelo nível (ex.: ARCA1-D1). O número de zonas varia por equipamento, mas não existem lados para além de D, C e E.'),
     ('RN-05', 'Uso preferencial', 'O uso preferencial de um equipamento de frio por categoria (ex.: arca 1 para aves) é uma sugestão, nunca uma restrição.'),
     ('RN-06', 'Sugestão de local', 'O sistema sugere primeiro um local não cheio que já contenha o mesmo produto; na falta deste, o local não cheio mais próximo, na ordenação, do último local usado pelo produto ou pela categoria (algoritmo na secção 4.6).'),
     ('RN-07', 'FEFO', 'As saídas sugerem os lotes por ordem crescente de validade, colocando no fim os lotes congelados internamente. Os produtos já congelados na origem são tratados como não congelados.'),
@@ -160,7 +160,7 @@ PERM = [
     ('Células e equipamentos de frio', 'G', 'G', '–', 'C', 'C', '–'),
     ('Receção e arrumação', 'C', 'G', '–', 'G', '–', '–'),
     ('Stock, congelação e desperdício', 'C', 'G', 'C', 'G', 'C', '–'),
-    ('Agregados e pessoas', 'C', 'G', 'G', 'C', 'C', 'P'),
+    ('Agregados e pessoas', '–', 'G', 'G', 'I', 'I', 'P'),
     ('Periodicidade dos cabazes', '–', 'G', 'C', 'C', '–', '–'),
     ('Agendamentos', '–', 'G', 'G', 'C', '–', 'P'),
     ('Entregas de cabazes e outros bens', '–', 'G', 'C', 'G', '–', 'P'),
@@ -193,7 +193,7 @@ def cap3(r, D):
     r.para(f'A Tabela {n} define as permissões de cada perfil por área funcional. As permissões são verificadas no servidor, pelas regras de segurança do Firestore e pelas Cloud Functions, e não apenas na interface (ver secção 6.4).')
     r.table(['Área funcional', 'ADM', 'RESP', 'TEC', 'OP', 'COZ', 'UT'],
             [list(p) for p in PERM],
-            'Matriz de permissões por perfil (G – gerir; C – consultar; P – apenas dados do próprio agregado; – sem acesso).',
+            'Matriz de permissões por perfil (G – gerir; C – consultar; I – apenas os dados necessários à identificação e à entrega, obtidos pela leitura da credencial; P – apenas dados do próprio agregado; – sem acesso).',
             widths=[4.2, 1, 1, 1, 1, 1, 1], first_bold=True)
 
     r.h2('Requisitos funcionais')

@@ -12,7 +12,7 @@ UCS = [
         'Atores': 'Operador de armazém.',
         'Descrição': 'Guarda um lote num local físico seguindo a sugestão do sistema.',
         'Pré-condições': 'Existe pelo menos um lote no estado PENDENTE_ARRUMACAO.',
-        'Pós-condições': 'Lote associado a um local e no estado DISPONIVEL (ou CONGELADO, se for congelado na origem); movimento de ARRUMACAO registado.',
+        'Pós-condições': 'Lote associado a um local e no estado DISPONIVEL (os produtos congelados na origem mantêm o indicador `congeladoOrigem`); movimento de ARRUMACAO registado.',
         'Fluxo principal': '1. O operador seleciona o lote.\n2. O sistema sugere um local (RN-06).\n3. O operador desloca-se ao local e lê o QR.\n4. O sistema valida o código e associa o lote ao local.',
         'Fluxos alternativos': '3a. O local está cheio: o operador assinala-o e o sistema marca o local como cheio e sugere o seguinte mais próximo.\n3b. O operador prefere outro local: lê o QR desse local ou escolhe-o numa lista.\n4a. O código lido não corresponde a um local ativo: é apresentado um erro.',
         'Requisitos': 'RF-ARM-04 a RF-ARM-06; RN-03 a RN-06.',

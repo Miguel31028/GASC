@@ -5,15 +5,17 @@ actor "Operador" as OP
 actor "Pessoa que\nlevanta" as PL
 participant "App Android\n(UI Entrega)" as UI
 participant "EntregaViewModel" as VM
-participant "Cloud Function\nregistarEntrega" as CF
+participant "Cloud Functions\n(identificarPessoa,\nregistarEntrega)" as CF
 database "Cloud Firestore" as FS
 
 OP -> UI : Abrir agendamentos do dia
 PL -> OP : Apresenta QR (papel / app)
 OP -> UI : Ler QR
 UI -> VM : identificar(token)
-VM -> FS : query credenciais where token == x
-FS --> VM : pessoa + agregado
+VM -> CF : call identificarPessoa(token)
+CF -> FS : credenciais/{token} → pessoa, agregado
+CF -> FS : registar acesso (auditoria)
+CF --> VM : pessoa, agregado, autorizado
 alt pessoa não autorizada ou agregado inativo
   VM --> UI : erro "Não autorizado"
   UI --> OP : mostrar motivo

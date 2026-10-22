@@ -161,46 +161,51 @@
   },
   {
     "id": "M33",
-    "grupo": "Administração",
-    "titulo": "Células de prateleira"
+    "grupo": "Relatórios e indicadores",
+    "titulo": "Histórico de receções e entregas"
   },
   {
     "id": "M34",
     "grupo": "Administração",
-    "titulo": "Equipamento de frio e zonas"
+    "titulo": "Células de prateleira"
   },
   {
     "id": "M35",
     "grupo": "Administração",
-    "titulo": "Categorias e tabela de congelação"
+    "titulo": "Equipamento de frio e zonas"
   },
   {
     "id": "M36",
     "grupo": "Administração",
-    "titulo": "Utilizadores e perfis"
+    "titulo": "Categorias e tabela de congelação"
   },
   {
     "id": "M37",
-    "grupo": "App Utente",
-    "titulo": "App Utente – entrada por telemóvel"
+    "grupo": "Administração",
+    "titulo": "Utilizadores e perfis"
   },
   {
     "id": "M38",
     "grupo": "App Utente",
-    "titulo": "App Utente – início e credencial"
+    "titulo": "App Utente – entrada por telemóvel"
   },
   {
     "id": "M39",
     "grupo": "App Utente",
-    "titulo": "App Utente – pedidos de refeição"
+    "titulo": "App Utente – início e credencial"
   },
   {
     "id": "M40",
+    "grupo": "App Utente",
+    "titulo": "App Utente – pedidos de refeição"
+  },
+  {
+    "id": "M41",
     "grupo": "Painel web",
     "titulo": "Painel de agenda para ecrã de parede"
   },
   {
-    "id": "M41",
+    "id": "M42",
     "grupo": "Documentos gerados",
     "titulo": "RGDHSA049 gerado em PDF"
   }

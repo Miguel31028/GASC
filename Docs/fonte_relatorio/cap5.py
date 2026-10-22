@@ -35,7 +35,7 @@ DICT = {
     'LOCAL': [
         ('id_local', 'String', 'S', 'Identificador.'),
         ('tipo', 'TipoLocal', 'S', 'CELULA ou ZONA_FRIO.'),
-        ('codigo', 'String', 'S', 'Único. Célula: xxx-xx-xx; zona: EQUIPAMENTO-LadoNível (ex.: ARCA1-D2). Codificado no QR.'),
+        ('codigo', 'String', 'S', 'Único. Célula: xxx-xx-xx; zona: EQUIPAMENTO-LadoNível (ex.: ARCA1-D1). Codificado no QR.'),
         ('coluna, linha, andar', 'Int', 'N', 'Componentes do código da célula.'),
         ('id_equipamento, lado, nivel', 'String/Char/Int', 'N', 'Componentes da zona de frio (lado ∈ {D, C, E}).'),
         ('cheio', 'Boolean', 'S', 'Assinalado pelo operador; excluído das sugestões.'),
@@ -43,7 +43,7 @@ DICT = {
     ],
     'EQUIPAMENTO_FRIO': [
         ('id_equipamento', 'String', 'S', 'Identificador.'),
-        ('codigo', 'String', 'S', 'Código curto (ex.: ARCA1, FRIG1).'),
+        ('codigo', 'String', 'S', 'Código curto (ex.: ARCA1, ARCA3).'),
         ('nome', 'String', 'S', 'Descrição.'),
         ('tipo', 'TipoEquipamento', 'S', 'CONGELADOR ou FRIGORIFICO.'),
         ('categorias_preferenciais', 'Lista', 'N', 'Categorias de uso preferencial (tabela EQUIPAMENTO_CATEGORIA).'),
@@ -85,7 +85,7 @@ DICT = {
         ('validade_original', 'Date', 'N', 'Validade de origem.'),
         ('qtd_inicial, qtd_atual', 'Decimal', 'S', 'Quantidades na unidade de stock; qtd_atual ≥ 0.'),
         ('volumes', 'Int', 'N', 'Número de volumes (produtos a granel).'),
-        ('estado', 'EstadoLote', 'S', 'Ver Figura do diagrama de estados do lote.'),
+        ('estado', 'EstadoLote', 'S', 'Ciclo de vida descrito na secção 4.4.'),
         ('congelado_origem, congelado_interno', 'Boolean', 'S', 'Origem da congelação (relevante para FEFO).'),
         ('data_entrada', 'Timestamp', 'S', 'Critério de desempate FEFO.'),
     ],
@@ -137,17 +137,33 @@ DICT = {
         ('id_pessoa', 'String', 'S', 'Titular.'),
         ('suporte, emitida_em, ativa', 'Vários', 'S', 'PAPEL ou APP; data; estado.'),
     ],
+    'EQUIPAMENTO_CATEGORIA': [
+        ('id_equipamento, id_categoria', 'String', 'S', 'Chave composta; associa um equipamento de frio a uma categoria de uso preferencial (sugestão).'),
+    ],
+    'CONSENTIMENTO': [
+        ('id_consentimento, id_agregado', 'String', 'S', 'Identificação e agregado.'),
+        ('data_hora', 'Timestamp', 'S', 'Momento em que o consentimento foi prestado.'),
+        ('finalidades', 'String', 'S', 'Finalidades consentidas (ex.: gestão do apoio alimentar, contacto por SMS).'),
+        ('url_documento', 'String', 'N', 'Digitalização do documento assinado.'),
+    ],
+    'CONTA_UTENTE': [
+        ('uid', 'String', 'S', 'UID do Firebase Authentication (autenticação por telefone).'),
+        ('id_pessoa', 'String', 'S', 'Pessoa associada (única).'),
+        ('telefone', 'String', 'S', 'Número de telemóvel validado por SMS.'),
+    ],
     'AGENDAMENTO / ENTREGA / LINHA_SAIDA': [
         ('AGENDAMENTO.data_hora, tipo, estado', 'Vários', 'S', 'Data prevista, CABAZ ou OUTROS_BENS, estado.'),
         ('ENTREGA.id_pessoa_levantou, id_utilizador', 'String', 'S', 'Quem levantou e quem entregou.'),
         ('ENTREGA.identificacao_manual', 'Boolean', 'S', 'Verdadeiro se não foi usado o QR.'),
         ('LINHA_SAIDA.id_lote, quantidade', 'String/Decimal', 'S', 'Lote e quantidade abatida.'),
+        ('LINHA_SAIDA.id_entrega / id_saida_cozinha', 'String', 'C', 'Exatamente um dos dois é preenchido (restrição de exclusividade).'),
     ],
-    'SERVICO_REFEICAO / PEDIDO_REFEICAO / LEVANTAMENTO': [
+    'SERVICO_REFEICAO / PEDIDO_REFEICAO / LEVANTAMENTO / SAIDA_COZINHA': [
         ('SERVICO_REFEICAO.data, tipo, aberto', 'Vários', 'S', 'Dia, ALMOCO ou JANTAR, se aceita pedidos.'),
         ('SERVICO_REFEICAO.total_previsto, total_confecionado', 'Int', 'N', 'Totais do dia.'),
         ('PEDIDO_REFEICAO.n_refeicoes, origem, estado', 'Vários', 'S', 'Quantidade, canal (BALCAO, APP_UTENTE, TECNICO) e estado.'),
-        ('LEVANTAMENTO.n_entregues, justificacao_excecao', 'Int/String', 'S/N', 'Refeições entregues e justificação de exceção.'),
+        ('LEVANTAMENTO.n_entregues, justificacao_excecao', 'Int/String', 'S/N', 'Refeições entregues e justificação de exceção (obrigatória quando não há pedido).'),
+        ('SAIDA_COZINHA.id_servico, id_utilizador, data_hora', 'Vários', 'S', 'Serviço a que se destinam os produtos, autor e momento.'),
     ],
 }
 

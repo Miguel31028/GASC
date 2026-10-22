@@ -25,7 +25,7 @@ def cap6(r, D):
     n = r.next_fig()
     r.para(f'A Figura {n} apresenta a arquitetura lógica em três camadas: clientes, backend Firebase e serviços externos previstos para a evolução futura. Os clientes comunicam com o backend através dos SDK do Firebase, sobre HTTPS.')
     r.figure(f'{D}/arq_componentes.png', 'Arquitetura lógica do sistema.', max_h=10)
-    r.para('As leituras são feitas diretamente no Firestore, com subscrições em tempo real filtradas pelas regras de segurança. As escritas que afetam o stock ou que envolvem várias entidades (receção, arrumação, congelação, entrega, saída para a cozinha, desperdício) são feitas através de Cloud Functions do tipo *callable*. Estas validam o perfil do utilizador, aplicam as regras de negócio e executam a operação numa transação. As escritas simples de dados mestre (por exemplo, editar um agregado) podem ser feitas diretamente pelo cliente, protegidas pelas regras de segurança.')
+    r.para('As leituras são feitas diretamente no Firestore, com subscrições em tempo real filtradas pelas regras de segurança. As escritas que afetam o stock ou que envolvem várias entidades (receção, arrumação, marcação de local cheio, congelação, entrega, saída para a cozinha, desperdício, levantamento de refeições) e a resolução das credenciais QR (`identificarPessoa`) são feitas através de Cloud Functions do tipo *callable*. Os totais derivados, como o número de refeições previstas de um serviço, são mantidos por funções acionadas por eventos do Firestore (*triggers*). Estas validam o perfil do utilizador, aplicam as regras de negócio e executam a operação numa transação. As escritas simples de dados mestre (por exemplo, editar um agregado) podem ser feitas diretamente pelo cliente, protegidas pelas regras de segurança.')
     n = r.next_fig()
     r.para(f'A Figura {n} mostra a implantação física. Inclui o posto biométrico previsto como melhoria futura, num computador fixo.')
     r.figure(f'{D}/arq_implantacao.png', 'Diagrama de implantação.', max_h=8)
@@ -53,7 +53,7 @@ pt.gasc.gestao
     r.para('O sistema trata dados pessoais de pessoas em situação de vulnerabilidade, incluindo informação de saúde (alergias e restrições alimentares). Por isso, a segurança e a conformidade com o Regulamento Geral sobre a Proteção de Dados (Regulamento (UE) 2016/679) são requisitos estruturais. As medidas previstas são:')
     r.bullets([
         '**Autorização no servidor:** os perfis são atribuídos como *custom claims* no token do Firebase Authentication e verificados pelas *Security Rules* e pelas Cloud Functions. A interface limita-se a esconder o que o perfil não pode fazer.',
-        '**Princípio do menor privilégio:** cada perfil acede apenas às coleções de que necessita (Tabela da matriz de permissões); o utente acede apenas aos dados do seu agregado.',
+        '**Princípio do menor privilégio:** cada perfil acede apenas às coleções de que necessita (matriz de permissões da secção 3.2); o utente acede apenas aos dados do seu agregado.',
         '**Credenciais QR sem dados pessoais:** o QR contém um *token* aleatório que só é resolvido por uma Cloud Function, que regista o acesso.',
         '**Minimização e finalidade:** só são recolhidos os dados necessários; o consentimento e as finalidades ficam registados por agregado.',
         '**Direitos dos titulares:** funções de exportação (acesso e portabilidade) e de anonimização (apagamento) que preservam as estatísticas agregadas.',
@@ -101,6 +101,20 @@ service cloud.firestore {
         ['7', 'RGDHSA049 em PDF, histórico, indicadores, exportações, painel web.', '2 sem.', 'Relatórios.'],
         ['8', 'App Utente; testes de aceitação e de usabilidade; correções; formação.', '3 sem.', 'Versão 1.0 (MVP).'],
     ], 'Plano de iterações.', widths=[1.1, 5.4, 1.2, 2.4])
+
+    r.h2('Riscos')
+    n = r.next_tab()
+    r.para(f'A Tabela {n} identifica os principais riscos do projeto, avaliados qualitativamente quanto à probabilidade e ao impacto, e as medidas de mitigação previstas.')
+    r.table(['ID', 'Risco', 'Prob.', 'Impacto', 'Mitigação'], [
+        ['R01', 'Baixa adesão dos colaboradores e voluntários (literacia digital variável).', 'Média', 'Alto', 'Interface simples e orientada à tarefa, validação dos protótipos, formação curta e período em paralelo com o papel.'],
+        ['R02', 'Má qualidade dos dados do catálogo (produtos duplicados), que começa vazio.', 'Alta', 'Médio', 'Sugestão de produtos semelhantes na criação (RF-CAT-07), revisão periódica pelo Responsável.'],
+        ['R03', 'Incidente de segurança com dados pessoais de utentes.', 'Baixa', 'Alto', 'Autorização no servidor, menor privilégio, auditoria, dados na UE, avaliação de impacto antes da biometria.'],
+        ['R04', 'Perda ou roubo de um dispositivo pessoal com sessão ativa.', 'Média', 'Médio', 'Desativação remota do utilizador, ausência de dados sensíveis fora da cache, bloqueio de ecrã recomendado.'],
+        ['R05', 'Dependência do Firebase (custos e dependência do fornecedor).', 'Baixa', 'Médio', 'Alertas de orçamento, camada de repositórios que isola o acesso a dados, exportações regulares.'],
+        ['R06', 'Alargamento do âmbito durante o desenvolvimento.', 'Alta', 'Médio', 'Priorização MoSCoW, iterações curtas com validação e registo das novas ideias como trabalho futuro.'],
+        ['R07', 'Etiquetas QR danificadas ou ilegíveis nas arcas e prateleiras.', 'Média', 'Baixo', 'Etiquetas plastificadas, reimpressão a partir da aplicação e seleção manual do local como alternativa.'],
+        ['R08', 'Divergência entre o stock registado e o físico.', 'Média', 'Médio', 'Confirmação por QR, transações atómicas, ajustes de inventário justificados e contagens periódicas.'],
+    ], 'Riscos do projeto e medidas de mitigação.', widths=[0.8, 3.4, 1.0, 1.1, 4.0])
 
 
 def cap7(r, D):
@@ -195,7 +209,8 @@ def cap9(r, D):
         f'Este documento apresentou a análise e modelação de um sistema de informação para a gestão do Espaço Social do GASC, no âmbito do projeto Barcelos Solidário. Partindo da descrição do problema e de várias rondas de clarificação com a instituição, foram documentados os atores e as permissões, {N_RF} requisitos funcionais organizados por módulo e priorizados, dezassete requisitos não funcionais e dezanove regras de negócio que traduzem com precisão a realidade do armazém: lotes definidos por produto, marca e validade; unidades múltiplas e produtos a granel; codificação de células e zonas de frio; FEFO com preferência por produtos não congelados; e controlo de pessoas autorizadas a levantar.',
         'A modelação UML, dividida por áreas para preservar a legibilidade, cobre os casos de uso, os processos (atividades), a estrutura (classes), o ciclo de vida das entidades principais (estados) e a colaboração entre componentes (sequências). O modelo entidade-relacionamento e o dicionário de dados foram traduzidos para um modelo físico em Cloud Firestore, com critérios explícitos de embebimento, subcoleções e desnormalização. A arquitetura proposta, em Kotlin com Firebase, concentra as operações críticas em Cloud Functions transacionais e aplica a segurança no servidor, o que é especialmente importante quando os colaboradores usam os seus próprios dispositivos e quando estão em causa dados pessoais sensíveis.',
         'A separação entre MVP e trabalho futuro torna o projeto exequível sem perder a visão completa. As funcionalidades de maior complexidade, como o reconhecimento de produtos e validades por imagem, a leitura automática de guias, a biometria, o cabaz automático e a sugestão de pratos, ficaram documentadas com a justificação e a abordagem prevista, e o modelo de dados já as acomoda. Os protótipos de interface completam a especificação, descrevendo ecrã a ecrã o comportamento esperado.',
-        'Como próximos passos, recomenda-se validar com os colaboradores os 41 protótipos de alta fidelidade do Capítulo 7, que servirão de especificação de referência para a implementação; confirmar com a equipa HACCP o tratamento dos tipos de data de validade e o layout do RGDHSA049 gerado, recolher a tabela de congelação por categoria e iniciar a implementação pela iteração 0 do plano proposto.',
+        'O trabalho tem limitações que importa reconhecer. A análise baseou-se na documentação fornecida e em respostas escritas da instituição, sem observação direta das operações no armazém e na cozinha; os protótipos ainda não foram validados com os utilizadores finais; as durações do plano são estimativas; e a medida de proximidade entre locais é uma aproximação baseada na ordenação dos códigos, enquanto não existir o mapa do armazém. Estas limitações são endereçadas pelos próximos passos propostos.',
+        'Como próximos passos, recomenda-se validar com os colaboradores os 42 protótipos de alta fidelidade do Capítulo 7, que servirão de especificação de referência para a implementação; confirmar com a equipa HACCP o tratamento dos tipos de data de validade e o layout do RGDHSA049 gerado, recolher a tabela de congelação por categoria e iniciar a implementação pela iteração 0 do plano proposto.',
     )
 
 
@@ -277,8 +292,25 @@ def anexos(r, D, UCS, RF):
 
     r.page_break()
     r.unnumbered_title('Anexo C – Matriz de rastreabilidade')
-    r.para('A matriz seguinte relaciona os casos de uso descritos na secção 4.1 com os requisitos funcionais que concretizam, permitindo verificar a cobertura dos requisitos do MVP.')
+    r.para('A matriz seguinte relaciona cada requisito funcional com os casos de uso descritos na secção 4.1 e com os mockups do Capítulo 7 que o concretizam, permitindo verificar que todos os requisitos do MVP estão cobertos pela modelação e pela interface.')
+    import re
+    from cap_mockups import DESC
+
+    def expand(t):
+        out = set(re.findall(r'RF-[A-Z]{3}-\d\d', t))
+        for a, b in re.findall(r'(RF-[A-Z]{3}-\d\d) a (RF-[A-Z]{3}-\d\d)', t):
+            out |= {f'{a[:7]}{i:02d}' for i in range(int(a[-2:]), int(b[-2:]) + 1)}
+        return out
+    uc, mk = {}, {}
+    for uid, _, f in UCS:
+        for x in expand(f['Requisitos']):
+            uc.setdefault(x, []).append(uid)
+    for mid, (_, req, _) in sorted(DESC.items()):
+        for x in expand(req):
+            mk.setdefault(x, []).append(mid)
     rows = []
-    for uid, name, f in UCS:
-        rows.append([uid, name, f['Requisitos']])
-    r.table(['UC', 'Caso de uso', 'Requisitos e regras'], rows, 'Matriz de rastreabilidade casos de uso – requisitos.', widths=[1.2, 3.2, 5.6])
+    for reqs in RF.values():
+        for rid, _, _, fase in reqs:
+            rows.append([rid, ', '.join(uc.get(rid, [])) or '–', ', '.join(mk.get(rid, [])) or '–', fase])
+    r.table(['Requisito', 'Casos de uso', 'Mockups', 'Fase'], rows,
+            'Matriz de rastreabilidade requisitos – casos de uso – mockups.', widths=[1.6, 2.2, 4.8, 1.2], size=8)

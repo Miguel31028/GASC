@@ -189,8 +189,8 @@ export const ecrasA = q => [
     <div class="content np">
       <div class="card ok row" style="margin:6px 16px 10px;gap:10px">${ic('check_circle', 'fill')}<div class="small"><b>Receção registada.</b> Arrume os lotes seguindo as sugestões de localização.</div></div>
       <div class="list">
-        ${li({ lead: 'ac_unit', leadCls: 'sq', h: 'Iogurte natural PD ×4 · 6 UN', s: 'Refrigerado · val. 24/10 · sugerido FRIG1-C1', trail: tag('2 dias', 'warn') })}
-        ${li({ lead: 'eco', leadCls: 'sq', h: 'Alface frisada PD · 1,324 kg', s: 'Refrigerado · sugerido FRIG1-D2', trail: tag('3 dias', 'warn') })}
+        ${li({ lead: 'ac_unit', leadCls: 'sq', h: 'Iogurte natural PD ×4 · 6 UN', s: 'Refrigerado · val. 24/10 · sugerido ARCA3-C1', trail: tag('2 dias', 'warn') })}
+        ${li({ lead: 'eco', leadCls: 'sq', h: 'Alface frisada PD · 1,324 kg', s: 'Refrigerado · sugerido ARCA3-D2', trail: tag('3 dias', 'warn') })}
         ${li({ lead: 'water_full', leadCls: 'sq', h: 'Leite meio-gordo Agros · 30 UN', s: 'Ambiente · sugerido 004-01-02', trail: '' })}
         ${li({ lead: 'nutrition', leadCls: 'sq', h: 'Maçã Gala saco 1,5 kg · 3 UN', s: 'Ambiente · sugerido 001-03-01', trail: '' })}
       </div>
@@ -253,36 +253,37 @@ export const ecrasA = q => [
     <div class="content" style="padding-top:6px">
       <div class="row">
         <div class="kpi"><div class="v">10 UN</div><div class="l">Stock disponível</div></div>
-        <div class="kpi"><div class="v">12 UN</div><div class="l">Stock mínimo</div></div>
+        <div class="kpi"><div class="v">8 UN</div><div class="l">Stock mínimo</div></div>
       </div>
       <div class="row sb"><div class="section">Lotes por ordem de saída (FEFO)</div>${ic('sort', 's20 muted')}</div>
       <div class="card outlined" style="padding:10px 12px;border-left:4px solid var(--warn)">
         <div class="row sb"><span class="title-s">1.º · Lote L-0912 · PD ×4</span>${tag('expira em 2 dias', 'warn', 'schedule')}</div>
-        <div class="small muted" style="margin-top:3px">Validade 24/10/2026 · 6 UN · FRIG1-C1</div>
+        <div class="small muted" style="margin-top:3px">Validade 24/10/2026 · 6 UN · ARCA3-C1</div>
         <div class="small muted">Receção 2026-0153 · Pingo Doce · 22/10</div>
         <div class="row" style="margin-top:8px;gap:6px">${btn('Transferir', 'outlined', 'swap_horiz')}${btn('Desperdício', 'outlined', 'delete')}</div>
       </div>
       <div class="card outlined" style="padding:10px 12px">
         <div class="row sb"><span class="title-s">2.º · Lote L-0931 · Danone</span>${tag('disponível', 'ok')}</div>
-        <div class="small muted" style="margin-top:3px">Validade 30/10/2026 · 4 UN · FRIG1-C2</div>
+        <div class="small muted" style="margin-top:3px">Validade 30/10/2026 · 4 UN · ARCA3-C2</div>
         <div class="small muted">Receção 2026-0155 · particular anónimo · 22/10</div>
+        <div class="row" style="margin-top:8px;gap:6px">${btn('Ajustar quantidade', 'outlined', 'tune')}</div>
       </div>
       <div class="card filled small row" style="gap:8px">${ic('history', 's20')}<span>Histórico: 14 entradas e 22 saídas nos últimos 30 dias</span>${ic('chevron_right')}</div>
     </div>
     ${bnav('Stock')}`) },
 
   { id: 'M15', grupo: 'Stock e validades', titulo: 'Congelar lote', html: phone(`
-    ${appbar({ title: 'Peito de frango', sub: 'Carne de aves · congelável', lead: 'arrow_back' })}
+    ${appbar({ title: 'Coxas de frango', sub: 'Carne de aves · congelável', lead: 'arrow_back' })}
     <div class="scrim"></div>
     <div class="sheet">
       <div class="handle"></div>
-      <div class="row" style="gap:10px">${ic('ac_unit', 's32')}<div><div class="title-m">Congelar lote L-0877</div><div class="small muted">Disponível: 3,2 kg · validade 23/10/2026</div></div></div>
-      <div class="row sb"><span class="title-s">Quantidade a congelar</span>${stepper('3,2 kg')}</div>
+      <div class="row" style="gap:10px">${ic('ac_unit', 's32')}<div><div class="title-m">Congelar lote L-0879</div><div class="small muted">Disponível: 2,4 kg · validade 23/10/2026</div></div></div>
+      <div class="row sb"><span class="title-s">Quantidade a congelar</span>${stepper('2,4 kg')}</div>
       <div class="card primary small" style="padding:10px 12px">
         <div class="row" style="gap:8px">${ic('rule', 's20')}<span><b>Regra da categoria:</b> carne de aves +90 dias</span></div>
       </div>
       ${field('Nova validade proposta', '20/01/2027', { icon: 'event', cls: 'focus', trail: 'edit', support: 'Validade original 23/10/2026 é preservada no histórico' })}
-      ${field('Zona de congelação sugerida', 'ARCA1-D2 · Arca 1 (aves)', { icon: 'kitchen', trail: 'qr_code_scanner' })}
+      ${field('Zona de congelação sugerida', 'ARCA1-D1 · Arca 1 (aves)', { icon: 'kitchen', trail: 'qr_code_scanner' })}
       <div class="card warn small row" style="gap:8px">${ic('info', 's20')}<span>Depois de congelado, o lote passa a ser usado depois dos não congelados (FEFO).</span></div>
       <div class="row" style="justify-content:flex-end;gap:8px">${btn('Cancelar', 'text')}${btn('Congelar', 'filled', 'ac_unit')}</div>
     </div>`) },
@@ -295,7 +296,7 @@ export const ecrasA = q => [
       <div class="list">
         ${li({ lead: 'delete_forever', leadCls: 'err', h: 'Fiambre perna fatiado 200 g', s: 'L-0810 · 2 UN · expirou 21/10 · 002-02-01', trail: ic('chevron_right') })}
         ${li({ lead: 'delete_forever', leadCls: 'err', h: 'Pão de forma integral', s: 'L-0822 · 1 UN · expirou 21/10 · 006-01-01', trail: ic('chevron_right') })}
-        ${li({ lead: 'delete_forever', leadCls: 'err', h: 'Natas para culinária 200 ml', s: 'L-0791 · 4 UN · expirou 20/10 · FRIG1-E1', trail: ic('chevron_right') })}
+        ${li({ lead: 'delete_forever', leadCls: 'err', h: 'Natas para culinária 200 ml', s: 'L-0791 · 4 UN · expirou 20/10 · ARCA3-E1', trail: ic('chevron_right') })}
       </div>
       <div style="padding:14px 16px">${btn('Registar todos como desperdício', 'tonal', 'delete_sweep', 'block')}</div>
     </div>
@@ -353,8 +354,8 @@ export const ecrasA = q => [
         ${li({ lead: 'TS', h: 'Tiago Silva <span class="muted small">· filho</span>', s: '12 anos · não autorizado · alergia', trail: ic('block') })}
       </div></div>
       <div class="card outlined small" style="padding:10px 12px">
-        <div class="row sb"><span class="muted">Próximo cabaz</span><span class="b">29/10/2026 · 10:30</span></div>
-        <div class="row sb" style="margin-top:4px"><span class="muted">Último cabaz</span><span class="b">15/10/2026 · 14 artigos</span></div>
+        <div class="row sb"><span class="muted">Próximo cabaz</span><span class="b">Hoje, 22/10/2026 · 10:30</span></div>
+        <div class="row sb" style="margin-top:4px"><span class="muted">Último cabaz</span><span class="b">08/10/2026 · 14 artigos</span></div>
         <div class="row sb" style="margin-top:4px"><span class="muted">Refeições esta semana</span><span class="b">2 seg–qui · 3 sex</span></div>
       </div>
       ${btn('Adicionar membro', 'tonal', 'person_add', 'block')}

@@ -1,52 +1,37 @@
 <!doctype html><html lang="pt"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"><title>M36 – Utilizadores e perfis</title>
+<meta name="viewport" content="width=device-width, initial-scale=1"><title>M36 – Categorias e tabela de congelação</title>
 <link rel="stylesheet" href="../mockups.css"></head><body style="padding:16px;background:#fff"><div class="screen">
 <div class="statusbar" >
   <span>10:42</span><span><span class="ms ">signal_cellular_4_bar</span><span class="ms ">wifi</span><span class="ms ">battery_5_bar</span></span>
 </div>
     <div class="appbar ">
     <div class="ib"><span class="ms ">arrow_back</span></div>
-    <div class="title"><h1>Utilizadores</h1><p>9 ativos</p></div>
-    <div class="ib"><span class="ms ">search</span></div>
+    <div class="title"><h1>Categorias</h1><p>18 categorias</p></div>
+    <div class="ib"><span class="ms ">add</span></div>
   </div>
     <div class="content np">
-      <div class="list">
-        
-<div class="li ">
-  <div class="lead ">AC</div>
-  <div class="txt"><div class="h">Ana Costa</div><div class="s">Operador · Responsável</div></div>
-  <div class="trail"><span class="tag ok">Ativo</span></div>
-</div>
-        
-<div class="li ">
-  <div class="lead ">JR</div>
-  <div class="txt"><div class="h">Joana Reis</div><div class="s">Técnico de ação social</div></div>
-  <div class="trail"><span class="tag ok">Ativo</span></div>
-</div>
-        
-<div class="li ">
-  <div class="lead ">MF</div>
-  <div class="txt"><div class="h">Manuel Fonseca</div><div class="s">Cozinha</div></div>
-  <div class="trail"><span class="tag ok">Ativo</span></div>
-</div>
-        
-<div class="li ">
-  <div class="lead ">TP</div>
-  <div class="txt"><div class="h">Teresa Pinto</div><div class="s">Administrador</div></div>
-  <div class="trail"><span class="tag ok">Ativo</span></div>
-</div>
-        
-<div class="li ">
-  <div class="lead ">VB</div>
-  <div class="txt"><div class="h">Vasco Brito</div><div class="s">Operador (voluntário)</div></div>
-  <div class="trail"><span class="tag neu">Inativo</span></div>
-</div>
-      </div>
+      <table class="t" style="margin:6px 0 0;font-size:12.5px">
+        <tr><th style="padding-left:16px">Categoria</th><th>Cond.</th><th>Cong.</th><th>Aviso</th></tr>
+        <tr><td style="padding-left:16px">Carne de aves</td><td>Refrig.</td><td><span class="tag info">+90 d</span></td><td>2 d</td></tr><tr><td style="padding-left:16px">Carne de vaca/porco</td><td>Refrig.</td><td><span class="tag info">+120 d</span></td><td>2 d</td></tr><tr><td style="padding-left:16px">Peixe fresco</td><td>Refrig.</td><td><span class="tag info">+90 d</span></td><td>1 d</td></tr><tr><td style="padding-left:16px">Pão e padaria</td><td>Ambiente</td><td><span class="tag info">+30 d</span></td><td>1 d</td></tr><tr><td style="padding-left:16px">Lacticínios</td><td>Refrig.</td><td><span class="muted">—</span></td><td>3 d</td></tr><tr><td style="padding-left:16px">Frutas e legumes</td><td>Ambiente</td><td><span class="muted">—</span></td><td>3 d</td></tr><tr><td style="padding-left:16px">Massas e arroz</td><td>Ambiente</td><td><span class="muted">—</span></td><td>30 d</td></tr><tr><td style="padding-left:16px">Conservas</td><td>Ambiente</td><td><span class="muted">—</span></td><td>30 d</td></tr><tr><td style="padding-left:16px">Higiene pessoal</td><td>Ambiente</td><td><span class="muted">—</span></td><td>—</td></tr><tr><td style="padding-left:16px">Vestuário</td><td>Ambiente</td><td><span class="muted">—</span></td><td>—</td></tr>
+      </table>
     </div>
-    <div class="scrim" style="top:420px"></div>
+    <div class="scrim" style="top:520px"></div>
     <div class="sheet">
       <div class="handle"></div>
-      <div class="title-m">Perfis de Ana Costa</div>
-      <div class="row" style="gap:12px;height:34px"><span class="check "></span><span class="small b">Administrador</span></div><div class="row" style="gap:12px;height:34px"><span class="check on"></span><span class="small b">Responsável da instituição</span></div><div class="row" style="gap:12px;height:34px"><span class="check "></span><span class="small b">Técnico de ação social</span></div><div class="row" style="gap:12px;height:34px"><span class="check on"></span><span class="small b">Operador de armazém</span></div><div class="row" style="gap:12px;height:34px"><span class="check "></span><span class="small b">Cozinha</span></div>
-      <div class="row" style="justify-content:flex-end;gap:8px"><span class="btn text ">Desativar</span><span class="btn filled ">Guardar</span></div>
+      <div class="title-m">Carne de aves</div>
+      <div class="row sb"><span class="small b">Congelável</span><div class="switch on"></div></div>
+      <div class="row">
+<div class="field grow focus">
+  <span class="lab">Extensão (dias)</span>
+  
+  <span class="val ">90</span>
+  
+</div>
+<div class="field grow ">
+  <span class="lab">Aviso (dias)</span>
+  
+  <span class="val ">2</span>
+  
+</div></div>
+      <div class="row" style="justify-content:flex-end;gap:8px"><span class="btn text ">Cancelar</span><span class="btn filled ">Guardar</span></div>
     </div><div class="navbar-gesture" ></div></div></body></html>

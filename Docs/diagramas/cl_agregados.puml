@@ -44,7 +44,7 @@ class ContaUtente {
 }
 class Utilizador
 Agregado "1" *-- "1..*" Pessoa
-Pessoa "1" -- "0..1" CredencialQR
+Pessoa "1" -- "0..*" CredencialQR : no máximo 1 ativa >
 Pessoa "1" -- "0..1" ContaUtente
 Agregado "1" -- "1..*" Consentimento
 Agregado "0..*" -- "0..1" Utilizador : técnico responsável >

@@ -41,6 +41,7 @@ Lote "0..*" -- "0..1" Local : guardado em >
 Lote "1" -- "0..*" Movimento
 Lote "1" -- "0..*" Desperdicio
 Lote "0..1" -- "0..*" Alerta
+Produto "0..1" -- "0..*" Alerta
 Movimento "0..*" -- "1" Utilizador : registado por >
 Desperdicio "0..*" -- "1" Utilizador : registado por >
 @enduml

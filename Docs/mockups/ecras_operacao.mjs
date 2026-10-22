@@ -37,7 +37,7 @@ export const ecrasB = q => [
       <div class="card outlined small" style="padding:10px 12px">
         <div class="row sb"><span class="muted">Agregado</span><span class="b">A-0142 · 4 pessoas</span></div>
         <div class="row sb" style="margin-top:4px"><span class="muted">Agendamento</span><span class="b">Hoje 10:30 · cabaz quinzenal</span></div>
-        <div class="row sb" style="margin-top:4px"><span class="muted">Último cabaz</span><span class="b">15/10/2026</span></div>
+        <div class="row sb" style="margin-top:4px"><span class="muted">Último cabaz</span><span class="b">08/10/2026</span></div>
       </div>
       <div class="card warn small row" style="gap:8px;align-items:flex-start">${ic('warning')}<div><b>Atenção na composição do cabaz</b><br>Alergia a glúten (1 membro) · sem carne de porco</div></div>
       <div class="spacer"></div>
@@ -110,6 +110,7 @@ export const ecrasB = q => [
           <div><div class="display" style="font-size:34px">17</div><div class="xs">por levantar</div></div>
         </div>
         <div class="hbar" style="margin-top:8px;background:rgba(255,255,255,.6)"><div style="width:55%"></div></div>
+        <div class="row" style="justify-content:flex-end;margin-top:6px"><span class="btn text" style="height:30px;color:var(--on-primary-container)">${ic('lock_clock')}Fechar serviço</span></div>
       </div>
       <div class="card outlined row" style="padding:10px 12px"><div class="grow"><div class="title-s">Jantar</div><div class="small muted">Serviço fechado · abrir em dias excecionais</div></div><div class="switch"></div></div>
       <div class="row">${btn('Distribuir', 'filled', 'qr_code_scanner', 'grow')}${btn('Saída de produtos', 'tonal', 'outbox', 'grow')}</div>
@@ -208,8 +209,24 @@ export const ecrasB = q => [
       </div>
     </div>`) },
 
+  { id: 'M33', grupo: 'Relatórios e indicadores', titulo: 'Histórico de receções e entregas', html: phone(`
+    ${appbar({ title: 'Histórico', sub: 'Outubro de 2026', lead: 'arrow_back', actions: ['download'] })}
+    <div class="tabs"><div class="on">Receções</div><div>Entregas</div><div>Refeições</div></div>
+    <div class="row wrap" style="padding:10px 16px 6px;gap:6px">${chip('Este mês', true)}${chip('Doador', false, 'filter_alt')}${chip('Com NC', false, 'report')}</div>
+    <div class="content np">
+      <div class="list">
+        ${li({ lead: 'store', leadCls: 'sq', h: '2026-0155 · Particular anónimo', s: '22/10 11:02 · 3 linhas · Ana Costa', trail: tag('editável', 'info', 'edit') })}
+        ${li({ lead: 'store', leadCls: 'sq', h: '2026-0153 · Pingo Doce – Barcelos', s: '22/10 10:15 · 5 linhas · 1 NC · Ana Costa', trail: tag('com saídas', 'neu', 'lock') })}
+        ${li({ lead: 'store', leadCls: 'sq', h: '2026-0151 · Mercadona', s: '20/10 16:40 · 9 linhas · Vasco Brito', trail: tag('com saídas', 'neu', 'lock') })}
+        ${li({ lead: 'campaign', leadCls: 'sq', h: '2026-0150 · Campanha escola', s: '19/10 09:30 · 12 linhas · Ana Costa', trail: tag('com saídas', 'neu', 'lock') })}
+        ${li({ lead: 'store', leadCls: 'sq', h: '2026-0149 · Recheio – Barcelos', s: '09/10 15:10 · 7 linhas · Vasco Brito', trail: tag('com saídas', 'neu', 'lock') })}
+      </div>
+      <div class="card info small row" style="margin:12px 16px;gap:8px">${ic('info', 's20')}<span>Uma receção só pode ser corrigida enquanto os seus lotes não tiverem saídas. Todas as correções ficam registadas na auditoria.</span></div>
+    </div>
+    ${bnav('Mais')}`) },
+
   // ---------------------------------------------------------------- Administração
-  { id: 'M33', grupo: 'Administração', titulo: 'Células de prateleira', html: phone(`
+  { id: 'M34', grupo: 'Administração', titulo: 'Células de prateleira', html: phone(`
     ${appbar({ title: 'Células', sub: '86 células · 6 colunas', lead: 'arrow_back', actions: ['print', 'more_vert'] })}
     <div class="row" style="padding:0 16px 10px;gap:6px">${chip('Todas', true)}${chip('Coluna 003')}${chip('Cheias 4')}${chip('Inativas')}</div>
     <div class="content np">
@@ -230,14 +247,14 @@ export const ecrasB = q => [
       <div class="row" style="justify-content:flex-end;gap:8px">${btn('Cancelar', 'text')}${btn('Criar e imprimir QR', 'filled', 'print')}</div>
     </div>`) },
 
-  { id: 'M34', grupo: 'Administração', titulo: 'Equipamento de frio e zonas', html: phone(`
-    ${appbar({ title: 'ARCA1 · Arca 1', sub: 'Congelador · 6 zonas', lead: 'arrow_back', actions: ['edit'] })}
+  { id: 'M35', grupo: 'Administração', titulo: 'Equipamento de frio e zonas', html: phone(`
+    ${appbar({ title: 'ARCA1 · Arca 1', sub: 'Congelador · 3 zonas', lead: 'arrow_back', actions: ['edit'] })}
     <div class="content" style="padding-top:8px">
       <div class="label">Zonas (lado × nível)</div>
       <div class="zones">
         <div></div><div class="h">E · esquerda</div><div class="h">C · centro</div><div class="h">D · direita</div>
-        <div class="h">1</div><div class="z">E1<small>2 lotes</small></div><div class="z full">C1<small>cheia</small></div><div class="z">D1<small>1 lote</small></div>
-        <div class="h">2</div><div class="z">E2<small>vazia</small></div><div class="z">C2<small>3 lotes</small></div><div class="z">D2<small>2 lotes</small></div>
+        <div class="h">1</div><div class="z">E1<small>2 lotes</small></div><div class="z full">C1<small>cheia</small></div><div class="z">D1<small>3 lotes</small></div>
+        <div class="h">2</div><div class="z none">—<small>não existe</small></div><div class="z none">—<small>não existe</small></div><div class="z none">—<small>não existe</small></div>
         <div class="h">3</div><div class="z none">—<small>não existe</small></div><div class="z none">—<small>não existe</small></div><div class="z none">—<small>não existe</small></div>
       </div>
       <div class="small muted">Os lados são sempre D, C ou E; o número de níveis varia por equipamento (RN-04).</div>
@@ -246,12 +263,12 @@ export const ecrasB = q => [
       <div class="label">Outros equipamentos</div>
       <div class="card outlined" style="padding:0"><div class="list">
         ${li({ lead: 'kitchen', leadCls: 'sq', h: 'ARCA2 · Arca 2', s: 'Congelador · 2 zonas (E1, D1) · todos os congelados' })}
-        ${li({ lead: 'kitchen', leadCls: 'sq', h: 'FRIG1 · Frigorífico', s: 'Refrigerado · 6 zonas · frescos' })}
+        ${li({ lead: 'kitchen', leadCls: 'sq', h: 'ARCA3 · Arca 3', s: 'Frigorífico (não congela) · 6 zonas · frescos' })}
       </div></div>
       ${btn('Imprimir etiquetas QR das zonas', 'tonal', 'print', 'block')}
     </div>`) },
 
-  { id: 'M35', grupo: 'Administração', titulo: 'Categorias e tabela de congelação', html: phone(`
+  { id: 'M36', grupo: 'Administração', titulo: 'Categorias e tabela de congelação', html: phone(`
     ${appbar({ title: 'Categorias', sub: '18 categorias', lead: 'arrow_back', actions: ['add'] })}
     <div class="content np">
       <table class="t" style="margin:6px 0 0;font-size:12.5px">
@@ -269,7 +286,7 @@ export const ecrasB = q => [
       <div class="row" style="justify-content:flex-end;gap:8px">${btn('Cancelar', 'text')}${btn('Guardar', 'filled')}</div>
     </div>`) },
 
-  { id: 'M36', grupo: 'Administração', titulo: 'Utilizadores e perfis', html: phone(`
+  { id: 'M37', grupo: 'Administração', titulo: 'Utilizadores e perfis', html: phone(`
     ${appbar({ title: 'Utilizadores', sub: '9 ativos', lead: 'arrow_back', actions: ['search'] })}
     <div class="content np">
       <div class="list">
@@ -289,7 +306,7 @@ export const ecrasB = q => [
     </div>`) },
 
   // ---------------------------------------------------------------- App Utente
-  { id: 'M37', grupo: 'App Utente', titulo: 'App Utente – entrada por telemóvel', html: phone(`
+  { id: 'M38', grupo: 'App Utente', titulo: 'App Utente – entrada por telemóvel', html: phone(`
     <div class="content" style="padding:40px 28px 20px;gap:16px">
       <div class="col" style="align-items:center;gap:10px;margin-bottom:14px">
         <div style="width:84px;height:84px;border-radius:24px;background:var(--tertiary);display:flex;align-items:center;justify-content:center;color:#fff">${ic('family_restroom', 's48')}</div>
@@ -305,7 +322,7 @@ export const ecrasB = q => [
       ${btn('Entrar', 'filled', '', 'block lg')}
     </div>`) },
 
-  { id: 'M38', grupo: 'App Utente', titulo: 'App Utente – início e credencial', html: phone(`
+  { id: 'M39', grupo: 'App Utente', titulo: 'App Utente – início e credencial', html: phone(`
     ${appbar({ title: 'Olá, Maria', sub: 'Agregado A-0142', lead: '', actions: ['notifications'] })}
     <div class="content" style="padding-top:4px;align-items:center">
       <div class="card elev col" style="width:100%;align-items:center;padding:16px;gap:6px">
@@ -313,7 +330,7 @@ export const ecrasB = q => [
         <div style="width:170px;height:170px">${q.utente}</div>
         <div class="small muted">Mostre este código ao levantar o cabaz ou as refeições</div>
       </div>
-      <div class="card primary row" style="width:100%;gap:12px">${ic('shopping_basket', 's32')}<div class="grow"><div class="small">Próximo cabaz</div><div class="title-m">qui., 29 de outubro · 10:30</div></div></div>
+      <div class="card primary row" style="width:100%;gap:12px">${ic('shopping_basket', 's32')}<div class="grow"><div class="small">Próximo cabaz</div><div class="title-m">qui., 5 de novembro · 10:30</div></div></div>
       <div class="card outlined" style="width:100%;padding:10px 12px">
         <div class="row sb"><span class="title-s">Refeições desta semana</span><span class="btn text" style="height:28px">Alterar</span></div>
         <div class="row" style="gap:6px;margin-top:6px">${['Seg 2', 'Ter 2', 'Qua 2', 'Qui 2', 'Sex 3'].map(d => tag(d, 'prim')).join('')}</div>
@@ -321,7 +338,7 @@ export const ecrasB = q => [
     </div>
     ${bnav('Início', NAV_UTENTE)}`) },
 
-  { id: 'M39', grupo: 'App Utente', titulo: 'App Utente – pedidos de refeição', html: phone(`
+  { id: 'M40', grupo: 'App Utente', titulo: 'App Utente – pedidos de refeição', html: phone(`
     ${appbar({ title: 'Refeições', sub: 'Pedidos do agregado', lead: '' })}
     <div class="content" style="padding-top:4px">
       <div class="row sb"><span class="btn text">${ic('chevron_left')}</span><span class="title-s">26 out. – 1 nov.</span><span class="btn text">${ic('chevron_right')}</span></div>
@@ -337,7 +354,7 @@ export const ecrasB = q => [
 ];
 
 // ---------------------------------------------------------------- Painel web (ecrã de parede)
-export const painelWeb = () => ({ id: 'M40', grupo: 'Painel web', titulo: 'Painel de agenda para ecrã de parede', wide: true, html: `
+export const painelWeb = () => ({ id: 'M41', grupo: 'Painel web', titulo: 'Painel de agenda para ecrã de parede', wide: true, html: `
 <div class="wide">
   <div style="height:86px;background:var(--primary);color:#fff;display:flex;align-items:center;padding:0 36px;gap:18px">
     ${ic('volunteer_activism', 'fill s40')}<div class="grow"><div style="font-size:28px;font-weight:500">Espaço Social · Entregas de hoje</div><div style="opacity:.85;font-size:16px">Quinta-feira, 22 de outubro de 2026</div></div>
@@ -384,7 +401,7 @@ export const pdfRgdhsa = () => {
     ['22', 'Cenoura granel / Produtor local', '—', '1 saco (10 kg)', 1, 1, 1, 1, '—', '', 'VB'],
   ];
   const cn = v => `<td style="text-align:center">${v ? 'X' : ''}</td><td style="text-align:center">${v ? '' : 'X'}</td>`;
-  return { id: 'M41', grupo: 'Documentos gerados', titulo: 'RGDHSA049 gerado em PDF', wide: true, html: `
+  return { id: 'M42', grupo: 'Documentos gerados', titulo: 'RGDHSA049 gerado em PDF', wide: true, html: `
 <div class="a4">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;border-bottom:2px solid #000;padding-bottom:8px">
     <div style="font-size:12px"><b>MEDIDA DE CONTROLO</b><br>Monitorização do Controlo da Receção de Matérias-Primas</div>

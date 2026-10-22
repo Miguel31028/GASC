@@ -4,7 +4,7 @@ autonumber
 actor "Operador" as OP
 participant "App Android\n(UI Arrumação)" as UI
 participant "ArrumacaoViewModel" as VM
-participant "Cloud Function\nsugerirLocal" as CF
+participant "Cloud Functions\n(sugerirLocal, marcarLocalCheio,\nconfirmarArrumacao)" as CF
 database "Cloud Firestore" as FS
 
 OP -> UI : Selecionar lote pendente
@@ -18,15 +18,17 @@ VM --> UI : mostrar sugestão
 alt local está cheio
   OP -> UI : Assinalar "cheio"
   UI -> VM : marcarCheio(localId)
-  VM -> FS : update locais/{id}.cheio = true
+  VM -> CF : call marcarLocalCheio(localId)
+  CF -> FS : locais/{id}.cheio = true
   VM -> CF : call sugerirLocal(loteId, excluir = [localId])
   CF --> VM : novo local (ex.: 003-03-1)
   VM --> UI : mostrar nova sugestão
 end
 OP -> UI : Ler QR do local
 UI -> VM : confirmarArrumacao(loteId, codigoLido)
-VM -> VM : validar código lido
-VM -> FS : transação: lote.localId, estado = DISPONIVEL,\nmovimento ARRUMACAO
-FS --> VM : OK
+VM -> CF : call confirmarArrumacao(loteId, codigoLido)
+CF -> FS : validar local ativo
+CF -> FS : transação: lote.localId, estado = DISPONIVEL,\nmovimento ARRUMACAO
+CF --> VM : OK
 VM --> UI : arrumação concluída
 @enduml
